@@ -1,0 +1,18 @@
+[package]
+name = "musicbot_discord_adapter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+musicbot_core = { path = "../core" }
+musicbot_audio_lavalink = { path = "../audio_lavalink" }
+
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
+serenity = {version = "0.12", features = ["client","gateway","model","voice"]}
+tokio = {version = "1", features = ["macros","rt-multi-thread"]}
+rand = "0.9"
+reqwest = { version = "0.11", features = ["json"] }
+songbird = "0.5.0"

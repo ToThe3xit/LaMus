@@ -1,0 +1,37 @@
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: lavalink
+    restart: unless-stopped
+    ports:
+      - "2333:2333"
+    volumes:
+      - ./application.yml:/opt/Lavalink/application.yml
+      - ./tracks:/opt/Lavalink/tracks # Put your local music files in the 'tracks' folder
+    environment:
+      - _JAVA_OPTIONS=-Xmx512M # Limit RAM usage for Lavalink JVM
+
+  lamus-bot:
+    build: .
+    container_name: lamus-app
+    restart: unless-stopped
+    depends_on:
+      - lavalink
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - ./db.yaml:/app/db.yaml
+      - ./normalization.yaml:/app/normalization.yaml
+      - ./tracks_normalized_preview.yaml:/app/tracks_normalized_preview.yaml
+      - ./tracks:/app/music # Put your local music files in the 'tracks' folder
+    # Note: VITE_API_URL is handled during the build stage via webui/.env
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-tunnel
+    restart: unless-stopped
+    environment:
+      - NGROK_AUTHTOKEN=YOUR_NGROK_AUTH_TOKEN_HERE
+    # Replace YOUR_STATIC_IP_HERE with the local IP of your hosting machine (e.g., 192.168.x.x)
+    command: "http --url=YOUR_NGROK_URL_HERE.ngrok-free.app YOUR_STATIC_IP_HERE:3000"

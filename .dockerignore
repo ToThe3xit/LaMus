@@ -1,0 +1,38 @@
+# 1. Git Repository
+.git
+.gitignore
+
+# 2. Frontend (React/Vite)
+# Prevents host node_modules from conflicting with the container's build environment.
+# This avoids "Permission denied" and "sh: 1: tsc: not found" errors.
+webui/node_modules/
+webui/dist/
+webui/build/
+webui/.npm/
+
+# 3. Backend (Rust)
+# Prevents large target folders (compiled for the host OS) from being sent to the Docker context.
+# Docker must compile the source code fresh inside the container environment.
+target/
+**/*.rs.bk
+
+# 4. Sensitive Data & Persistence
+# Do not bake secrets or local databases into the immutable Docker image.
+.env
+webui/.env
+*.pem
+*.key
+db.yaml
+tracks_normalized_preview.yaml
+
+# 5. Local Assets
+# Music tracks should be mounted via volumes in docker-compose, not copied into the image.
+tracks/
+
+# 6. System Junk & IDE Settings
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.log

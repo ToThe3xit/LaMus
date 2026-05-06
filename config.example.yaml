@@ -1,0 +1,36 @@
+# ==========================================
+# LaMus Bot - Main Configuration File
+# Rename this file to 'config.yaml' before running!
+# ==========================================
+
+lavalink_password: "YOUR_LAVALINK_PASSWORD_HERE"
+
+# Database and cache file paths (default: root of the repository)
+db_path: "db.yaml" 
+tracks_preview_path: "tracks_normalized_preview.yaml" 
+normalization_path: "normalization.yaml"
+
+# Local music directories mapping
+local_tracks_dir: "/app/music/"
+docker_tracks_dir: "/opt/Lavalink/tracks/"
+
+# Playback settings
+default_volume: 100 # Default volume (min 0, max 100)
+
+# Permissions
+superadmin_ids:
+  - "YOUR_DISCORD_USER_ID_HERE" # SuperUser ID (Your personal Discord Account ID)
+max_bots_per_channel: 2 # Max number of bots allowed in a single voice channel
+
+# Discord OAuth2 & App Credentials
+discord_client_id: "YOUR_DISCORD_CLIENT_ID"
+discord_client_secret: "YOUR_DISCORD_CLIENT_SECRET"
+discord_redirect_uri: "https://YOUR_NGROK_URL_HERE.ngrok-free.app/api/auth/callback" # Your NGROK URL
+
+# Observer Bot (The main manager)
+observer_bot_token: "YOUR_OBSERVER_BOT_TOKEN_HERE"
+
+# Audio instances (You can add multiple bots, tested for up to 8)
+bots:
+  - name: "Bot 1"
+    token: "YOUR_FIRST_AUDIO_BOT_TOKEN_HERE"

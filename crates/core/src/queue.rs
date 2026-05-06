@@ -1,0 +1,74 @@
+use crate::track::{Track, TrackId};
+
+// ============================================================ //
+// ==== PLAYBACK QUEUE ABSTRACTION ============================ //
+// ============================================================ //
+#[derive(Debug)]
+pub struct Queue{
+    tracks: Vec<Track>,
+    current_index: Option<usize>,
+}
+
+impl Queue{
+    pub fn new() -> Self{
+        Self{
+            tracks: Vec::new(),
+            current_index: None,
+        }
+    }
+    pub fn add_track(&mut self, track: Track){
+        self.tracks.push(track);
+
+        if self.current_index.is_none(){
+            self.current_index = Some(0);
+        }
+    }
+    pub fn remove_track(&mut self, track_id: &TrackId) -> bool{
+        if let Some(pos) = self.tracks.iter().position(|t| &t.id == track_id){
+            self.tracks.remove(pos);
+
+            if let Some(idx) = self.current_index{
+                if pos <= idx && idx > 0{
+                    self.current_index = Some(idx - 1);
+                }else if self.tracks.is_empty(){
+                    self.current_index = None;
+                }
+            }
+            true
+        }else{
+            false
+        }
+    }
+    pub fn current_track(&self) -> Option<&Track>{
+        self.current_index.and_then(|i| self.tracks.get(i))
+    }
+    pub fn tracks(&self) -> &[Track]{
+        &self.tracks
+    }
+    pub fn len(&self) -> usize{
+        self.tracks.len()
+    }
+    pub fn is_empty(&self) -> bool{
+        self.tracks.is_empty()
+    }
+    pub fn clear(&mut self){
+        self.tracks.clear();
+    }
+    pub fn move_track(&mut self, from: usize, to: usize) -> bool {
+        let len = self.tracks.len();
+        if from < len && to < len {
+            let track = self.tracks.remove(from);
+            self.tracks.insert(to, track);
+            true
+        } else {
+            false
+        }
+    }
+    pub fn insert_at_front(&mut self, track: Track) {
+        self.tracks.insert(0, track);
+
+        if self.current_index.is_none() {
+            self.current_index = Some(0);
+        }
+    }
+}

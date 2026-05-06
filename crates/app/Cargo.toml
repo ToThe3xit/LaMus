@@ -1,0 +1,19 @@
+[package]
+name = "lamus"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+musicbot_core = { path = "../core" }
+musicbot_auth = { path = "../auth" }
+musicbot_persistence = { path = "../persistence" }
+musicbot_discord_adapter = { path = "../discord_adapter" }
+musicbot_web_ui = { path = "../web_ui" }
+musicbot_audio_lavalink = { path = "../audio_lavalink" }
+
+tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+anyhow = "1.0"
+serenity = "0.12"
+futures = "0.3"

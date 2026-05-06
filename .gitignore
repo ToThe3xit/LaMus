@@ -1,0 +1,16 @@
+# DB files
+db.yaml
+tracks_normalized_preview.yaml
+
+# Music Dir
+tracks/
+
+# Builds
+target/
+webui/node_modules/
+webui/dist/
+
+# Real configs
+config.yaml
+application.yml
+webui/.env

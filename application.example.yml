@@ -1,0 +1,49 @@
+# ==========================================
+# Lavalink Audio Node Configuration
+# Rename this file to 'application.yml' before running!
+# ==========================================
+
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  # Uncomment the lines below and add a valid plugin link if you want to enable network sources.
+  # plugins:
+  #   - dependency: "ADD_YOUR_PLUGIN_LINK_HERE"
+  server:
+    password: "YOUR_LAVALINK_PASSWORD_HERE" # Must match 'lavalink_password' in config.yaml
+    sources:
+      youtube: false
+      bandcamp: false
+      soundcloud: false
+      twitch: false
+      vimeo: false
+      http: true
+      local: true # Enables reading local files
+
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    clients:
+      - MUSIC
+      - ANDROID_VR
+      - WEB
+      - TVHTML5EMBEDDED
+    oauth:
+      enabled: true
+      
+metrics:
+  prometheus:
+    enabled: false
+
+logging:
+  level:
+    root: INFO

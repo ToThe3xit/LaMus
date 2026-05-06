@@ -1,0 +1,115 @@
+bracket_pairs:
+  - ["(", ")"]
+  - ["[", "]"]
+  - ["{", "}"]
+  - ["（", "）"]
+  - ["【", "】"]
+  - ["『", "』"]
+  - ["「", "」"]
+  - ["《", "》"]
+  - ["〈", "〉"]
+  - ["〔", "〕"]
+  - ["＂", "＂"]
+  - ["“", "”"]
+  - ["„", "”"]
+  - ["«", "»"]
+  - ["ᐸ", "ᐳ"]
+  - ["•", "•"]
+  - ["~", "~"]
+
+noise_keywords:
+  - official
+  - video
+  - lyrics
+  - lyric
+  - audio
+  - hd
+  - mv
+  - clip
+  - music
+  - version
+  - remix
+  - reupload
+  - extended
+  - cover
+  - amv
+  - pmv
+  - opening
+  - ending
+  - op
+  - ed
+  - 4k
+  - uhd
+  - full
+  - creditless
+  - ost
+  - soundtrack
+
+trash_tokens:
+  - vol
+  - mv
+  - amv
+  - pmv
+  - pv
+  - prod
+  - feat
+  - by
+  - music
+  - video
+  - audio
+  - official
+  - lyrics
+  - lyric
+  - clip
+  - hd
+  - reupload
+  - version
+  - full
+  - 4k
+  - uhd
+
+split_chars:
+  - "-"
+  - "_"
+  - "/"
+  - "|"
+  - "｜"
+  - "⧸"
+  - ","
+  - "."
+  - ":"
+  - ";"
+  - "!"
+  - "?"
+  - "："
+  - "！"
+  - "？"
+  - "…"
+
+trim_chars:
+  - "\""
+  - "“"
+  - "”"
+  - "‘"
+  - "’"
+  - ","
+  - "."
+  - ":"
+  - ";"
+  - "!"
+  - "?"
+  - "："
+  - "！"
+  - "？"
+  - "＊"
+  - "★"
+  - "☆"
+  - "♫"
+  - "♬"
+  - "🎼"
+  - "🎵"
+  - "🔥"
+  - "⬆"
+  - "※"
+  - "—"
+  - "–"

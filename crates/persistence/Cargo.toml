@@ -1,0 +1,15 @@
+[package]
+name = "musicbot_persistence"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+musicbot_core = { path = "../core" }
+
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+walkdir = "2.5"
+sha1 = "0.10"
+chrono = { version = "0.4", features = ["clock"] }
+symphonia = { version = "0.5", features = ["mp3"] }
