@@ -157,7 +157,7 @@ Switch the search input to **Library mode** (📁) to query the local track data
 Superadmins see a folder-style navigation in the sidebar grouping active bot instances by server. Clicking a server folder reveals all currently active players, each showing the bot's avatar and live status. Any instance can be taken over and controlled directly from this panel.
 
 <p align="center">
-  <img src="screenshots/ActiveInstancesLight&showcontrolling.png" alt="Active Instances — Superadmin View" width="780" />
+  <img src="screenshots/ActiveInstancesLightShow controlling.png" alt="Active Instances — Superadmin View" width="780" />
 </p>
 
 ---
