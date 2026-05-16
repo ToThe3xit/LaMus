@@ -266,7 +266,9 @@ impl CoreState{
 
         self.queue.clear();
         self.history.clear();
-        
+        self.network_radio_enabled = false;
+        self.local_radio_enabled = false;
+
         self.playback.mode = Stopped;
         self.playback.current_track = None;
         self.playback.position_seconds = 0;

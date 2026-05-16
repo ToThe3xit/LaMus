@@ -47,11 +47,15 @@ pub async fn handle_interaction(
     } 
 
     if target_bot_index.is_none() {
+        let bots_guard = hivemind.bots.read().await;
         for i in 0..bot_count {
-            let state = hivemind.get_bot_state(i).await;
-            if state == musicbot_core::hivemind::BotState::Idle {
-                target_bot_index = Some(i);
-                break;
+            if let Some(bot) = bots_guard.get(&i) {
+                let is_on_server = bot.guilds.contains(&u_guild);
+                let is_idle = bot.state == musicbot_core::hivemind::BotState::Idle;
+                if is_on_server && is_idle {
+                    target_bot_index = Some(i);
+                    break;
+                }
             }
         }
     }

@@ -130,15 +130,19 @@ function App() {
     document.title = "LaMus";
   }, []);
   const [currentView, setCurrentView] = useState<'servers' | 'bots' | 'player'>(() => {
-    return (localStorage.getItem('mbv2_view') as any) || 'servers';
-  });
+  const saved = localStorage.getItem('mbv2_view') as any;
+  if (saved === 'player' && !localStorage.getItem('mbv2_active_server')) {
+    return 'servers';
+  }
+  return saved || 'servers';
+});
   const [activeServerId, setActiveServerId] = useState<string | null>(() => {
     return localStorage.getItem('mbv2_active_server') || null;
   });
 
   useEffect(() => { localStorage.setItem('mbv2_view', currentView); }, [currentView]);
   useEffect(() => { if (activeServerId) localStorage.setItem('mbv2_active_server', activeServerId); }, [activeServerId]);
-
+  
   const [searchSource, setSearchSource] = useState<'network' | 'local'>('network')
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -413,7 +417,13 @@ function App() {
   }, {} as Record<string, { key: string; state: PlayerState }[]>);
   
   const [activePlayerKey, setActivePlayerKey] = useState<string | null>(null);
-
+  useEffect(() => {
+  if (!activePlayerKey) return;
+  setPlayerState(prev => ({
+    ...prev,
+    isRadioActive: false,
+  }));
+  }, [activePlayerKey]);
   // ============================================================ //
   // ==== BOTS AND SERVERS SYNCHRONIZATION SUBSYSTEM ============ //
   // ============================================================ //
