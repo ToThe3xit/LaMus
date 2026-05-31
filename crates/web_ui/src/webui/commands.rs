@@ -225,6 +225,10 @@ pub async fn handle_command(
             let _ = state.core_tx.send(CoreMessage::ToggleLoop { server_id, bot_index: target_bot }).await;
             return Json(CommandResponse { success: true, message: "Track loop toggled".into(), results: None });
         },
+        "shuffle_queue" => {
+            let _ = state.core_tx.send(CoreMessage::ShuffleQueue { server_id, bot_index: target_bot }).await;
+            return Json(CommandResponse { success: true, message: "Queue shuffled".into(), results: None });
+        },
         "radio_network" => { 
             let _ = state.core_tx.send(CoreMessage::ToggleNetworkRadio { server_id: server_id.clone(), bot_index: target_bot }).await; 
             

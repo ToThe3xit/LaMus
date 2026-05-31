@@ -1,4 +1,6 @@
 use crate::track::{Track, TrackId};
+use rand::seq::SliceRandom;
+use rand::thread_rng;
 
 // ============================================================ //
 // ==== PLAYBACK QUEUE ABSTRACTION ============================ //
@@ -71,4 +73,17 @@ impl Queue{
             self.current_index = Some(0);
         }
     }
+    pub fn shuffle_upcoming(&mut self) {
+        if self.tracks.len() <= 2 {
+            return;
+        }
+
+        let mut rng = thread_rng();
+
+        if let Some(current_index) = self.current_index {
+            if current_index + 1 < self.tracks.len() {
+                self.tracks[(current_index + 1)..].shuffle(&mut rng);
+            }
+        }
+    }   
 }

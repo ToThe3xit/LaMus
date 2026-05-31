@@ -49,4 +49,6 @@ pub enum Event{
     },
 
     LoopToggled(bool),
+    
+    QueueShuffled,
 }

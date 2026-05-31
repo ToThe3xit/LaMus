@@ -51,6 +51,7 @@ pub enum CoreMessage {
     LeaveChannel { server_id: String, bot_index: usize },
     SetVolume { server_id: String, bot_index: usize, volume: u8 },
     ToggleLoop { server_id: String, bot_index: usize },
+    ShuffleQueue { server_id: String, bot_index: usize },
 }
 
 // ============================================================ //

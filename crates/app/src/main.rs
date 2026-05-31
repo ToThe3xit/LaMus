@@ -605,6 +605,22 @@ async fn main() {
                             musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
                         }
                     },
+                    CoreMessage::ShuffleQueue { server_id, bot_index } => {
+                        if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
+                            let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+
+                            let events = {
+                                let mut c = node.core.lock().await;
+                                c.handle_command(Command::ShuffleQueue)
+                            };
+
+                            musicbot_discord_adapter::discord::commands::process_core_events(
+                                guild_id,
+                                events,
+                                node.audio.clone()
+                            ).await;
+                        }
+                    },                    
                 }
             }
         }

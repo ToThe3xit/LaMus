@@ -56,6 +56,7 @@ impl CoreState{
             Command::RemoveAtIndex { index } => self.handle_remove_at_index(index),
             Command::PlayIndex { index } => self.handle_play_index(index),
             Command::ToggleLoop => self.handle_toggle_loop(),
+            Command::ShuffleQueue => self.handle_shuffle_queue(),
         }
     }
 
@@ -414,5 +415,12 @@ impl CoreState{
     fn handle_toggle_loop(&mut self) -> Vec<Event> {
         self.playback.is_looping = !self.playback.is_looping;
         vec![Event::LoopToggled(self.playback.is_looping)]
+    }
+    fn handle_shuffle_queue(&mut self) -> Vec<Event> {
+        self.queue.shuffle_upcoming();
+
+        vec![
+            Event::QueueShuffled,
+        ]
     }
 }

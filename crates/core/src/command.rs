@@ -43,4 +43,6 @@ pub enum Command{
     PlayIndex { index: usize },
 
     ToggleLoop,
+
+    ShuffleQueue,
 }
