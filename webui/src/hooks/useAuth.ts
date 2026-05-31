@@ -4,6 +4,27 @@ import type { CurrentUser } from '../types/bot';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+// ── Dozwolone originy dla avatara (tylko CDN Discorda) ────────
+const ALLOWED_AVATAR_ORIGINS = [
+  'https://cdn.discordapp.com',
+  'https://media.discordapp.net',
+];
+
+const AVATAR_FALLBACK = 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+function sanitizeAvatarUrl(url: string | null): string {
+  if (!url) return AVATAR_FALLBACK;
+  try {
+    const parsed = new URL(url);
+    if (ALLOWED_AVATAR_ORIGINS.some(origin => parsed.origin === origin)) {
+      return url;
+    }
+  } catch {
+    // nieprawidłowy URL — fallback
+  }
+  return AVATAR_FALLBACK;
+}
+
 export default function useAuth() {
 
   const [currentUser, setCurrentUser] =
@@ -35,15 +56,17 @@ export default function useAuth() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    const userId = params.get('user_id');
+    const userId   = params.get('user_id');
     const username = params.get('username');
-    const avatar = params.get('avatar');
+    const avatar   = params.get('avatar');
 
     if (userId && username && avatar) {
-      const user = {
-        id: userId,
-        name: username,
-        avatarUrl: avatar,
+      const sanitizedAvatar = sanitizeAvatarUrl(avatar);
+
+      const user: CurrentUser = {
+        id:        userId,
+        name:      username,
+        avatarUrl: sanitizedAvatar,
       };
 
       localStorage.setItem('mbv2_user', JSON.stringify(user));
