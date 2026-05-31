@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Este arquivo foi gerado utilizando um modelo de IA e não foi verificado por um tradutor profissional.",
+"common": {
+"bot": "BOT",
+"server": "Servidor",
+"density": "Densidade",
+"online": "Online",
+"back": "Voltar",
+"close": "Fechar",
+"loading": "Carregando..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Faça login via Discord para acessar o painel de controle.",
+"loginButton": "Entrar com o Discord",
+"logoutButton": "Sair",
+"status": "Status: Conectado",
+"settingsTitle": "Configurações"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Selecionar instância",
+"playingMusic": "▶ Reproduzindo música",
+"selectBot": "Selecionar bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instâncias",
+"active": "Ativo",
+"yourInstance": "Sua instância",
+"activeInstances": "Instâncias ativas",
+"server": "Servidor",
+"bots": "Bots",
+"controlling": "Controle"
+},
+"botSelector": {
+"title": "Selecionar bot",
+"backToServers": "Voltar para os servidores",
+"scanningFleet": "Escaneando frota...",
+"limitTitle": "Limite atingido!",
+"limitStop": "PARAR",
+"limitDescription": "Já existem {{max}} bots no seu canal de voz. Você precisa expulsar um para evocar outro.",
+"returnToLobby": "VOLTAR PARA O LOBBY"
+},
+"botCard": {
+"busy": "Ocupado em outro lugar",
+"joinChannel": "Entrar no canal!",
+"ready": "Pronto para a ação"
+},
+"player": {
+"waitingForTrack": "Aguardando faixa...",
+"noCover": "SEM CAPA",
+"leave": "SAIR",
+"backToCurrent": "Voltar para a atual",
+"controlling": "Controle"
+},
+"controls": {
+"previous": "Anterior",
+"playPause": "Reproduzir / Pausar",
+"skip": "Pular",
+"loop": "Repetir"
+},
+"volume": {
+"mute": "MUTAR",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Reproduzindo agora",
+"upNext": "Próximas",
+"previous": "Anteriores",
+"empty": "FILA VAZIA",
+"clear": "LIMPAR FILA",
+"clearConfirm": "Tem certeza de que deseja limpar a fila?",
+"shuffle": "ALEATÓRIO",
+"dedup": "REMOVER DUPLICADOS",
+"sortTitle": "A–Z",
+"sortDuration": "TEMPO",
+"radioOff": "RÁDIO DESL.",
+"radioOn": "RÁDIO LIG."
+},
+"search": {
+"placeholder": "Buscar...",
+"placeholderFull": "Buscar faixas, playlists, URLs...",
+"localMatches": "Resultados locais",
+"recent": "Recentes",
+"clearHistory": "Limpar",
+"searching": "Buscando...",
+"noResults": "Nenhum resultado encontrado",
+"networkSource": "Rede",
+"librarySource": "Biblioteca"
+},
+"channels": {
+"selectTitle": "Selecionar canal de voz",
+"selectSubtitle": "Para o bot selecionado",
+"searching": "Buscando canais...",
+"noChannels": "Nenhum canal de voz visível."
+},
+"settings": {
+"language": "Idioma"
+}
+}

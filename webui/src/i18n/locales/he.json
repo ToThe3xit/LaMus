@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "קובץ זה נוצר באמצעות מודל בינה מלאכותית ולא נבדק על ידי מתרגם מקצועי.",
+"common": {
+"bot": "בוט",
+"server": "שרת",
+"density": "צפיפות",
+"online": "מחובר",
+"back": "חזור",
+"close": "סגור",
+"loading": "טוען..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "התחבר באמצעות Discord כדי לגשת ללוח הבקרה.",
+"loginButton": "התחבר באמצעות Discord",
+"logoutButton": "התנתק",
+"status": "סטטוס: מחובר",
+"settingsTitle": "הגדרות"
+},
+"lobby": {
+"title": "לובי",
+"selectInstance": "בחר מופע",
+"playingMusic": "▶ מוזיקה מתנגנת",
+"selectBot": "בחר בוט"
+},
+"sidebar": {
+"lobby": "לובי",
+"instances": "מופעים",
+"active": "פעיל",
+"yourInstance": "המופע שלך",
+"activeInstances": "מופעים פעילים",
+"server": "שרת",
+"bots": "בוטים",
+"controlling": "שליטה"
+},
+"botSelector": {
+"title": "בחר בוט",
+"backToServers": "חזור לשרתים",
+"scanningFleet": "סורק את צי הבוטים...",
+"limitTitle": "הגעת למגבלה!",
+"limitStop": "עצור",
+"limitDescription": "יש כבר {{max}} בוטים בערוץ הקולי שלך. עליך להעיף אחד כדי לזמן בוט אחר.",
+"returnToLobby": "חזור ללובי"
+},
+"botCard": {
+"busy": "עסוק במקום אחר",
+"joinChannel": "הצטרף לערוץ!",
+"ready": "מוכן לפעולה"
+},
+"player": {
+"waitingForTrack": "מחכה לשיר...",
+"noCover": "אין עטיפה",
+"leave": "עזוב",
+"backToCurrent": "חזור לנוכחי",
+"controlling": "שליטה"
+},
+"controls": {
+"previous": "הקודם",
+"playPause": "הפעל / השהה",
+"skip": "דלג",
+"loop": "לולאה"
+},
+"volume": {
+"mute": "השתק",
+"label": "עוצמה"
+},
+"queue": {
+"nowPlaying": "מתנגן עכשיו",
+"upNext": "הבא בתור",
+"previous": "הקודמים",
+"empty": "התור ריק",
+"clear": "נקה את התור",
+"clearConfirm": "האם אתה בטוח שברצונך לנקות את התור?",
+"shuffle": "ערבב",
+"dedup": "הסר כפילויות",
+"sortTitle": "א–ת",
+"sortDuration": "זמן",
+"radioOff": "רדיו כבוי",
+"radioOn": "רדיו מופעל"
+},
+"search": {
+"placeholder": "חיפוש...",
+"placeholderFull": "חפש שירים, פלייליסטים, קישורים...",
+"localMatches": "תוצאות מקומיות",
+"recent": "אחרונים",
+"clearHistory": "נקה",
+"searching": "מחפש...",
+"noResults": "לא נמצאו תוצאות",
+"networkSource": "רשת",
+"librarySource": "ספריה"
+},
+"channels": {
+"selectTitle": "בחר ערוץ קולי",
+"selectSubtitle": "עבור הבוט שנבחר",
+"searching": "מחפש ערוצים...",
+"noChannels": "אין ערוצים קוליים גלויים."
+},
+"settings": {
+"language": "שפה"
+}
+}

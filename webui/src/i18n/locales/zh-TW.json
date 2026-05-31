@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "該文件由人工智慧模型生成，未經專業翻譯人員審核。",
+"common": {
+"bot": "機器人",
+"server": "伺服器",
+"density": "間距",
+"online": "線上",
+"back": "返回",
+"close": "關閉",
+"loading": "載入中..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "透過 Discord 登入以造訪控制面板。",
+"loginButton": "透過 Discord 登入",
+"logoutButton": "登出",
+"status": "狀態：已登入",
+"settingsTitle": "設定"
+},
+"lobby": {
+"title": "大廳",
+"selectInstance": "選擇執行個體",
+"playingMusic": "▶ 音樂播放中",
+"selectBot": "選擇機器人"
+},
+"sidebar": {
+"lobby": "大廳",
+"instances": "執行個體",
+"active": "活躍",
+"yourInstance": "您的執行個體",
+"activeInstances": "活躍執行個體",
+"server": "伺服器",
+"bots": "機器人",
+"controlling": "控制"
+},
+"botSelector": {
+"title": "選擇機器人",
+"backToServers": "返回伺服器列表",
+"scanningFleet": "正在掃描機器人叢集...",
+"limitTitle": "已達上限！",
+"limitStop": "停止",
+"limitDescription": "您的語音頻道中已有 {{max}} 個機器人。必須移出一個才能召喚另一個。",
+"returnToLobby": "返回大廳"
+},
+"botCard": {
+"busy": "在其他地方忙碌",
+"joinChannel": "加入頻道！",
+"ready": "準備就緒"
+},
+"player": {
+"waitingForTrack": "正在等待曲目...",
+"noCover": "暫無封面",
+"leave": "離開",
+"backToCurrent": "返回目前播放",
+"controlling": "控制"
+},
+"controls": {
+"previous": "上一首",
+"playPause": "播放 / 暫停",
+"skip": "跳過",
+"loop": "循環"
+},
+"volume": {
+"mute": "靜音",
+"label": "音量"
+},
+"queue": {
+"nowPlaying": "正在播放",
+"upNext": "即將播放",
+"previous": "歷史播放",
+"empty": "佇列為空",
+"clear": "清空佇列",
+"clearConfirm": "確定要清空播放佇列嗎？",
+"shuffle": "隨機播放",
+"dedup": "移除重複",
+"sortTitle": "A–Z 排序",
+"sortDuration": "按時長排序",
+"radioOff": "電台關閉",
+"radioOn": "電台開啟"
+},
+"search": {
+"placeholder": "搜尋...",
+"placeholderFull": "搜尋曲目、歌單、URL 連結...",
+"localMatches": "區域比對結果",
+"recent": "最近搜尋",
+"clearHistory": "清除",
+"searching": "正在搜尋...",
+"noResults": "未找到相關結果",
+"networkSource": "網路資源",
+"librarySource": "媒體庫"
+},
+"channels": {
+"selectTitle": "選擇語音頻道",
+"selectSubtitle": "針對所選機器人",
+"searching": "正在搜尋頻道...",
+"noChannels": "未發現可見的語音頻道。"
+},
+"settings": {
+"language": "語言"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "このファイルはAIモデルによって生成されたものであり、専門の翻訳者による確認は行われていません。",
+"common": {
+"bot": "ボット",
+"server": "サーバー",
+"density": "表示間隔",
+"online": "オンライン",
+"back": "戻る",
+"close": "閉じる",
+"loading": "読み込み中..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "コントロールパネルにアクセスするには、Discordでログインしてください。",
+"loginButton": "Discordでログイン",
+"logoutButton": "ログアウト",
+"status": "ステータス: ログイン中",
+"settingsTitle": "設定"
+},
+"lobby": {
+"title": "ロビー",
+"selectInstance": "インスタンスを選択",
+"playingMusic": "▶ 音楽再生中",
+"selectBot": "ボットを選択"
+},
+"sidebar": {
+"lobby": "ロビー",
+"instances": "インスタンス",
+"active": "アクティブ",
+"yourInstance": "あなたのインスタンス",
+"activeInstances": "アクティブなインスタンス",
+"server": "サーバー",
+"bots": "ボット",
+"controlling": "コントロール"
+},
+"botSelector": {
+"title": "ボットを選択",
+"backToServers": "サーバーリストに戻る",
+"scanningFleet": "ボット群をスキャン中...",
+"limitTitle": "上限に達しました！",
+"limitStop": "ストップ",
+"limitDescription": "ボイスチャンネルに既に {{max}} 台のボットが参加しています。別のボットを呼び出すには、いずれか1台を切断する必要があります。",
+"returnToLobby": "ロビーに戻る"
+},
+"botCard": {
+"busy": "他の場所で稼働中",
+"joinChannel": "チャンネルに参加！",
+"ready": "準備完了"
+},
+"player": {
+"waitingForTrack": "トラックを待機中...",
+"noCover": "カバーアートなし",
+"leave": "切断",
+"backToCurrent": "現在の再生に戻る",
+"controlling": "コントロール"
+},
+"controls": {
+"previous": "前の曲",
+"playPause": "再生 / 一時停止",
+"skip": "スキップ",
+"loop": "ループ"
+},
+"volume": {
+"mute": "ミュート",
+"label": "音量"
+},
+"queue": {
+"nowPlaying": "現在再生中",
+"upNext": "次に再生",
+"previous": "再生履歴",
+"empty": "キューが空です",
+"clear": "キューをクリア",
+"clearConfirm": "本当に再生キューをクリアしますか？",
+"shuffle": "シャッフル",
+"dedup": "重複を削除",
+"sortTitle": "A–Z 順",
+"sortDuration": "長さ順",
+"radioOff": "ラジオOFF",
+"radioOn": "ラジオON"
+},
+"search": {
+"placeholder": "検索...",
+"placeholderFull": "楽曲、プレイリスト、URLを検索...",
+"localMatches": "ローカル検索結果",
+"recent": "最近の検索",
+"clearHistory": "履歴をクリア",
+"searching": "検索中...",
+"noResults": "結果が見つかりませんでした",
+"networkSource": "ネットワーク",
+"librarySource": "ライブラリ"
+},
+"channels": {
+"selectTitle": "ボイスチャンネルを選択",
+"selectSubtitle": "選択したボット用",
+"searching": "チャンネルを検索中...",
+"noChannels": "表示可能なボイスチャンネルがありません。"
+},
+"settings": {
+"language": "言語"
+}
+}

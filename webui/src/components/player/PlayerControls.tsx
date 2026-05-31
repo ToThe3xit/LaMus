@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction, RefObject } from 'react';
+import { useTranslation } from 'react-i18next';
 import ProgressBar from './ProgressBar';
 import VolumeControl from './VolumeControl';
 import type { Theme, PlayerState } from '../../types/player';
@@ -40,10 +41,11 @@ const PlayerControls = ({
   setShufflePressed: _setShufflePressed,
   setCurrentView,
 }: PlayerControlsProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="w-full max-w-lg space-y-12">
-
         <ProgressBar
           progressPercent={playerState.progressPercent}
           durationSeconds={playerState.durationSeconds}
@@ -53,15 +55,14 @@ const PlayerControls = ({
           sendCommand={sendCommand}
         />
 
-        {/* Przyciski nawigacyjne: Previous / Play-Pause / Skip / Loop */}
         <div className="relative w-full max-w-md mx-auto flex items-center justify-center">
           <div className="flex items-center justify-center gap-4 sm:gap-6 z-10 w-full">
 
-            {/* Pusty spacer wyrównujący — symetria z przyciskiem Loop */}
             <div className="w-10 sm:w-12 shrink-0 pointer-events-none opacity-0" />
 
             <button
               onClick={() => sendCommand('previous')}
+              title={t('controls.previous')}
               className="shrink-0 text-green-500 hover:text-green-400 transition-all active:scale-95 drop-shadow-md"
             >
               <svg className="w-14 h-14 sm:w-20 sm:h-20" fill="currentColor" viewBox="0 0 24 24">
@@ -71,6 +72,7 @@ const PlayerControls = ({
 
             <button
               onClick={() => sendCommand('play_pause')}
+              title={t('controls.playPause')}
               className="shrink-0 text-green-500 hover:text-green-400 flex items-center justify-center transition-all active:scale-95 drop-shadow-md"
             >
               {playerState.isPlaying ? (
@@ -86,6 +88,7 @@ const PlayerControls = ({
 
             <button
               onClick={() => sendCommand('skip')}
+              title={t('controls.skip')}
               className="shrink-0 text-green-500 hover:text-green-400 transition-all active:scale-95 drop-shadow-md"
             >
               <svg className="w-14 h-14 sm:w-20 sm:h-20" fill="currentColor" viewBox="0 0 24 24">
@@ -93,9 +96,9 @@ const PlayerControls = ({
               </svg>
             </button>
 
-            {/* Przycisk Loop */}
             <button
               onClick={toggleLoop}
+              title={t('controls.loop')}
               className={`shrink-0 w-10 sm:w-12 flex items-center justify-center p-2 transition-all active:scale-95 drop-shadow-sm ${
                 playerState.isLooping
                   ? 'text-green-500 hover:text-green-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]'
@@ -109,7 +112,6 @@ const PlayerControls = ({
           </div>
         </div>
 
-        {/* Rząd: Leave + Volume — BEZ Radio i Shuffle (te są tylko w QueuePanel) */}
         <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-md mx-auto px-4 mt-6 gap-6 sm:gap-4">
           <button
             onClick={() => {
@@ -118,7 +120,7 @@ const PlayerControls = ({
             }}
             className="py-3 px-6 sm:px-8 rounded-2xl border border-red-900/30 bg-red-950/10 text-red-500 font-black text-[10px] tracking-[0.2em] active:scale-95 transition-all hover:bg-red-900/20 shadow-lg shadow-red-900/5 whitespace-nowrap"
           >
-            LEAVE
+            {t('player.leave')}
           </button>
 
           <VolumeControl
@@ -132,8 +134,6 @@ const PlayerControls = ({
             sendCommand={sendCommand}
           />
         </div>
-        {/* KONIEC PlayerControls — Radio i Shuffle celowo usunięte.
-            Są one jedynie w QueuePanel (prawa kolumna), żeby nie było duplikatów. */}
       </div>
     </>
   );

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "এই ফাইলটি একটি এআই মডেল ব্যবহার করে তৈরি করা হয়েছে এবং কোনো পেশাদার অনুবাদক দ্বারা যাচাই করা হয়নি।",
+"common": {
+"bot": "বট",
+"server": "সার্ভার",
+"density": "ঘনত্ব",
+"online": "অনলাইন",
+"back": "ফিরে যান",
+"close": "বন্ধ করুন",
+"loading": "লোড হচ্ছে..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "ড্যাশবোর্ড অ্যাক্সেস করতে Discord-এর মাধ্যমে লগ ইন করুন।",
+"loginButton": "Discord দিয়ে লগ ইন করুন",
+"logoutButton": "লগ আউট করুন",
+"status": "স্ট্যাটাস: লগ ইন আছেন",
+"settingsTitle": "সেটিংস"
+},
+"lobby": {
+"title": "লবি",
+"selectInstance": "ইনস্ট্যান্স নির্বাচন করুন",
+"playingMusic": "▶ গান বাজছে",
+"selectBot": "বট নির্বাচন করুন"
+},
+"sidebar": {
+"lobby": "লবি",
+"instances": "ইনস্ট্যান্স",
+"active": "সক্রিয়",
+"yourInstance": "আপনার ইনস্ট্যান্স",
+"activeInstances": "সক্রিয় ইনস্ট্যান্স",
+"server": "সার্ভার",
+"bots": "বটসমূহ",
+"controlling": "নিয়ন্ত্রণ"
+},
+"botSelector": {
+"title": "বট নির্বাচন করুন",
+"backToServers": "সার্ভারে ফিরে যান",
+"scanningFleet": "বট বহর স্ক্যান করা হচ্ছে...",
+"limitTitle": "সীমা শেষ!",
+"limitStop": "থামুন",
+"limitDescription": "আপনার ভয়েস চ্যানেলে ইতিমধ্যে {{max}}টি বট রয়েছে। অন্য একটি বটকে ডাকার জন্য আপনাকে একটি বটকে বের করে দিতে হবে।",
+"returnToLobby": "লবিতে ফিরে যান"
+},
+"botCard": {
+"busy": "অন্য কোথাও ব্যস্ত",
+"joinChannel": "চ্যানেলে যোগ দিন!",
+"ready": "কাজের জন্য প্রস্তুত"
+},
+"player": {
+"waitingForTrack": "গানের জন্য অপেক্ষা করা হচ্ছে...",
+"noCover": "কোনো কভার নেই",
+"leave": "প্রস্থান",
+"backToCurrent": "বর্তমানে ফিরে যান",
+"controlling": "নিয়ন্ত্রণ"
+},
+"controls": {
+"previous": "পূর্ববর্তী",
+"playPause": "চালান / থামান",
+"skip": "এড়িয়ে যান",
+"loop": "লুপ"
+},
+"volume": {
+"mute": "মিউট",
+"label": "আওয়াজ"
+},
+"queue": {
+"nowPlaying": "এখন বাজছে",
+"upNext": "পরবর্তী গান",
+"previous": "পূর্ববর্তী গানসমূহ",
+"empty": "তালিকা খালি",
+"clear": "তালিকা মুছুন",
+"clearConfirm": "আপনি কি নিশ্চিত যে আপনি তালিকাটি খালি করতে চান?",
+"shuffle": "এলোমেলো",
+"dedup": "ডুপ্লিকেট সরান",
+"sortTitle": "অ–হ",
+"sortDuration": "সময়",
+"radioOff": "রেডিও বন্ধ",
+"radioOn": "রেডিও চালু"
+},
+"search": {
+"placeholder": "খুঁজুন...",
+"placeholderFull": "গান, প্লেলিস্ট, ইউআরএল ইত্যাদি খুঁজুন...",
+"localMatches": "স্থানীয় ফলাফল",
+"recent": "সাম্প্রতিক",
+"clearHistory": "মুছুন",
+"searching": "খোঁজা হচ্ছে...",
+"noResults": "কোনো ফলাফল পাওয়া যায়নি",
+"networkSource": "নেটওয়ার্ক",
+"librarySource": "লাইব্রেরি"
+},
+"channels": {
+"selectTitle": "ভয়েস চ্যানেল নির্বাচন করুন",
+"selectSubtitle": "নির্বাচিত বটের জন্য",
+"searching": "চ্যানেল খোঁজা হচ্ছে...",
+"noChannels": "কোনো দৃশ্যমান ভয়েস চ্যানেল পাওয়া যায়নি।"
+},
+"settings": {
+"language": "ভাষা"
+}
+}

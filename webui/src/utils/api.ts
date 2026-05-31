@@ -1,7 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-// ── Generyczne fetch helpers ───────────────────────────────────
-
 export async function apiGet<T = unknown>(
   path: string
 ): Promise<T | null> {
@@ -33,8 +31,6 @@ export async function apiPost<T = unknown>(
     return null;
   }
 }
-
-// ── Specyficzne API calls ──────────────────────────────────────
 
 export interface CommandPayload {
   serverId: string;

@@ -26,7 +26,6 @@ export default function useBots({
   const [channelBotLimitInfo, setChannelBotLimitInfo] =
     useState({ current: 0, max: 2 });
 
-  // Polling listy serwerów (lobby)
   useEffect(() => {
     const fetchServers = () => {
       fetch(`${API_URL}/api/bots`, { credentials: 'include' })
@@ -44,7 +43,6 @@ export default function useBots({
     return () => clearInterval(interval);
   }, []);
 
-  // Polling botów dla aktywnego serwera
   useEffect(() => {
     if (!activeServerId) return;
 
@@ -77,7 +75,6 @@ export default function useBots({
     return () => clearInterval(interval);
   }, [activeServerId]);
 
-  // Dodatkowy polling przy widoku 'bots'
   useEffect(() => {
     if (currentView !== 'bots' || !activeServerId) return;
 

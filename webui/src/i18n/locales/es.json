@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Este archivo fue generado utilizando un modelo de IA y no ha sido verificado por un traductor profesional.",
+"common": {
+"bot": "BOT",
+"server": "Servidor",
+"density": "Densidad",
+"online": "En línea",
+"back": "Volver",
+"close": "Cerrar",
+"loading": "Cargando..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Inicia sesión a través de Discord para acceder al panel de control.",
+"loginButton": "Iniciar sesión con Discord",
+"logoutButton": "Cerrar sesión",
+"status": "Estado: Conectado",
+"settingsTitle": "Ajustes"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Seleccionar instancia",
+"playingMusic": "▶ Reproduciendo música",
+"selectBot": "Seleccionar bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instancias",
+"active": "Activa",
+"yourInstance": "Tu instancia",
+"activeInstances": "Instancias activas",
+"server": "Servidor",
+"bots": "Bots",
+"controlling": "Control"
+},
+"botSelector": {
+"title": "Seleccionar bot",
+"backToServers": "Volver a los servidores",
+"scanningFleet": "Escaneando flota...",
+"limitTitle": "¡Límite alcanzado!",
+"limitStop": "STOP",
+"limitDescription": "Ya hay {{max}} bots en tu canal de voz. Debes expulsar a uno para invocar a otro.",
+"returnToLobby": "VOLVER AL LOBBY"
+},
+"botCard": {
+"busy": "Ocupado en otro lugar",
+"joinChannel": "¡Unirse al canal!",
+"ready": "Listo para la acción"
+},
+"player": {
+"waitingForTrack": "Esperando pista...",
+"noCover": "SIN PORTADA",
+"leave": "SALIR",
+"backToCurrent": "Volver a la actual",
+"controlling": "Control"
+},
+"controls": {
+"previous": "Anterior",
+"playPause": "Reproducir / Pausa",
+"skip": "Saltar",
+"loop": "Bucle"
+},
+"volume": {
+"mute": "SILENCIAR",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Reproduciendo ahora",
+"upNext": "Siguiente",
+"previous": "Anteriores",
+"empty": "COLA VACÍA",
+"clear": "LIMPIAR COLA",
+"clearConfirm": "¿Estás seguro de que deseas limpiar la cola?",
+"shuffle": "ALEATORIO",
+"dedup": "ELIMINAR DUPLICADOS",
+"sortTitle": "A–Z",
+"sortDuration": "TIEMPO",
+"radioOff": "RADIO APAGADA",
+"radioOn": "RADIO ENCENDIDA"
+},
+"search": {
+"placeholder": "Buscar...",
+"placeholderFull": "Buscar pistas, listas de reproducción, URLs...",
+"localMatches": "Resultados locales",
+"recent": "Recientes",
+"clearHistory": "Limpiar",
+"searching": "Buscando...",
+"noResults": "Sin resultados",
+"networkSource": "Red",
+"librarySource": "Biblioteca"
+},
+"channels": {
+"selectTitle": "Seleccionar canal de voz",
+"selectSubtitle": "Para el bot seleccionado",
+"searching": "Buscando canales...",
+"noChannels": "No hay canales de voz visibles."
+},
+"settings": {
+"language": "Idioma"
+}
+}

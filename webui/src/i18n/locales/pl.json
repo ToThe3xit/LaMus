@@ -1,0 +1,102 @@
+{
+  "_generatedBy": "AI",
+  "_warning": "Ten plik został wygenerowany przy użyciu modelu AI i nie został zweryfikowany przez profesjonalnego tłumacza.",
+  "common": {
+    "bot": "BOT",
+    "server": "Serwer",
+    "density": "Gęstość",
+    "online": "Online",
+    "back": "Wróć",
+    "close": "Zamknij",
+    "loading": "Ładowanie..."
+  },
+  "auth": {
+    "loginTitle": "LaMus",
+    "loginSubtitle": "Zaloguj się przez Discord, aby uzyskać dostęp do panelu sterowania.",
+    "loginButton": "Zaloguj się przez Discord",
+    "logoutButton": "Wyloguj się",
+    "status": "Status: Zalogowany",
+    "settingsTitle": "Ustawienia"
+  },
+  "lobby": {
+    "title": "Lobby",
+    "selectInstance": "Wybierz instancję",
+    "playingMusic": "▶ Gra muzyka",
+    "selectBot": "Wybierz bota"
+  },
+  "sidebar": {
+    "lobby": "Lobby",
+    "instances": "Instancje",
+    "active": "Aktywny",
+    "yourInstance": "Twoja instancja",
+    "activeInstances": "Aktywne instancje",
+    "server": "Serwer",
+    "bots": "Boty",
+    "controlling": "Sterowanie"
+  },
+  "botSelector": {
+    "title": "Wybierz bota",
+    "backToServers": "Wróć do serwerów",
+    "scanningFleet": "Skanowanie floty...",
+    "limitTitle": "Limit osiągnięty!",
+    "limitStop": "STOP",
+    "limitDescription": "Na Twoim kanale głosowym jest już {{max}} botów. Musisz wyrzucić jednego, aby przywołać kolejnego.",
+    "returnToLobby": "WRÓĆ DO LOBBY"
+  },
+  "botCard": {
+    "busy": "Zajęty gdzie indziej",
+    "joinChannel": "Dołącz do kanału!",
+    "ready": "Gotowy do akcji"
+  },
+  "player": {
+    "waitingForTrack": "Oczekiwanie na utwór...",
+    "noCover": "BRAK OKŁADKI",
+    "leave": "OPUŚĆ",
+    "backToCurrent": "Wróć do aktualnego",
+    "controlling": "Sterowanie"
+  },
+  "controls": {
+    "previous": "Poprzedni",
+    "playPause": "Odtwórz / Pauza",
+    "skip": "Pomiń",
+    "loop": "Pętla"
+  },
+  "volume": {
+    "mute": "WYCISZ",
+    "label": "GŁOŚ"
+  },
+  "queue": {
+    "nowPlaying": "Teraz gra",
+    "upNext": "Następne",
+    "previous": "Poprzednie",
+    "empty": "PUSTA KOLEJKA",
+    "clear": "WYCZYŚĆ KOLEJKĘ",
+    "clearConfirm": "Czy na pewno chcesz wyczyścić kolejkę?",
+    "shuffle": "LOSUJ",
+    "dedup": "DEDUP",
+    "sortTitle": "A–Z",
+    "sortDuration": "CZAS",
+    "radioOff": "RADIO WYŁ.",
+    "radioOn": "RADIO WŁ."
+  },
+  "search": {
+    "placeholder": "Szukaj...",
+    "placeholderFull": "Szukaj utworów, playlist, URL...",
+    "localMatches": "Wyniki lokalne",
+    "recent": "Ostatnie",
+    "clearHistory": "Wyczyść",
+    "searching": "Szukam...",
+    "noResults": "Brak wyników",
+    "networkSource": "Sieć",
+    "librarySource": "Biblioteka"
+  },
+  "channels": {
+    "selectTitle": "Wybierz kanał głosowy",
+    "selectSubtitle": "Dla wybranego bota",
+    "searching": "Szukam kanałów...",
+    "noChannels": "Brak widocznych kanałów głosowych."
+  },
+  "settings": {
+    "language": "Język"
+  }
+}

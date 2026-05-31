@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Theme } from '../../types/player';
 
 interface VolumeControlProps {
@@ -22,6 +23,8 @@ const VolumeControl = ({
   setLastVolume,
   sendCommand,
 }: VolumeControlProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-center justify-center gap-4 flex-1 w-full max-w-[200px] sm:max-w-none">
       <button
@@ -34,12 +37,10 @@ const VolumeControl = ({
           }
         }}
         className={`text-xs font-black transition-all ${
-          volume === 0
-            ? 'text-red-500'
-            : 'text-zinc-400 hover:text-white'
+          volume === 0 ? 'text-red-500' : 'text-zinc-400 hover:text-white'
         }`}
       >
-        {volume === 0 ? 'MUTE' : 'VOL'}
+        {volume === 0 ? t('volume.mute') : t('volume.label')}
       </button>
 
       <input

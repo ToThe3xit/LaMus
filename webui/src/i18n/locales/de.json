@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Diese Datei wurde mit einem KI-Modell erstellt und nicht von einem professionellen Übersetzer überprüft.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Dichte",
+"online": "Online",
+"back": "Zurück",
+"close": "Schließen",
+"loading": "Laden..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Melde dich über Discord an, um auf das Dashboard zuzugreifen.",
+"loginButton": "Mit Discord anmelden",
+"logoutButton": "Abmelden",
+"status": "Status: Angemeldet",
+"settingsTitle": "Einstellungen"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Instanz auswählen",
+"playingMusic": "▶ Musik spielt",
+"selectBot": "Bot auswählen"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanzen",
+"active": "Aktiv",
+"yourInstance": "Deine Instanz",
+"activeInstances": "Aktive Instanzen",
+"server": "Server",
+"bots": "Bots",
+"controlling": "Steuerung"
+},
+"botSelector": {
+"title": "Bot auswählen",
+"backToServers": "Zurück zu den Servern",
+"scanningFleet": "Flotte wird gescannt...",
+"limitTitle": "Limit erreicht!",
+"limitStop": "STOPP",
+"limitDescription": "Es befinden sich bereits {{max}} Bots in deinem Sprachkanal. Du musst einen herauswerfen, um einen weiteren zu rufen.",
+"returnToLobby": "ZURÜCK ZUR LOBBY"
+},
+"botCard": {
+"busy": "Anderswo beschäftigt",
+"joinChannel": "Kanal beitreten!",
+"ready": "Bereit für den Einsatz"
+},
+"player": {
+"waitingForTrack": "Warten auf Titel...",
+"noCover": "KEIN COVER",
+"leave": "VERLASSEN",
+"backToCurrent": "Zurück zum aktuellen",
+"controlling": "Steuerung"
+},
+"controls": {
+"previous": "Vorheriger",
+"playPause": "Wiedergabe / Pause",
+"skip": "Überspringen",
+"loop": "Wiederholung"
+},
+"volume": {
+"mute": "STUMMSCHALTEN",
+"label": "LAUT"
+},
+"queue": {
+"nowPlaying": "Aktuelle Wiedergabe",
+"upNext": "Als nächstes",
+"previous": "Vorherige",
+"empty": "WARTESCHLANGE LEER",
+"clear": "WARTESCHLANGE LEEREN",
+"clearConfirm": "Möchtest du die Warteschlange wirklich leeren?",
+"shuffle": "ZUFALL",
+"dedup": "DEDUP",
+"sortTitle": "A–Z",
+"sortDuration": "ZEIT",
+"radioOff": "RADIO AUS",
+"radioOn": "RADIO EIN"
+},
+"search": {
+"placeholder": "Suchen...",
+"placeholderFull": "Suche nach Titeln, Playlists, URLs...",
+"localMatches": "Lokale Treffer",
+"recent": "Verlauf",
+"clearHistory": "Löschen",
+"searching": "Suche...",
+"noResults": "Keine Ergebnisse",
+"networkSource": "Netzwerk",
+"librarySource": "Bibliothek"
+},
+"channels": {
+"selectTitle": "Sprachkanal auswählen",
+"selectSubtitle": "Für den ausgewählten Bot",
+"searching": "Kanäle werden gesucht...",
+"noChannels": "Keine sichtbaren Sprachkanäle."
+},
+"settings": {
+"language": "Sprache"
+}
+}

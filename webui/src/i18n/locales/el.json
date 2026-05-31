@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Αυτό το αρχείο δημιουργήθηκε με τη χρήση μοντέλου τεχνητής νοημοσύνης και δεν έχει ελεγχθεί από επαγγελματία μεταφραστή.",
+"common": {
+"bot": "BOT",
+"server": "Διακομιστής",
+"density": "Πυκνότητα",
+"online": "Σε σύνδεση",
+"back": "Πίσω",
+"close": "Κλείσιμο",
+"loading": "Φόρτωση..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Συνδεθείτε μέσω Discord για να αποκτήσετε πρόσβαση στον πίνακα ελέγχου.",
+"loginButton": "Σύνδεση με το Discord",
+"logoutButton": "Αποσύνδεση",
+"status": "Κατάσταση: Συνδεδεμένος",
+"settingsTitle": "Ρυθμίσεις"
+},
+"lobby": {
+"title": "Λόμπι",
+"selectInstance": "Επιλογή συνεδρίας",
+"playingMusic": "▶ Αναπαραγωγή μουσικής",
+"selectBot": "Επιλογή bot"
+},
+"sidebar": {
+"lobby": "Λόμπι",
+"instances": "Συνεδρίες",
+"active": "Ενεργό",
+"yourInstance": "Η συνεδρία σας",
+"activeInstances": "Ενεργές συνεδρίες",
+"server": "Διακομιστής",
+"bots": "Bots",
+"controlling": "Έλεγχος"
+},
+"botSelector": {
+"title": "Επιλογή bot",
+"backToServers": "Πίσω στους διακομιστές",
+"scanningFleet": "Σάρωση στόλου...",
+"limitTitle": "Επίτευξη ορίου!",
+"limitStop": "ΔΙΑΚΟΠΗ",
+"limitDescription": "Υπάρχουν ήδη {{max}} bots στο κανάλι φωνής σας. Πρέπει να αποβάλλετε ένα για να καλέσετε ένα άλλο.",
+"returnToLobby": "ΕΠΙΣΤΡΟΦΗ ΣΤΟ ΛΟΜΠΙ"
+},
+"botCard": {
+"busy": "Απασχολημένο αλλού",
+"joinChannel": "Είσοδος στο κανάλι!",
+"ready": "Έτοιμο για δράση"
+},
+"player": {
+"waitingForTrack": "Αναμονή για κομμάτι...",
+"noCover": "ΧΩΡΙΣ ΕΞΩΦΥΛΛΟ",
+"leave": "ΑΠΟΧΩΡΗΣΗ",
+"backToCurrent": "Πίσω στο τρέχον",
+"controlling": "Έλεγχος"
+},
+"controls": {
+"previous": "Προηγούμενο",
+"playPause": "Αναπαραγωγή / Παύση",
+"skip": "Παράκαμψη",
+"loop": "Επανάληψη"
+},
+"volume": {
+"mute": "ΣΙΓΑΣΗ",
+"label": "ΕΝΤ"
+},
+"queue": {
+"nowPlaying": "Αναπαραγωγή τώρα",
+"upNext": "Επόμενα",
+"previous": "Προηγούμενα",
+"empty": "ΑΔΕΙΑ ΟΥΡΑ",
+"clear": "ΚΑΘΑΡΙΣΜΟΣ ΟΥΡΑΣ",
+"clearConfirm": "Είστε σίγουροι ότι θέλετε να καθαρίσετε την ουρά;",
+"shuffle": "ΤΥΧΑΙΑ ΣΕΙΡΑ",
+"dedup": "ΑΦΑΙΡΕΣΗ ΔΙΠΛΟΤΥΠΩΝ",
+"sortTitle": "Α–Ω",
+"sortDuration": "ΔΙΑΡΚΕΙΑ",
+"radioOff": "ΡΑΔΙΟΦΩΝΟ ΑΠΕΝ.",
+"radioOn": "ΡΑΔΙΟΦΩΝΟ ΕΝΕΡΓ."
+},
+"search": {
+"placeholder": "Αναζήτηση...",
+"placeholderFull": "Αναζήτηση για κομμάτι, λίστες αναπαραγωγής, URL...",
+"localMatches": "Τοπικά αποτελέσματα",
+"recent": "Πρόσφατα",
+"clearHistory": "Καθαρισμός",
+"searching": "Αναζήτηση...",
+"noResults": "Δεν βρέθηκαν αποτελέσματα",
+"networkSource": "Δίκτυο",
+"librarySource": "Βιβλιοθήκη"
+},
+"channels": {
+"selectTitle": "Επιλογή καναλιού φωνής",
+"selectSubtitle": "Για το επιλεγμένο bot",
+"searching": "Αναζήτηση καναλιών...",
+"noChannels": "Δεν υπάρχουν ορατά κανάλια φωνής."
+},
+"settings": {
+"language": "Γλώσσα"
+}
+}

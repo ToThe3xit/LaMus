@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Denna fil har genererats med hjälp av en AI-modell och har inte verifierats av en professionell översättare.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Densitet",
+"online": "Online",
+"back": "Tillbaka",
+"close": "Stäng",
+"loading": "Laddar..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Logga in via Discord för att komma åt kontrollpanelen.",
+"loginButton": "Logga in med Discord",
+"logoutButton": "Logga ut",
+"status": "Status: Inloggad",
+"settingsTitle": "Inställningar"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Välj instans",
+"playingMusic": "▶ Musik spelas",
+"selectBot": "Välj bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanser",
+"active": "Aktiv",
+"yourInstance": "Din instans",
+"activeInstances": "Aktiva instanser",
+"server": "Server",
+"bots": "Bottar",
+"controlling": "Styrning"
+},
+"botSelector": {
+"title": "Välj bot",
+"backToServers": "Tillbaka till servrar",
+"scanningFleet": "Söker igenom flotta...",
+"limitTitle": "Gränsen nådd!",
+"limitStop": "STOPP",
+"limitDescription": "Det finns redan {{max}} bottar i din röstkanal. Du måste kasta ut en för att kalla på en till.",
+"returnToLobby": "TILLBAKA TILL LOBBY"
+},
+"botCard": {
+"busy": "Upptagen på annat håll",
+"joinChannel": "Gå med i kanalen!",
+"ready": "Redo för action"
+},
+"player": {
+"waitingForTrack": "Väntar på låt...",
+"noCover": "INGET OMSLAG",
+"leave": "LÄMNA",
+"backToCurrent": "Tillbaka till aktuell",
+"controlling": "Styrning"
+},
+"controls": {
+"previous": "Föregående",
+"playPause": "Spela / Pausa",
+"skip": "Hoppa över",
+"loop": "Loopa"
+},
+"volume": {
+"mute": "LJUDLÖS",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Spelas nu",
+"upNext": "Nästa",
+"previous": "Föregående",
+"empty": "TOM KÖ",
+"clear": "RENSA KÖ",
+"clearConfirm": "Är du säker på att du vill rensa kön?",
+"shuffle": "BLANDA",
+"dedup": "RENSA DUPLIKAT",
+"sortTitle": "A–Ö",
+"sortDuration": "TID",
+"radioOff": "RADIO AV",
+"radioOn": "RADIO PÅ"
+},
+"search": {
+"placeholder": "Sök...",
+"placeholderFull": "Sök efter låtar, spellistor, URL:er...",
+"localMatches": "Lokala resultat",
+"recent": "Senaste",
+"clearHistory": "Rensa",
+"searching": "Söker...",
+"noResults": "Inga resultat",
+"networkSource": "Nätverk",
+"librarySource": "Bibliotek"
+},
+"channels": {
+"selectTitle": "Välj röstkanal",
+"selectSubtitle": "För den valda botten",
+"searching": "Söker efter kanaler...",
+"noChannels": "Inga synliga röstkanaler."
+},
+"settings": {
+"language": "Språk"
+}
+}

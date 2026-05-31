@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Dit bestand is gegenereerd met behulp van een AI-model en is niet gecontroleerd door een professionele vertaler.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Dichtheid",
+"online": "Online",
+"back": "Terug",
+"close": "Sluiten",
+"loading": "Laden..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Log in via Discord om toegang te krijgen tot het controlepaneel.",
+"loginButton": "Inloggen via Discord",
+"logoutButton": "Uitloggen",
+"status": "Status: Ingelogd",
+"settingsTitle": "Instellingen"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Selecteer instantie",
+"playingMusic": "▶ Muziek speelt af",
+"selectBot": "Selecteer bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanties",
+"active": "Actief",
+"yourInstance": "Jouw instantie",
+"activeInstances": "Actieve instanties",
+"server": "Server",
+"bots": "Bots",
+"controlling": "Bediening"
+},
+"botSelector": {
+"title": "Selecteer bot",
+"backToServers": "Terug naar servers",
+"scanningFleet": "Vloot scannen...",
+"limitTitle": "Limiet bereikt!",
+"limitStop": "STOP",
+"limitDescription": "Er zijn al {{max}} bots in je spraakkanaal. Je moet er een weggooien om een andere op te roepen.",
+"returnToLobby": "TERUG NAAR LOBBY"
+},
+"botCard": {
+"busy": "Elders bezet",
+"joinChannel": "Deelnemen aan kanaal!",
+"ready": "Klaar voor actie"
+},
+"player": {
+"waitingForTrack": "Wachten op nummer...",
+"noCover": "GEEN COVER",
+"leave": "VERLATEN",
+"backToCurrent": "Terug naar huidige",
+"controlling": "Bediening"
+},
+"controls": {
+"previous": "Vorige",
+"playPause": "Afspelen / Pauzeren",
+"skip": "Overslaan",
+"loop": "Herhalen"
+},
+"volume": {
+"mute": "DEMPEN",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Nu aan het afspelen",
+"upNext": "Volgende",
+"previous": "Vorige",
+"empty": "WACHTRIJ LEEG",
+"clear": "WACHTRIJ LEEGMAKEN",
+"clearConfirm": "Weet je zeker dat je de wachtrij wilt leegmaken?",
+"shuffle": "SHUFFLE",
+"dedup": "DEDUP",
+"sortTitle": "A–Z",
+"sortDuration": "TIJD",
+"radioOff": "RADIO UIT",
+"radioOn": "RADIO AAN"
+},
+"search": {
+"placeholder": "Zoeken...",
+"placeholderFull": "Zoek naar nummers, afspeellijsten, URL's...",
+"localMatches": "Lokale resultaten",
+"recent": "Recent",
+"clearHistory": "Wissen",
+"searching": "Zoeken...",
+"noResults": "Geen resultaten",
+"networkSource": "Netwerk",
+"librarySource": "Bibliotheek"
+},
+"channels": {
+"selectTitle": "Selecteer spraakkanaal",
+"selectSubtitle": "Voor de geselecteerde bot",
+"searching": "Kanalen zoeken...",
+"noChannels": "Geen zichtbare spraakkanalen."
+},
+"settings": {
+"language": "Taal"
+}
+}

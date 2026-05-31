@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "یہ فائل مصنوعی ذہانت (AI) کے ماڈل کی مدد سے تیار کی گئی ہے اور کسی پیشہ ور مترجم نے اس کی تصدیق نہیں کی ہے۔",
+"common": {
+"bot": "بوٹ",
+"server": "سرور",
+"density": "کثافت",
+"online": "آن لائن",
+"back": "واپس",
+"close": "بند کریں",
+"loading": "لوڈ ہو رہا ہے..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "کنٹرول پینل تک رسائی کے لیے Discord کے ذریعے لاگ ان کریں۔",
+"loginButton": "Discord کے ساتھ لاگ ان کریں",
+"logoutButton": "لاگ آؤٹ",
+"status": "اسٹیٹس: لاگ ان ہے",
+"settingsTitle": "ترتیبات"
+},
+"lobby": {
+"title": "لابی",
+"selectInstance": "انسٹنس منتخب کریں",
+"playingMusic": "▶ موسیقی چل رہی ہے",
+"selectBot": "بوٹ منتخب کریں"
+},
+"sidebar": {
+"lobby": "لابی",
+"instances": "انسٹنسز",
+"active": "فعال",
+"yourInstance": "آپ کا انسٹنس",
+"activeInstances": "فعال انسٹنسز",
+"server": "سرور",
+"bots": "بوٹس",
+"controlling": "کنٹرولنگ"
+},
+"botSelector": {
+"title": "بوٹ منتخب کریں",
+"backToServers": "سرورز پر واپس جائیں",
+"scanningFleet": "بوٹ فلیٹ کو اسکین کیا جا رہا ہے...",
+"limitTitle": "حد ختم ہو گئی!",
+"limitStop": "سٹاپ",
+"limitDescription": "آپ کے وائس چینل میں پہلے ہی {{max}} بوٹس موجود ہیں۔ دوسرا بوٹ بلانے کے لیے آپ کو ایک کو ہٹانا ہوگا۔",
+"returnToLobby": "لابی میں واپس جائیں"
+},
+"botCard": {
+"busy": "کہیں اور مصروف",
+"joinChannel": "چینل میں شامل ہوں!",
+"ready": "ایکشن کے لیے تیار"
+},
+"player": {
+"waitingForTrack": "گانے کا انتظار ہے...",
+"noCover": "کوئی کور نہیں",
+"leave": "چھوڑیں",
+"backToCurrent": "موجودہ پر واپس جائیں",
+"controlling": "کنٹرولنگ"
+},
+"controls": {
+"previous": "پچھلا",
+"playPause": "چلائیں / روکیں",
+"skip": "آگے بڑھیں",
+"loop": "لوپ"
+},
+"volume": {
+"mute": "میوٹ",
+"label": "آواز"
+},
+"queue": {
+"nowPlaying": "ابھی چل رہا ہے",
+"upNext": "اگلا گانا",
+"previous": "پچھلے گانے",
+"empty": "فہرست خالی ہے",
+"clear": "فہرست صاف کریں",
+"clearConfirm": "کیا آپ واقعی فہرست صاف کرنا چاہتے ہیں؟",
+"shuffle": "شفل",
+"dedup": "ڈپلیکیٹ ہٹائیں",
+"sortTitle": "ا–ی",
+"sortDuration": "وقت",
+"radioOff": "ریڈیو بند",
+"radioOn": "ریڈیو آن"
+},
+"search": {
+"placeholder": "تلاش کریں...",
+"placeholderFull": "گانے، پلے لسٹس، لنکس وغیرہ تلاش کریں...",
+"localMatches": "مقامی نتائج",
+"recent": "حالیہ",
+"clearHistory": "صاف کریں",
+"searching": "تلاش جاری ہے...",
+"noResults": "کوئی نتیجہ نہیں ملا",
+"networkSource": "نیٹ ورک",
+"librarySource": "لائبریری"
+},
+"channels": {
+"selectTitle": "وائس چینل منتخب کریں",
+"selectSubtitle": "منتخب کردہ بوٹ کے لیے",
+"searching": "چینلز تلاش کیے جا رہے ہیں...",
+"noChannels": "کوئی بھی وائس چینل نظر نہیں آیا۔"
+},
+"settings": {
+"language": "زبان"
+}
+}

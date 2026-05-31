@@ -229,6 +229,30 @@ pub async fn handle_command(
             let _ = state.core_tx.send(CoreMessage::ShuffleQueue { server_id, bot_index: target_bot }).await;
             return Json(CommandResponse { success: true, message: "Queue shuffled".into(), results: None });
         },
+        "dedup_queue" => {
+            let _ = state.core_tx.send(CoreMessage::DeduplicateQueue {
+                server_id,
+                bot_index: target_bot,
+            }).await;
+            return Json(CommandResponse {
+                success: true,
+                message: "Queue deduplicated".into(),
+                results: None,
+            });
+        },
+        "sort_queue" => {
+            let mode = command.payload.clone().unwrap_or_else(|| "title".to_string());
+            let _ = state.core_tx.send(CoreMessage::SortQueue {
+                server_id,
+                bot_index: target_bot,
+                mode,
+            }).await;
+            return Json(CommandResponse {
+                success: true,
+                message: "Queue sorted".into(),
+                results: None,
+            });
+        },
         "radio_network" => { 
             let _ = state.core_tx.send(CoreMessage::ToggleNetworkRadio { server_id: server_id.clone(), bot_index: target_bot }).await; 
             

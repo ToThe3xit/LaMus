@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "File ini dibuat menggunakan model AI dan belum diperiksa oleh penerjemah profesional.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Kerapatan",
+"online": "Online",
+"back": "Kembali",
+"close": "Tutup",
+"loading": "Memuat..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Masuk melalui Discord untuk mengakses panel kontrol.",
+"loginButton": "Masuk dengan Discord",
+"logoutButton": "Keluar",
+"status": "Status: Masuk",
+"settingsTitle": "Pengaturan"
+},
+"lobby": {
+"title": "Lobi",
+"selectInstance": "Pilih Instans",
+"playingMusic": "▶ Musik sedang diputar",
+"selectBot": "Pilih Bot"
+},
+"sidebar": {
+"lobby": "Lobi",
+"instances": "Instans",
+"active": "Aktif",
+"yourInstance": "Instans Anda",
+"activeInstances": "Instans Aktif",
+"server": "Server",
+"bots": "Bot",
+"controlling": "Mengontrol"
+},
+"botSelector": {
+"title": "Pilih Bot",
+"backToServers": "Kembali ke Server",
+"scanningFleet": "Memindai armada bot...",
+"limitTitle": "Mencapai Batas!",
+"limitStop": "BERHENTI",
+"limitDescription": "Sudah ada {{max}} bot di saluran suara Anda. Anda harus mengeluarkan salah satu untuk memanggil bot lain.",
+"returnToLobby": "KEMBALI KE LOBI"
+},
+"botCard": {
+"busy": "Sibuk di tempat lain",
+"joinChannel": "Gabung Saluran!",
+"ready": "Siap Beraksi"
+},
+"player": {
+"waitingForTrack": "Menunggu lagu...",
+"noCover": "TANPA SAMPUL",
+"leave": "KELUAR",
+"backToCurrent": "Kembali ke Saat Ini",
+"controlling": "Mengontrol"
+},
+"controls": {
+"previous": "Sebelumnya",
+"playPause": "Putar / Jeda",
+"skip": "Lewati",
+"loop": "Ulangi"
+},
+"volume": {
+"mute": "SENYAPKAN",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Sedang Diputar",
+"upNext": "Berikutnya",
+"previous": "Sebelumnya",
+"empty": "ANTREAN KOSONG",
+"clear": "BERSIHKAN ANTREAN",
+"clearConfirm": "Apakah Anda yakin ingin membersihkan antrean?",
+"shuffle": "ACAK",
+"dedup": "HAPUS DUPLIKAT",
+"sortTitle": "A–Z",
+"sortDuration": "DURASI",
+"radioOff": "RADIO MATI",
+"radioOn": "RADIO NYALA"
+},
+"search": {
+"placeholder": "Cari...",
+"placeholderFull": "Cari lagu, daftar putar, tautan URL...",
+"localMatches": "Kecocokan Lokal",
+"recent": "Terbaru",
+"clearHistory": "Bersihkan",
+"searching": "Mencari...",
+"noResults": "Hasil tidak ditemukan",
+"networkSource": "Jaringan",
+"librarySource": "Pustaka"
+},
+"channels": {
+"selectTitle": "Pilih Saluran Suara",
+"selectSubtitle": "Untuk bot yang dipilih",
+"searching": "Mencari saluran...",
+"noChannels": "Tidak ada saluran suara yang terlihat."
+},
+"settings": {
+"language": "Bahasa"
+}
+}

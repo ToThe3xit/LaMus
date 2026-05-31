@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Bu dosya bir yapay zeka modeli kullanılarak oluşturulmuştur ve profesyonel bir çevirmen tarafından doğrulanmamıştır.",
+"common": {
+"bot": "BOT",
+"server": "Sunucu",
+"density": "Yoğunluk",
+"online": "Çevrimiçi",
+"back": "Geri",
+"close": "Kapat",
+"loading": "Yükleniyor..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Kontrol paneline erişmek için Discord ile giriş yapın.",
+"loginButton": "Discord ile Giriş Yap",
+"logoutButton": "Çıkış Yap",
+"status": "Durum: Giriş Yapıldı",
+"settingsTitle": "Ayarlar"
+},
+"lobby": {
+"title": "Lobi",
+"selectInstance": "Oturum seçin",
+"playingMusic": "▶ Müzik çalıyor",
+"selectBot": "Bot seçin"
+},
+"sidebar": {
+"lobby": "Lobi",
+"instances": "Oturumlar",
+"active": "Aktif",
+"yourInstance": "Sizin oturumunuz",
+"activeInstances": "Aktif oturumlar",
+"server": "Sunucu",
+"bots": "Botlar",
+"controlling": "Kontrol ediliyor"
+},
+"botSelector": {
+"title": "Bot seçin",
+"backToServers": "Sunuculara geri dön",
+"scanningFleet": "Filo taranıyor...",
+"limitTitle": "Sınıra ulaşıldı!",
+"limitStop": "DUR",
+"limitDescription": "Ses kanalınızda zaten {{max}} bot var. Bir başkasını çağırmak için mevcut olanlardan birini atmanız gerekir.",
+"returnToLobby": "LOBİYE GERİ DÖN"
+},
+"botCard": {
+"busy": "Başka yerde meşgul",
+"joinChannel": "Kanala katıl!",
+"ready": "Aksiyona hazır"
+},
+"player": {
+"waitingForTrack": "Şarkı bekleniyor...",
+"noCover": "KAPAK RESMİ YOK",
+"leave": "AYRIL",
+"backToCurrent": "Mevcut şarkıya dön",
+"controlling": "Kontrol ediliyor"
+},
+"controls": {
+"previous": "Önceki",
+"playPause": "Oynat / Duraklat",
+"skip": "Geç",
+"loop": "Döngü"
+},
+"volume": {
+"mute": "SESİ KIS",
+"label": "SES"
+},
+"queue": {
+"nowPlaying": "Şimdi oynatılıyor",
+"upNext": "Sıradaki",
+"previous": "Öncekiler",
+"empty": "SIRA BOŞ",
+"clear": "SIRAYI TEMİZLE",
+"clearConfirm": "Sırayı temizlemek istediğinize emin misiniz?",
+"shuffle": "KARIŞTIR",
+"dedup": "KOPYALARI SİL",
+"sortTitle": "A–Z",
+"sortDuration": "SÜRE",
+"radioOff": "RADYO KAPALI",
+"radioOn": "RADYO AÇIK"
+},
+"search": {
+"placeholder": "Ara...",
+"placeholderFull": "Şarkı, oynatma listesi, URL ara...",
+"localMatches": "Yerel sonuçlar",
+"recent": "Son aramalar",
+"clearHistory": "Temizle",
+"searching": "Aranıyor...",
+"noResults": "Sonuç bulunamadı",
+"networkSource": "Ağ",
+"librarySource": "Kitaplık"
+},
+"channels": {
+"selectTitle": "Ses kanalı seçin",
+"selectSubtitle": "Seçilen bot için",
+"searching": "Kanallar aranıyor...",
+"noChannels": "Görünür ses kanalı yok."
+},
+"settings": {
+"language": "Dil"
+}
+}

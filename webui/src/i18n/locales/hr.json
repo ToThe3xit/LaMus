@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Ova datoteka je generirana pomoću AI modela i nije pregledana od strane profesionalnog prevoditelja.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Gustoća",
+"online": "Na mreži",
+"back": "Natrag",
+"close": "Zatvori",
+"loading": "Učitavanje..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Prijavite se putem Discorda kako biste pristupili upravljačkoj ploči.",
+"loginButton": "Prijava preko Discorda",
+"logoutButton": "Odjava",
+"status": "Status: Prijavljen",
+"settingsTitle": "Postavke"
+},
+"lobby": {
+"title": "Lobi",
+"selectInstance": "Odaberite instancu",
+"playingMusic": "▶ Glazba svira",
+"selectBot": "Odaberite bota"
+},
+"sidebar": {
+"lobby": "Lobi",
+"instances": "Instance",
+"active": "Aktivno",
+"yourInstance": "Vaša instanca",
+"activeInstances": "Aktivne instance",
+"server": "Server",
+"bots": "Botovi",
+"controlling": "Upravljanje"
+},
+"botSelector": {
+"title": "Odaberite bota",
+"backToServers": "Natrag na servere",
+"scanningFleet": "Skeniranje flote...",
+"limitTitle": "Ograničenje dosegnuto!",
+"limitStop": "STOP",
+"limitDescription": "U vašem glasovnom kanalu već se nalazi {{max}} bota. Morate izbaciti jednog kako biste pozvali drugog.",
+"returnToLobby": "POVRATAK U LOBI"
+},
+"botCard": {
+"busy": "Zauzet drugdje",
+"joinChannel": "Pridruži se kanalu!",
+"ready": "Spreman za akciju"
+},
+"player": {
+"waitingForTrack": "Čekanje na pjesmu...",
+"noCover": "NEMA OMOTA",
+"leave": "NAPUSTI",
+"backToCurrent": "Natrag na trenutno",
+"controlling": "Upravljanje"
+},
+"controls": {
+"previous": "Prethodno",
+"playPause": "Reprodukcija / Pauza",
+"skip": "Preskoči",
+"loop": "Ponavljanje"
+},
+"volume": {
+"mute": "UTIŠAJ",
+"label": "GLAS"
+},
+"queue": {
+"nowPlaying": "Trenutno svira",
+"upNext": "Sljedeće",
+"previous": "Prethodno",
+"empty": "RED JE PRAZAN",
+"clear": "OČISTI RED",
+"clearConfirm": "Jeste li sigurni da želite očistiti red?",
+"shuffle": "PROMIJEŠAJ",
+"dedup": "UKLONI DUPLIKATE",
+"sortTitle": "A–Ž",
+"sortDuration": "VRIJEME",
+"radioOff": "RADIO ISKLJ.",
+"radioOn": "RADIO UKLJ."
+},
+"search": {
+"placeholder": "Pretraži...",
+"placeholderFull": "Pretraži pjesme, popise pjesama, URL-ove...",
+"localMatches": "Lokalni rezultati",
+"recent": "Nedavno",
+"clearHistory": "Očisti",
+"searching": "Pretraživanje...",
+"noResults": "Nema rezultata",
+"networkSource": "Mreža",
+"librarySource": "Biblioteka"
+},
+"channels": {
+"selectTitle": "Odaberite glasovni kanal",
+"selectSubtitle": "Za odabranog bota",
+"searching": "Traženje kanala...",
+"noChannels": "Nema vidljivih glasovnih kanala."
+},
+"settings": {
+"language": "Jezik"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "See fail on loodud tehisintellekti mudeli abil ja seda pole professionaalne tõlkija kontrollinud.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Tihedus",
+"online": "Sees",
+"back": "Tagasi",
+"close": "Sulge",
+"loading": "Laadimine..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Juhtpaneelile pääsemiseks logige sisse Discordi kaudu.",
+"loginButton": "Logi sisse Discordiga",
+"logoutButton": "Logi välja",
+"status": "Olek: Sisselogitud",
+"settingsTitle": "Seaded"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Vali instants",
+"playingMusic": "▶ Muusika mängib",
+"selectBot": "Vali bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instantsid",
+"active": "Aktiivne",
+"yourInstance": "Sinu instants",
+"activeInstances": "Aktiivsed instantsid",
+"server": "Server",
+"bots": "Botid",
+"controlling": "Juhtimine"
+},
+"botSelector": {
+"title": "Vali bot",
+"backToServers": "Tagasi serveritesse",
+"scanningFleet": "Pargi skannimine...",
+"limitTitle": "Limiit on käes!",
+"limitStop": "STOPP",
+"limitDescription": "Sinu häälekanalis on juba {{max}} boti. Uue kutsumiseks pead ühe välja viskama.",
+"returnToLobby": "TAGASI LOBBYSE"
+},
+"botCard": {
+"busy": "Hõivatud mujal",
+"joinChannel": "Liitu kanaliga!",
+"ready": "Tööks valmis"
+},
+"player": {
+"waitingForTrack": "Ootab lugu...",
+"noCover": "KAANEPILT PUUDUB",
+"leave": "LAHKU",
+"backToCurrent": "Tagasi praeguse juurde",
+"controlling": "Juhtimine"
+},
+"controls": {
+"previous": "Eelmine",
+"playPause": "Mängi / Paus",
+"skip": "Jäta vahele",
+"loop": "Kordus"
+},
+"volume": {
+"mute": "VAIGISTA",
+"label": "HELI"
+},
+"queue": {
+"nowPlaying": "Hetkel mängib",
+"upNext": "Järgmisena",
+"previous": "Eelmised",
+"empty": "JÄRJEKORD ON TÜHI",
+"clear": "TÜHJENDA JÄRJEKORD",
+"clearConfirm": "Kas oled kindel, et soovid järjekorra tühjendada?",
+"shuffle": "SEGA",
+"dedup": "EEMALDA DUPLIKAADID",
+"sortTitle": "A–Y",
+"sortDuration": "AEG",
+"radioOff": "RAADIO VÄLJAS",
+"radioOn": "RAADIO SEES"
+},
+"search": {
+"placeholder": "Otsi...",
+"placeholderFull": "Otsi lugusid, esitusloendeid, URL-e...",
+"localMatches": "Kohalikud vasted",
+"recent": "Hiljutised",
+"clearHistory": "Tühjenda",
+"searching": "Otsimine...",
+"noResults": "Tulemusi ei leitud",
+"networkSource": "Võrk",
+"librarySource": "Teek"
+},
+"channels": {
+"selectTitle": "Vali häälekanal",
+"selectSubtitle": "Valitud boti jaoks",
+"searching": "Kanalite otsimine...",
+"noChannels": "Nähtavaid häälekanaleid pole."
+},
+"settings": {
+"language": "Keel"
+}
+}

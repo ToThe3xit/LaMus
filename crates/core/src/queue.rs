@@ -5,6 +5,14 @@ use rand::thread_rng;
 // ============================================================ //
 // ==== PLAYBACK QUEUE ABSTRACTION ============================ //
 // ============================================================ //
+
+#[derive(Debug, Clone)]
+pub enum SortMode {
+    Title,
+    Duration,
+    //Source,
+}
+
 #[derive(Debug)]
 pub struct Queue{
     tracks: Vec<Track>,
@@ -85,5 +93,50 @@ impl Queue{
                 self.tracks[(current_index + 1)..].shuffle(&mut rng);
             }
         }
-    }   
+    }
+    pub fn dedup_upcoming(&mut self) {
+        if self.tracks.len() <= 1 {
+            return;
+        }
+
+        let mut seen = std::collections::HashSet::new();
+
+        if let Some(current) = self.tracks.first() {
+            seen.insert(current.id.clone());
+        }
+
+        let mut i = 1;
+        while i < self.tracks.len() {
+            if seen.contains(&self.tracks[i].id) {
+                self.tracks.remove(i);
+            } else {
+                seen.insert(self.tracks[i].id.clone());
+                i += 1;
+            }
+        }
+    }
+    pub fn sort_upcoming(&mut self, mode: SortMode) {
+        if self.tracks.len() <= 2 {
+            return;
+        }
+
+        if let Some(current_index) = self.current_index {
+            let start = current_index + 1;
+            if start >= self.tracks.len() {
+                return;
+            }
+
+            self.tracks[start..].sort_by(|a, b| match mode {
+                SortMode::Title => a.title.to_lowercase().cmp(&b.title.to_lowercase()),
+                SortMode::Duration => a.duration_seconds.cmp(&b.duration_seconds),
+                /*SortMode::Source => {
+                    let ord = |s: &crate::track::AudioSource| match s {
+                        crate::track::AudioSource::Local => 0,
+                        crate::track::AudioSource::Lavalink => 1,
+                    };
+                    ord(&a.source).cmp(&ord(&b.source))
+                }*/
+            });
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import logo from '../../assets/logo.png';
 import type { Theme, PlayerState } from '../../types/player';
 import type { BotInstance, SystemBot } from '../../types/bot';
@@ -50,14 +51,12 @@ const Sidebar = ({
   setStartSidebarY,
   setScrollSidebarTop,
 }: SidebarProps) => {
+  const { t } = useTranslation();
+
   return (
-    <aside
-      className={`fixed bottom-0 left-0 w-full h-20 md:static md:w-64 md:h-full flex flex-row md:flex-col border-t md:border-t-0 md:border-r z-[100] shrink-0 ${
-        theme === 'dark'
-          ? 'bg-zinc-950 border-zinc-900'
-          : 'bg-zinc-50 border-zinc-200'
-      }`}
-    >
+    <aside className={`fixed bottom-0 left-0 w-full h-20 md:static md:w-64 md:h-full flex flex-row md:flex-col border-t md:border-t-0 md:border-r z-[100] shrink-0 ${
+      theme === 'dark' ? 'bg-zinc-950 border-zinc-900' : 'bg-zinc-50 border-zinc-200'
+    }`}>
       <div className="hidden md:flex pt-4 pb-6 px-4 flex-col items-center justify-center">
         <img
           src={logo}
@@ -116,12 +115,12 @@ const Sidebar = ({
           }`}
         >
           <span className="text-sm uppercase font-black tracking-widest drop-shadow-sm">🏠</span>
-          <span className="ml-4 hidden md:inline font-bold">Lobby</span>
+          <span className="ml-4 hidden md:inline font-bold">{t('sidebar.lobby')}</span>
         </button>
 
         <div className="pt-0 md:pt-6 border-l md:border-l-0 border-t-0 md:border-t border-zinc-800/50 flex flex-row md:flex-col items-center md:items-stretch pl-4 md:pl-0 h-full md:h-auto">
           <p className="hidden md:block text-[10px] font-black uppercase text-zinc-500 mb-4 px-2 tracking-widest text-left">
-            Instances
+            {t('sidebar.instances')}
           </p>
 
           {isSuperadmin ? (
@@ -144,25 +143,19 @@ const Sidebar = ({
                           : 'border-transparent bg-transparent hover:border-green-500/50 hover:bg-green-500/10'
                       }`}
                     >
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden text-sm font-black shadow-inner border transition-colors ${
-                          theme === 'dark'
-                            ? 'bg-zinc-800 border-zinc-700'
-                            : 'bg-zinc-100 border-zinc-300'
-                        }`}
-                      >
-                        {serverInfo?.iconUrl ? (
-                          <img src={serverInfo.iconUrl} alt="Icon" className="w-full h-full object-cover" />
-                        ) : (
-                          'SRV'
-                        )}
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden text-sm font-black shadow-inner border transition-colors ${
+                        theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-100 border-zinc-300'
+                      }`}>
+                        {serverInfo?.iconUrl
+                          ? <img src={serverInfo.iconUrl} alt="Icon" className="w-full h-full object-cover" />
+                          : 'SRV'}
                       </div>
                       <div className="hidden md:block text-left truncate flex-1">
                         <p className={`text-xs font-bold truncate ${theme === 'dark' ? 'text-zinc-200' : 'text-zinc-900'}`}>
-                          {serverInfo?.serverName || 'Server'}
+                          {serverInfo?.serverName || t('common.server')}
                         </p>
                         <p className="text-[9px] text-green-500 font-black tracking-wider uppercase">
-                          Bots: {players.length}
+                          {t('sidebar.bots')}: {players.length}
                         </p>
                       </div>
                     </button>
@@ -177,10 +170,10 @@ const Sidebar = ({
                         <div className={`flex justify-between items-center mb-6 gap-8 border-b pb-4 shrink-0 ${theme === 'dark' ? 'border-zinc-800' : 'border-zinc-200'}`}>
                           <div>
                             <h3 className={`text-xl font-black mb-1 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                              Active Instances
+                              {t('sidebar.activeInstances')}
                             </h3>
                             <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">
-                              Server: {serverInfo?.serverName || 'Unknown'}
+                              {t('sidebar.server')}: {serverInfo?.serverName || t('common.server')}
                             </p>
                           </div>
                           <button
@@ -216,15 +209,15 @@ const Sidebar = ({
                                   }`}
                                 >
                                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-sm font-black mb-3 overflow-hidden shadow-inner shrink-0 border ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-300'}`}>
-                                    {botInfo?.avatarUrl ? (
-                                      <img src={botInfo.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
-                                    ) : 'BOT'}
+                                    {botInfo?.avatarUrl
+                                      ? <img src={botInfo.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                      : t('common.bot')}
                                   </div>
                                   <span className={`text-[10px] font-black uppercase truncate w-full text-center px-1 ${theme === 'dark' ? 'text-white' : 'text-zinc-900'}`}>
                                     {botInfo?.name || `Bot #${p.state.botId}`}
                                   </span>
                                   <span className="text-[8px] font-bold text-green-500 mt-1 uppercase tracking-widest bg-green-500/10 px-2 py-0.5 rounded-full">
-                                    Active
+                                    {t('sidebar.active')}
                                   </span>
                                 </button>
                               );
@@ -259,16 +252,16 @@ const Sidebar = ({
                   }`}
                 >
                   <div className={`w-12 h-12 rounded-xl overflow-hidden border shrink-0 shadow-md flex items-center justify-center text-sm font-black ${theme === 'dark' ? 'border-zinc-700 bg-zinc-800' : 'border-zinc-300 bg-white'}`}>
-                    {botInfo?.avatarUrl ? (
-                      <img src={botInfo.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
-                    ) : 'BOT'}
+                    {botInfo?.avatarUrl
+                      ? <img src={botInfo.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                      : t('common.bot')}
                   </div>
                   <div className="text-left hidden md:block truncate flex-1">
                     <p className={`text-[11px] font-black truncate leading-tight ${theme === 'dark' ? 'text-white' : 'text-zinc-900'}`}>
                       {botInfo?.name || `Instance #${state.botId}`}
                     </p>
                     <p className="text-[9px] text-green-500 font-bold uppercase tracking-tighter mt-0.5">
-                      Your Instance
+                      {t('sidebar.yourInstance')}
                     </p>
                   </div>
                 </button>

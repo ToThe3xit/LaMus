@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Ова датотека је генерисана помоћу модела вештачке интелигенције и није прегледана од стране професионалног преводиоца.",
+"common": {
+"bot": "БОТ",
+"server": "Сервер",
+"density": "Густина",
+"online": "На мрежи",
+"back": "Назад",
+"close": "Затвори",
+"loading": "Учитавање..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Пријавите се путем Discord-а да бисте приступили контролној табли.",
+"loginButton": "Пријави се преко Discord-а",
+"logoutButton": "Одјави се",
+"status": "Статус: Пријављен",
+"settingsTitle": "Подешавања"
+},
+"lobby": {
+"title": "Лобо",
+"selectInstance": "Изаберите инстанцу",
+"playingMusic": "▶ Музика се репродукује",
+"selectBot": "Изаберите бота"
+},
+"sidebar": {
+"lobby": "Лобо",
+"instances": "Инстанце",
+"active": "Активан",
+"yourInstance": "Ваша инстанца",
+"activeInstances": "Активне инстанце",
+"server": "Сервер",
+"bots": "Ботови",
+"controlling": "Управљање"
+},
+"botSelector": {
+"title": "Изаберите бота",
+"backToServers": "Назад на сервере",
+"scanningFleet": "Скенирање флоте...",
+"limitTitle": "Лимит је достигнут!",
+"limitStop": "СТОП",
+"limitDescription": "У вашем гласовном каналу већ има {{max}} ботова. Морате избацити једног да бисте позвали следећег.",
+"returnToLobby": "ВРАТИ СЕ У ЛОБИ"
+},
+"botCard": {
+"busy": "Заузет на другом месту",
+"joinChannel": "Придружи се каналу!",
+"ready": "Спреман за акцију"
+},
+"player": {
+"waitingForTrack": "Чекање на песму...",
+"noCover": "НЕМА ОМОТА",
+"leave": "НАПУСТИ",
+"backToCurrent": "Назад на тренутно",
+"controlling": "Управљање"
+},
+"controls": {
+"previous": "Претходна",
+"playPause": "Репродукција / Пауза",
+"skip": "Прескочи",
+"loop": "Понављање"
+},
+"volume": {
+"mute": "УТИШАЈ",
+"label": "ГЛАС"
+},
+"queue": {
+"nowPlaying": "Тренутно свира",
+"upNext": "Следеће",
+"previous": "Претходно",
+"empty": "РЕД ЈЕ ПРАЗАН",
+"clear": "ОЧИСТИ РЕД",
+"clearConfirm": "Да ли сте сигурни да желите да очистите ред?",
+"shuffle": "ПРОМЕШАЈ",
+"dedup": "УКЛОНИ ДУПЛИКАТЕ",
+"sortTitle": "А–Ш",
+"sortDuration": "ВРЕМЕ",
+"radioOff": "РАДИО ИСКЉ.",
+"radioOn": "РАДИО УКЉ."
+},
+"search": {
+"placeholder": "Претрага...",
+"placeholderFull": "Претрага песама, плејлиста, URL адреса...",
+"localMatches": "Локални резултати",
+"recent": "Недавно",
+"clearHistory": "Обриши",
+"searching": "Претраживање...",
+"noResults": "Нема резултата",
+"networkSource": "Мрежа",
+"librarySource": "Библиотека"
+},
+"channels": {
+"selectTitle": "Изаберите гласовни канал",
+"selectSubtitle": "За изабраног бота",
+"searching": "Тражење канала...",
+"noChannels": "Нема видљивих гласовних канала."
+},
+"settings": {
+"language": "Језик"
+}
+}

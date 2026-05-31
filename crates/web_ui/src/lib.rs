@@ -52,6 +52,8 @@ pub enum CoreMessage {
     SetVolume { server_id: String, bot_index: usize, volume: u8 },
     ToggleLoop { server_id: String, bot_index: usize },
     ShuffleQueue { server_id: String, bot_index: usize },
+    DeduplicateQueue { server_id: String, bot_index: usize },
+    SortQueue { server_id: String, bot_index: usize, mode: String },
 }
 
 // ============================================================ //

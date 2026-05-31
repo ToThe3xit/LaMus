@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Ez a fájl egy MI modell segítségével készült, és nem ellenőrizte hivatásos fordító.",
+"common": {
+"bot": "BOT",
+"server": "Szerver",
+"density": "Sűrűség",
+"online": "Online",
+"back": "Vissza",
+"close": "Bezárás",
+"loading": "Betöltés..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "A vezérlőpult eléréséhez jelentkezz be Discordon keresztül.",
+"loginButton": "Bejelentkezés Discorddal",
+"logoutButton": "Kijelentkezés",
+"status": "Állapot: Bejelentkezve",
+"settingsTitle": "Beállítások"
+},
+"lobby": {
+"title": "Lobbi",
+"selectInstance": "Válassz példányt",
+"playingMusic": "▶ Zene szól",
+"selectBot": "Válassz botot"
+},
+"sidebar": {
+"lobby": "Lobbi",
+"instances": "Példányok",
+"active": "Aktív",
+"yourInstance": "Saját példány",
+"activeInstances": "Aktív példányok",
+"server": "Szerver",
+"bots": "Botok",
+"controlling": "Vezérlés"
+},
+"botSelector": {
+"title": "Válassz botot",
+"backToServers": "Vissza a szerverekhez",
+"scanningFleet": "Flotta pásztázása...",
+"limitTitle": "Elérted a korlátot!",
+"limitStop": "STOP",
+"limitDescription": "Már {{max}} bot van a hangcsatornádon. Ki kell tenned egyet, hogy újat hívhass be.",
+"returnToLobby": "VISSZA A LOBBIBA"
+},
+"botCard": {
+"busy": "Máshol elfoglalt",
+"joinChannel": "Csatlakozz a csatornához!",
+"ready": "Akcióra kész"
+},
+"player": {
+"waitingForTrack": "Várakozás zeneszámra...",
+"noCover": "NINCS BORÍTÓ",
+"leave": "KILÉPÉS",
+"backToCurrent": "Vissza a mostanihoz",
+"controlling": "Vezérlés"
+},
+"controls": {
+"previous": "Előző",
+"playPause": "Lejátszás / Szünet",
+"skip": "Kihagyás",
+"loop": "Ismétlés"
+},
+"volume": {
+"mute": "NÉMÍTÁS",
+"label": "HANGERŐ"
+},
+"queue": {
+"nowPlaying": "Most szól",
+"upNext": "Következik",
+"previous": "Előzőek",
+"empty": "ÜRES LEJÁTSZÁSI LISTA",
+"clear": "LISTA KIÜRÍTÉSE",
+"clearConfirm": "Biztosan ki szeretnéd üríteni a listát?",
+"shuffle": "VEGYES",
+"dedup": "DUPLIKÁCIÓK KISZŰRÉSE",
+"sortTitle": "A–Z",
+"sortDuration": "IDŐ",
+"radioOff": "RÁDIÓ KI",
+"radioOn": "RÁDIÓ BE"
+},
+"search": {
+"placeholder": "Keresés...",
+"placeholderFull": "Keresés számok, lejátszási listák, URL-ek között...",
+"localMatches": "Helyi találatok",
+"recent": "Előzmények",
+"clearHistory": "Törlés",
+"searching": "Keresés...",
+"noResults": "Nincs találat",
+"networkSource": "Hálózat",
+"librarySource": "Könyvtár"
+},
+"channels": {
+"selectTitle": "Válassz hangcsatornát",
+"selectSubtitle": "A kiválasztott bot számára",
+"searching": "Csatornák keresése...",
+"noChannels": "Nincsenek látható hangcsatornák."
+},
+"settings": {
+"language": "Nyelv"
+}
+}

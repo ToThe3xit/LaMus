@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Този файл е генериран с помощта на модел с изкуствен интелект и не е проверен от професионален преводач.",
+"common": {
+"bot": "БОТ",
+"server": "Сървър",
+"density": "Плътност",
+"online": "Онлайн",
+"back": "Назад",
+"close": "Затвори",
+"loading": "Зареждане..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Влезте чрез Discord, за да получите достъп до контролния панел.",
+"loginButton": "Вход с Discord",
+"logoutButton": "Изход",
+"status": "Статус: Влязъл",
+"settingsTitle": "Настройки"
+},
+"lobby": {
+"title": "Лоби",
+"selectInstance": "Изберете инстанция",
+"playingMusic": "▶ Играе музика",
+"selectBot": "Изберете бот"
+},
+"sidebar": {
+"lobby": "Лоби",
+"instances": "Инстанции",
+"active": "Активен",
+"yourInstance": "Вашата инстанция",
+"activeInstances": "Активни инстанции",
+"server": "Сървър",
+"bots": "Ботове",
+"controlling": "Управление"
+},
+"botSelector": {
+"title": "Изберете бот",
+"backToServers": "Назад към сървърите",
+"scanningFleet": "Сканиране на флота...",
+"limitTitle": "Лимитът е достигнат!",
+"limitStop": "СТОП",
+"limitDescription": "Във вашия гласов канал вече има {{max}} бота. Трябва да изгоните един, за да извикате друг.",
+"returnToLobby": "ВЪРНЕТЕ СЕ В ЛОБИТО"
+},
+"botCard": {
+"busy": "Зает на друго място",
+"joinChannel": "Присъединете се към канала!",
+"ready": "Готов за действие"
+},
+"player": {
+"waitingForTrack": "Изчакване на песен...",
+"noCover": "НЯМА ОБЛОЖКА",
+"leave": "НАПУСНИ",
+"backToCurrent": "Назад към текущата",
+"controlling": "Управление"
+},
+"controls": {
+"previous": "Предишна",
+"playPause": "Възпроизвеждане / Пауза",
+"skip": "Пропусни",
+"loop": "Повторение"
+},
+"volume": {
+"mute": "ЗАГЛУШИ",
+"label": "СИЛА"
+},
+"queue": {
+"nowPlaying": "В момента свири",
+"upNext": "Следващо",
+"previous": "Предишни",
+"empty": "ПРАЗНА ОПАШКА",
+"clear": "ИЗЧИСТИ ОПАШКАТА",
+"clearConfirm": "Сигурни ли сте, че искате да изчистите опашката?",
+"shuffle": "РАЗБЪРКАЙ",
+"dedup": "ПРЕМАХНИ ДУБЛИКАТИ",
+"sortTitle": "А–Я",
+"sortDuration": "ВРЕМЕ",
+"radioOff": "РАДИО ИЗКЛ.",
+"radioOn": "РАДИО ВКЛ."
+},
+"search": {
+"placeholder": "Търсене...",
+"placeholderFull": "Търсене на песни, плейлисти, URL адреси...",
+"localMatches": "Локални резултати",
+"recent": "Скорошни",
+"clearHistory": "Изчисти",
+"searching": "Търсене...",
+"noResults": "Няма намерени резултати",
+"networkSource": "Мрежа",
+"librarySource": "Библиотека"
+},
+"channels": {
+"selectTitle": "Изберете гласов канал",
+"selectSubtitle": "За избрания бот",
+"searching": "Търсене на канали...",
+"noChannels": "Няма видими гласови канали."
+},
+"settings": {
+"language": "Език"
+}
+}

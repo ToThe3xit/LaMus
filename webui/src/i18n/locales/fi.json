@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Tämä tiedosto on luotu tekoälymallin avulla, eikä ammattimainen kääntäjä ole tarkistanut sitä.",
+"common": {
+"bot": "BOTTI",
+"server": "Palvelin",
+"density": "Tiheys",
+"online": "Paikalla",
+"back": "Takaisin",
+"close": "Sulje",
+"loading": "Ladataan..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Kirjaudu sisään Discordin kautta päästäksesi ohjauspaneeliin.",
+"loginButton": "Kirjaudu sisään Discordin kautta",
+"logoutButton": "Kirjaudu ulos",
+"status": "Tila: Kirjautunut sisään",
+"settingsTitle": "Asetukset"
+},
+"lobby": {
+"title": "Aula",
+"selectInstance": "Valitse instanssi",
+"playingMusic": "▶ Musiikki soi",
+"selectBot": "Valitse botti"
+},
+"sidebar": {
+"lobby": "Aula",
+"instances": "Instanssit",
+"active": "Aktiivinen",
+"yourInstance": "Sinun instanssisi",
+"activeInstances": "Aktiiviset instanssit",
+"server": "Palvelin",
+"bots": "Botit",
+"controlling": "Ohjaus"
+},
+"botSelector": {
+"title": "Valitse botti",
+"backToServers": "Takaisin palvelimiin",
+"scanningFleet": "Skannataan laivastoa...",
+"limitTitle": "Raja saavutettu!",
+"limitStop": "SEIS",
+"limitDescription": "Puhekanavallasi on jo {{max}} bottia. Sinun on potkittava yksi ulos kutsuaksesi toisen.",
+"returnToLobby": "PALAA AULAAN"
+},
+"botCard": {
+"busy": "Varattu muualla",
+"joinChannel": "Liity kanavalle!",
+"ready": "Valmiina toimintaan"
+},
+"player": {
+"waitingForTrack": "Odotetaan kappaletta...",
+"noCover": "EI KANSIVUVA",
+"leave": "POISTU",
+"backToCurrent": "Takaisin nykyiseen",
+"controlling": "Ohjaus"
+},
+"controls": {
+"previous": "Edellinen",
+"playPause": "Toista / Tauko",
+"skip": "Ohita",
+"loop": "Kierto"
+},
+"volume": {
+"mute": "MYKISTÄ",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Nyt toistetaan",
+"upNext": "Seuraavana",
+"previous": "Edelliset",
+"empty": "JONO ON TYHJÄ",
+"clear": "TYHJENNÄ JONO",
+"clearConfirm": "Haluatko varmasti tyhjentää jonon?",
+"shuffle": "SEKOITA",
+"dedup": "POISTA KAKSOISKAPPALEET",
+"sortTitle": "A–Ö",
+"sortDuration": "AIKA",
+"radioOff": "RADIO POIS",
+"radioOn": "RADIO PÄÄLLE"
+},
+"search": {
+"placeholder": "Hae...",
+"placeholderFull": "Hae kappaleita, soittolistoja, URL-osoitteita...",
+"localMatches": "Paikalliset tulokset",
+"recent": "Viimeisimmät",
+"clearHistory": "Tyhjennä",
+"searching": "Haetaan...",
+"noResults": "Ei tuloksia",
+"networkSource": "Verkko",
+"librarySource": "Kirjasto"
+},
+"channels": {
+"selectTitle": "Valitse puhekanava",
+"selectSubtitle": "Valitulle botille",
+"searching": "Esitään kanavia...",
+"noChannels": "Ei näkyviä puhekanavia."
+},
+"settings": {
+"language": "Kieli"
+}
+}

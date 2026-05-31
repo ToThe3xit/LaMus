@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import QueueItem from './QueueItem';
 import HistoryPanel from './HistoryPanel';
 import type { Theme, PlayerState } from '../../types/player';
@@ -20,6 +21,10 @@ interface QueuePanelProps {
   scrollQueueTop: number;
   shufflePressed: boolean;
   setShufflePressed: React.Dispatch<React.SetStateAction<boolean>>;
+  dedupPressed: boolean;
+  setDedupPressed: React.Dispatch<React.SetStateAction<boolean>>;
+  sortMode: 'title' | 'duration' | null;
+  setSortMode: React.Dispatch<React.SetStateAction<'title' | 'duration' | null>>;
   setDraggedIndex: React.Dispatch<React.SetStateAction<number | null>>;
   setDragOverIndex: React.Dispatch<React.SetStateAction<number | null>>;
   setActiveDragHandle: React.Dispatch<React.SetStateAction<number | null>>;
@@ -28,6 +33,11 @@ interface QueuePanelProps {
   setScrollQueueTop: React.Dispatch<React.SetStateAction<number>>;
   sendCommand: (action: string, payload?: string, source?: string) => void;
 }
+
+const SORT_MODES = (t: (key: string) => string) => [
+  { key: 'title'    as const, label: t('queue.sortTitle')    },
+  { key: 'duration' as const, label: t('queue.sortDuration') },
+];
 
 const QueuePanel = ({
   theme,
@@ -46,6 +56,10 @@ const QueuePanel = ({
   scrollQueueTop,
   shufflePressed,
   setShufflePressed,
+  dedupPressed,
+  setDedupPressed,
+  sortMode,
+  setSortMode,
   setDraggedIndex,
   setDragOverIndex,
   setActiveDragHandle,
@@ -54,7 +68,14 @@ const QueuePanel = ({
   setScrollQueueTop,
   sendCommand,
 }: QueuePanelProps) => {
+  const { t } = useTranslation();
   const isRadioOn = playerState.isRadioActive === true;
+
+  const handleSort = (mode: 'title' | 'duration') => {
+    setSortMode(mode);
+    sendCommand('sort_queue', mode);
+    setTimeout(() => setSortMode(null), 600);
+  };
 
   return (
     <div
@@ -64,12 +85,8 @@ const QueuePanel = ({
           : 'bg-white border-zinc-200 shadow-xl'
       }`}
     >
-      {/* Radio */}
       <button
-        onClick={() => {
-          if (!activePlayerKey) return;
-          sendCommand('radio_network');
-        }}
+        onClick={() => { if (!activePlayerKey) return; sendCommand('radio_network'); }}
         className={`w-full py-4 mb-4 rounded-2xl font-black text-[10px] tracking-[0.2em] border transition-all active:scale-95 shrink-0 ${
           !isRadioOn
             ? theme === 'dark'
@@ -78,10 +95,9 @@ const QueuePanel = ({
             : 'bg-green-600 text-white border-green-500 shadow-lg'
         }`}
       >
-        RADIO {!isRadioOn ? 'OFF' : 'ON'}
+        {isRadioOn ? t('queue.radioOn') : t('queue.radioOff')}
       </button>
 
-      {/* Shuffle */}
       <button
         onMouseDown={() => setShufflePressed(true)}
         onMouseUp={() => setShufflePressed(false)}
@@ -95,17 +111,47 @@ const QueuePanel = ({
               : 'bg-zinc-200 text-black hover:bg-zinc-300'
         }`}
       >
-        SHUFFLE
+        {t('queue.shuffle')}
       </button>
 
-      {/* Lista */}
+      <div className="flex gap-2 mb-4">
+        {SORT_MODES(t).map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => handleSort(key)}
+            className={`flex-1 py-3 rounded-2xl font-black text-[10px] tracking-[0.15em] transition-all duration-100 active:scale-95 border ${
+              sortMode === key
+                ? 'bg-blue-500 text-white border-blue-400 scale-95'
+                : theme === 'dark'
+                  ? 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+                  : 'bg-zinc-100 text-zinc-700 border-zinc-300 hover:bg-zinc-200'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onMouseDown={() => setDedupPressed(true)}
+        onMouseUp={() => setDedupPressed(false)}
+        onMouseLeave={() => setDedupPressed(false)}
+        onClick={() => sendCommand('dedup_queue')}
+        className={`px-4 py-4 mb-4 rounded-2xl font-black text-[10px] tracking-[0.2em] transition-all duration-100 active:scale-95 border ${
+          dedupPressed
+            ? 'bg-orange-500 text-white border-orange-400 scale-95'
+            : theme === 'dark'
+              ? 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+              : 'bg-zinc-100 text-zinc-700 border-zinc-300 hover:bg-zinc-200'
+        }`}
+      >
+        {t('queue.dedup')}
+      </button>
+
       <div
         ref={queueScrollRef}
         onMouseDown={(e) => {
-          if (
-            (e.target as HTMLElement).closest('button') ||
-            activeDragHandle !== null
-          ) return;
+          if ((e.target as HTMLElement).closest('button') || activeDragHandle !== null) return;
           setIsDraggingQueue(true);
           setStartQueueY(e.pageY - (queueScrollRef.current?.offsetTop || 0));
           setScrollQueueTop(queueScrollRef.current?.scrollTop || 0);
@@ -115,64 +161,45 @@ const QueuePanel = ({
         onMouseMove={(e) => {
           if (!isDraggingQueue || !queueScrollRef.current) return;
           e.preventDefault();
-          const walk =
-            (e.pageY - (queueScrollRef.current.offsetTop || 0) - startQueueY) *
-            1.5;
+          const walk = (e.pageY - (queueScrollRef.current.offsetTop || 0) - startQueueY) * 1.5;
           queueScrollRef.current.scrollTop = scrollQueueTop - walk;
         }}
         onTouchStart={(e) => {
-          if (
-            (e.target as HTMLElement).closest('button') ||
-            activeDragHandle !== null
-          ) return;
+          if ((e.target as HTMLElement).closest('button') || activeDragHandle !== null) return;
           setIsDraggingQueue(true);
-          setStartQueueY(
-            e.touches[0].pageY - (queueScrollRef.current?.offsetTop || 0)
-          );
+          setStartQueueY(e.touches[0].pageY - (queueScrollRef.current?.offsetTop || 0));
           setScrollQueueTop(queueScrollRef.current?.scrollTop || 0);
         }}
         onTouchEnd={() => setIsDraggingQueue(false)}
         onTouchMove={(e) => {
           if (!isDraggingQueue || !queueScrollRef.current) return;
-          const walk =
-            (e.touches[0].pageY -
-              (queueScrollRef.current.offsetTop || 0) -
-              startQueueY) *
-            1.5;
+          const walk = (e.touches[0].pageY - (queueScrollRef.current.offsetTop || 0) - startQueueY) * 1.5;
           queueScrollRef.current.scrollTop = scrollQueueTop - walk;
         }}
         className="xl:flex-1 xl:overflow-y-auto mt-6 hide-scrollbar space-y-3 pb-4"
       >
         {unifiedList.length > 0 ? (
           unifiedList.map((title, idx) => {
-            const isHistory = idx < currentIndex;
+            const isHistory   = idx < currentIndex;
             const isNowPlaying = idx === currentIndex;
 
             return (
               <React.Fragment key={`${title}-${idx}`}>
-
-                {/* ── Nagłówek sekcji "Previous" (HistoryPanel) ── */}
                 <HistoryPanel
                   theme={theme}
                   count={historyList.length}
                   visible={idx === 0 && historyList.length > 0}
                 />
-
-                {/* ── Nagłówek sekcji "Now Playing" ── */}
                 {isNowPlaying && (
                   <h3 className="text-[10px] font-black text-green-500 uppercase tracking-[0.2em] mb-4 mt-6">
-                    Now Playing
+                    {t('queue.nowPlaying')}
                   </h3>
                 )}
-
-                {/* ── Nagłówek sekcji "Up Next" ── */}
                 {idx === currentIndex + 1 && (
                   <h3 className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-4 mt-6">
-                    Up Next
+                    {t('queue.upNext')}
                   </h3>
                 )}
-
-                {/* ── Element kolejki ── */}
                 <QueueItem
                   idx={idx}
                   title={title}
@@ -195,22 +222,21 @@ const QueuePanel = ({
           })
         ) : (
           <div className="text-center text-zinc-700 text-sm mt-10 font-bold">
-            EMPTY QUEUE
+            {t('queue.empty')}
           </div>
         )}
       </div>
 
-      {/* Przycisk czyszczenia */}
       {playerState.upNext.length > 0 && (
         <button
           onClick={() => {
-            if (window.confirm('Are you sure you want to clear the queue?')) {
+            if (window.confirm(t('queue.clearConfirm'))) {
               sendCommand('clear');
             }
           }}
           className="shrink-0 mt-auto w-full py-4 rounded-2xl font-black text-[10px] tracking-[0.2em] bg-red-900/10 text-red-500 border border-red-900/30 hover:bg-red-900/20 active:scale-95 transition-all"
         >
-          CLEAR QUEUE
+          {t('queue.clear')}
         </button>
       )}
     </div>

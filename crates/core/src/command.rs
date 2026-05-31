@@ -45,4 +45,8 @@ pub enum Command{
     ToggleLoop,
 
     ShuffleQueue,
+
+    DeduplicateQueue,
+
+    SortQueue { mode: crate::queue::SortMode, },
 }

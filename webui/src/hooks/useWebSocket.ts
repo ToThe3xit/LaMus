@@ -6,9 +6,6 @@ export default function useWebSocket(
   enabled: boolean,
   onMessage: (data: any) => void
 ) {
-  // Kluczowa poprawka: trzymamy aktualny callback w ref.
-  // Dzięki temu useEffect NIE widzi `onMessage` jako zmiennej dependency
-  // i nie restartuje połączenia WS przy każdym re-renderze komponentu.
   const onMessageRef = useRef(onMessage);
   useEffect(() => {
     onMessageRef.current = onMessage;
@@ -38,7 +35,6 @@ export default function useWebSocket(
       ws.onmessage = (e) => {
         try {
           const data = JSON.parse(e.data);
-          // Wywołujemy ZAWSZE aktualną wersję callbacku przez ref
           onMessageRef.current(data);
         } catch (err) {
           console.error('WebSocket parse error:', err);
@@ -51,7 +47,6 @@ export default function useWebSocket(
 
       ws.onclose = () => {
         if (!destroyed) {
-          // Automatyczny reconnect po 2s gdy połączenie padnie
           reconnectTimer = setTimeout(connect, 2000);
         }
       };
@@ -65,6 +60,5 @@ export default function useWebSocket(
       ws?.close();
     };
 
-  // CELOWO tylko `enabled` jako dependency - onMessage obsługujemy przez ref
   }, [enabled]);
 }

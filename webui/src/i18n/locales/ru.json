@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Этот файл был создан с использованием модели ИИ и не был проверен профессиональным переводчиком.",
+"common": {
+"bot": "БОТ",
+"server": "Сервер",
+"density": "Плотность",
+"online": "Онлайн",
+"back": "Назад",
+"close": "Закрыть",
+"loading": "Загрузка..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Войдите через Discord, чтобы получить доступ к панели управления.",
+"loginButton": "Войти через Discord",
+"logoutButton": "Выйти",
+"status": "Статус: В сети",
+"settingsTitle": "Настройки"
+},
+"lobby": {
+"title": "Лобби",
+"selectInstance": "Выберите инстанс",
+"playingMusic": "▶ Играет музыка",
+"selectBot": "Выберите бота"
+},
+"sidebar": {
+"lobby": "Лобби",
+"instances": "Инстансы",
+"active": "Активен",
+"yourInstance": "Ваш инстанс",
+"activeInstances": "Активные инстансы",
+"server": "Сервер",
+"bots": "Боты",
+"controlling": "Управление"
+},
+"botSelector": {
+"title": "Выберите бота",
+"backToServers": "Назад к серверам",
+"scanningFleet": "Сканирование флота...",
+"limitTitle": "Лимит достигнут!",
+"limitStop": "СТОП",
+"limitDescription": "В вашем голосовом канале уже находится {{max}} ботов. Вы должны отключить одного, чтобы призвать следующего.",
+"returnToLobby": "ВЕРНУТЬСЯ В ЛОББИ"
+},
+"botCard": {
+"busy": "Занят в другом месте",
+"joinChannel": "Присоединиться к каналу!",
+"ready": "Готов к действию"
+},
+"player": {
+"waitingForTrack": "Ожидание трека...",
+"noCover": "НЕТ ОБЛОЖКИ",
+"leave": "ПОКИНУТЬ",
+"backToCurrent": "Назад к текущему",
+"controlling": "Управление"
+},
+"controls": {
+"previous": "Предыдущий",
+"playPause": "Воспроизведение / Пауза",
+"skip": "Пропустить",
+"loop": "Повтор"
+},
+"volume": {
+"mute": "ВЫКЛ. ЗВУК",
+"label": "ГРОМК"
+},
+"queue": {
+"nowPlaying": "Сейчас играет",
+"upNext": "Далее",
+"previous": "Предыдущие",
+"empty": "ОЧЕРЕДЬ ПУСТА",
+"clear": "ОЧИСТИТЬ ОЧЕРЕДЬ",
+"clearConfirm": "Вы уверены, что хотите очистить очередь?",
+"shuffle": "ПЕРЕМЕШАТЬ",
+"dedup": "УДАЛИТЬ ДУБЛИ",
+"sortTitle": "А–Я",
+"sortDuration": "ВРЕМЯ",
+"radioOff": "РАДИО ВЫКЛ.",
+"radioOn": "РАДИО ВКЛ."
+},
+"search": {
+"placeholder": "Поиск...",
+"placeholderFull": "Поиск треков, плейлистов, URL...",
+"localMatches": "Локальные совпадения",
+"recent": "Недавние",
+"clearHistory": "Очистить",
+"searching": "Поиск...",
+"noResults": "Нет результатов",
+"networkSource": "Сеть",
+"librarySource": "Библиотека"
+},
+"channels": {
+"selectTitle": "Выберите голосовой канал",
+"selectSubtitle": "Для выбранного бота",
+"searching": "Поиск каналов...",
+"noChannels": "Нет видимых голосовых каналов."
+},
+"settings": {
+"language": "Язык"
+}
+}

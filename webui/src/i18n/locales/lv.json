@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Šis fails tika ģenerēts, izmantojot AI modeli, un to nav pārbaudījis profesionāls tulkotājs.",
+"common": {
+"bot": "BOTS",
+"server": "Serveris",
+"density": "Blīvums",
+"online": "Tiešsaistē",
+"back": "Atpakaļ",
+"close": "Aizvērt",
+"loading": "Ielādē..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Piesakieties, izmantojot Discord, lai piekļūtu vadības panelim.",
+"loginButton": "Pieteikties ar Discord",
+"logoutButton": "Izrakstīties",
+"status": "Statuss: Pieslēdzies",
+"settingsTitle": "Iestatījumi"
+},
+"lobby": {
+"title": "Vestibils",
+"selectInstance": "Izvēlieties instanci",
+"playingMusic": "▶ Tiek atskaņota mūzika",
+"selectBot": "Izvēlieties botu"
+},
+"sidebar": {
+"lobby": "Vestibils",
+"instances": "Instances",
+"active": "Aktīvs",
+"yourInstance": "Jūsu instance",
+"activeInstances": "Aktīvās instances",
+"server": "Serveris",
+"bots": "Boti",
+"controlling": "Vadība"
+},
+"botSelector": {
+"title": "Izvēlieties botu",
+"backToServers": "Atpakaļ uz serveriem",
+"scanningFleet": "Tiek skenēta flote...",
+"limitTitle": "Robeža ir sasniegta!",
+"limitStop": "STOP",
+"limitDescription": "Jūsu balss kanālā jau ir {{max}} boti. Jums ir jāizmet viens, lai izsauktu citu.",
+"returnToLobby": "ATPAKAĻ UZ VESTIBILU"
+},
+"botCard": {
+"busy": "Aizņemts citur",
+"joinChannel": "Pievienoties kanālam!",
+"ready": "Gatavs darbībai"
+},
+"player": {
+"waitingForTrack": "Gaida dziesmu...",
+"noCover": "NAV VĀCIŅA",
+"leave": "PAMEST",
+"backToCurrent": "Atpakaļ uz pašreizējo",
+"controlling": "Vadība"
+},
+"controls": {
+"previous": "Iepriekšējā",
+"playPause": "Atskaņot / Pauze",
+"skip": "Izlaist",
+"loop": "Cikls"
+},
+"volume": {
+"mute": "IZSLĒGT SKAŅU",
+"label": "SKAL"
+},
+"queue": {
+"nowPlaying": "Pašlaik skan",
+"upNext": "Nākamā",
+"previous": "Iepriekšējās",
+"empty": "RINDĀ NAV DZIESMU",
+"clear": "NOTĪRĪT RINDU",
+"clearConfirm": "Vai tiešām vēlaties notīrīt rindu?",
+"shuffle": "JAUKT",
+"dedup": "NOTĪRĪT DUBLIKĀTUS",
+"sortTitle": "A–Ž",
+"sortDuration": "LAIKS",
+"radioOff": "RADIO IZSL.",
+"radioOn": "RADIO IESL."
+},
+"search": {
+"placeholder": "Meklēt...",
+"placeholderFull": "Meklēt dziesmas, atskaņošanas sarakstus, URL...",
+"localMatches": "Vietējie rezultāti",
+"recent": "Pēdējie",
+"clearHistory": "Notīrīt",
+"searching": "Meklē...",
+"noResults": "Nekas netika atrasts",
+"networkSource": "Tīkls",
+"librarySource": "Bibliotēka"
+},
+"channels": {
+"selectTitle": "Izvēlieties balss kanālu",
+"selectSubtitle": "Izvēlētajam botam",
+"searching": "Meklē kanālus...",
+"noChannels": "Nav redzamu balss kanālu."
+},
+"settings": {
+"language": "Valoda"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "यह फ़ाइल एआई मॉडल का उपयोग करके बनाई गई है और किसी पेशेवर अनुवादक द्वारा इसकी जांच नहीं की गई है।",
+"common": {
+"bot": "बॉट",
+"server": "सर्वर",
+"density": "घनत्व",
+"online": "ऑनलाइन",
+"back": "पीछे",
+"close": "बंद करें",
+"loading": "लोड हो रहा है..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "डैशबोर्ड तक पहुँचने के लिए Discord के ज़रिए लॉग इन करें।",
+"loginButton": "Discord के साथ लॉग इन करें",
+"logoutButton": "लॉग आउट करें",
+"status": "स्थिति: लॉग इन हैं",
+"settingsTitle": "सेटिंग्स"
+},
+"lobby": {
+"title": "लॉबी",
+"selectInstance": "इंसटेंस चुनें",
+"playingMusic": "▶ संगीत चल रहा है",
+"selectBot": "बॉट चुनें"
+},
+"sidebar": {
+"lobby": "लॉबी",
+"instances": "इंसटेंस",
+"active": "सक्रिय",
+"yourInstance": "आपका इंसटेंस",
+"activeInstances": "सक्रिय इंसटेंस",
+"server": "सर्वर",
+"bots": "बॉट",
+"controlling": "नियंत्रण"
+},
+"botSelector": {
+"title": "बॉट चुनें",
+"backToServers": "सर्वर पर वापस जाएँ",
+"scanningFleet": "बॉट फ्लीट को स्कैन किया जा रहा है...",
+"limitTitle": "सीमा समाप्त!",
+"limitStop": "स्टॉप",
+"limitDescription": "आपके वॉयस चैनल में पहले से ही {{max}} बॉट मौजूद हैं। किसी दूसरे बॉट को बुलाने के लिए आपको एक को हटाना होगा।",
+"returnToLobby": "लॉबी में वापस जाएँ"
+},
+"botCard": {
+"busy": "कहीं और व्यस्त",
+"joinChannel": "चैनल से जुड़ें!",
+"ready": "कार्रवाई के लिए तैयार"
+},
+"player": {
+"waitingForTrack": "गाने का इंतज़ार है...",
+"noCover": "कोई कवर नहीं",
+"leave": "छोड़ें",
+"backToCurrent": "वर्तमान पर वापस जाएँ",
+"controlling": "नियंत्रण"
+},
+"controls": {
+"previous": "पिछला",
+"playPause": "चलाएँ / रोकें",
+"skip": "आगे बढ़ें",
+"loop": "लूप"
+},
+"volume": {
+"mute": "म्यूट",
+"label": "आवाज़"
+},
+"queue": {
+"nowPlaying": "अभी चल रहा है",
+"upNext": "अगला गाना",
+"previous": "पिछले गाने",
+"empty": "कतार खाली है",
+"clear": "कतार साफ करें",
+"clearConfirm": "क्या आप वाकई कतार साफ करना चाहते हैं?",
+"shuffle": "शफल",
+"dedup": "डुप्लिकेट हटाएँ",
+"sortTitle": "अ-ज्ञ",
+"sortDuration": "समय",
+"radioOff": "रेडियो बंद",
+"radioOn": "रेडियो चालू"
+},
+"search": {
+"placeholder": "खोजें...",
+"placeholderFull": "गाने, प्लेलिस्ट, यूआरएल आदि खोजें...",
+"localMatches": "स्थानीय परिणाम",
+"recent": "हालिया",
+"clearHistory": "साफ करें",
+"searching": "खोजा जा रहा है...",
+"noResults": "कोई परिणाम नहीं मिला",
+"networkSource": "नेटवर्क",
+"librarySource": "लाइब्रेरी"
+},
+"channels": {
+"selectTitle": "वॉयस चैनल चुनें",
+"selectSubtitle": "चुने गए बॉट के लिए",
+"searching": "चैनल खोजे जा रहे हैं...",
+"noChannels": "कोई भी दृश्यमान वॉयस चैनल नहीं मिला।"
+},
+"settings": {
+"language": "भाषा"
+}
+}

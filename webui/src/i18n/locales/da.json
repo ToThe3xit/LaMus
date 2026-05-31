@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Denne fil blev genereret ved hjælp af en AI-model og er ikke blevet verificeret af en professionel oversætter.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Tæthed",
+"online": "Online",
+"back": "Tilbage",
+"close": "Luk",
+"loading": "Indlæser..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Log ind via Discord for at få adgang til kontrolpanelet.",
+"loginButton": "Log ind via Discord",
+"logoutButton": "Log ud",
+"status": "Status: Logget ind",
+"settingsTitle": "Indstillinger"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Vælg instans",
+"playingMusic": "▶ Musikken spiller",
+"selectBot": "Vælg bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanser",
+"active": "Aktiv",
+"yourInstance": "Din instans",
+"activeInstances": "Aktive instanser",
+"server": "Server",
+"bots": "Botter",
+"controlling": "Styring"
+},
+"botSelector": {
+"title": "Vælg bot",
+"backToServers": "Tilbage til servere",
+"scanningFleet": "Scanner flåden...",
+"limitTitle": "Grænse nået!",
+"limitStop": "STOP",
+"limitDescription": "Der er allerede {{max}} botter i din talekanal. Du skal smide én ud for at tilkalde en anden.",
+"returnToLobby": "TILBAGE TIL LOBBY"
+},
+"botCard": {
+"busy": "Optaget andetsteds",
+"joinChannel": "Deltag i kanalen!",
+"ready": "Klar til action"
+},
+"player": {
+"waitingForTrack": "Venter på sang...",
+"noCover": "INTET COVERSKILT",
+"leave": "FORLAD",
+"backToCurrent": "Tilbage til nuværende",
+"controlling": "Styring"
+},
+"controls": {
+"previous": "Forrige",
+"playPause": "Afspil / Pause",
+"skip": "Spring over",
+"loop": "Loop"
+},
+"volume": {
+"mute": "SLÅ LYD FRA",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Spiller nu",
+"upNext": "Næste",
+"previous": "Forrige",
+"empty": "KØEN ER TOM",
+"clear": "RYD KØ",
+"clearConfirm": "Er du sikker på, at du vil rydde køen?",
+"shuffle": "BLAND",
+"dedup": "FJERN DUPLIKATER",
+"sortTitle": "A–Å",
+"sortDuration": "TID",
+"radioOff": "RADIO SLUKKET",
+"radioOn": "RADIO TÆNDT"
+},
+"search": {
+"placeholder": "Søg...",
+"placeholderFull": "Søg efter sange, playlister, URL'er...",
+"localMatches": "Lokale resultater",
+"recent": "Seneste",
+"clearHistory": "Ryd",
+"searching": "Søger...",
+"noResults": "Ingen resultater",
+"networkSource": "Netværk",
+"librarySource": "Bibliotek"
+},
+"channels": {
+"selectTitle": "Vælg talekanal",
+"selectSubtitle": "For den valgte bot",
+"searching": "Søger efter kanaler...",
+"noChannels": "Ingen synlige talekanaler."
+},
+"settings": {
+"language": "Sprog"
+}
+}

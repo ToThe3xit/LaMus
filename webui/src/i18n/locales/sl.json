@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Ta datoteka je bila ustvarjena s pomočjo modela AI in ni bila pregledana s strani profesionalnega prevajalca.",
+"common": {
+"bot": "BOT",
+"server": "Strežnik",
+"density": "Gostota",
+"online": "Povezan",
+"back": "Nazaj",
+"close": "Zapri",
+"loading": "Nalaganje..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Za dostop do nadzorne plošče se prijavite prek Discorda.",
+"loginButton": "Prijava z Discordom",
+"logoutButton": "Odjava",
+"status": "Stanje: Prijavljen",
+"settingsTitle": "Nastavitve"
+},
+"lobby": {
+"title": "Preddverje",
+"selectInstance": "Izberite instanco",
+"playingMusic": "▶ Predvajanje glasbe",
+"selectBot": "Izberite bota"
+},
+"sidebar": {
+"lobby": "Preddverje",
+"instances": "Instance",
+"active": "Aktivno",
+"yourInstance": "Vaša instanca",
+"activeInstances": "Aktivne instance",
+"server": "Strežnik",
+"bots": "Boti",
+"controlling": "Nadzor"
+},
+"botSelector": {
+"title": "Izberite bota",
+"backToServers": "Nazaj na strežnike",
+"scanningFleet": "Skeniranje flote...",
+"limitTitle": "Omejitev dosežena!",
+"limitStop": "STOP",
+"limitDescription": "V vašem govornem kanalu je že {{max}} botov. Če želite poklicati drugega, morate enega odstraniti.",
+"returnToLobby": "NAZAJ V PREDDVERJE"
+},
+"botCard": {
+"busy": "Zaseden drugje",
+"joinChannel": "Pridruži se kanalu!",
+"ready": "Pripravljen na akcijo"
+},
+"player": {
+"waitingForTrack": "Čakanje na skladbo...",
+"noCover": "BREZ PREVLECKE",
+"leave": "ZAPUSTI",
+"backToCurrent": "Nazaj na trenutno",
+"controlling": "Nadzor"
+},
+"controls": {
+"previous": "Prejšnja",
+"playPause": "Predvajaj / Premor",
+"skip": "Preskoči",
+"loop": "Zanka"
+},
+"volume": {
+"mute": "UTIŠAJ",
+"label": "GLAS"
+},
+"queue": {
+"nowPlaying": "Zdaj se predvaja",
+"upNext": "Naslednja",
+"previous": "Prejšnje",
+"empty": "ČAKALNA VRSTA JE PRAZNA",
+"clear": "POČISTI ČAKALNO VRSTO",
+"clearConfirm": "Ali ste prepričani, da želite počistiti čakalno vrsto?",
+"shuffle": "PREMEŠAJ",
+"dedup": "ODSTRANI PODVOJENE",
+"sortTitle": "A–Ž",
+"sortDuration": "ČAS",
+"radioOff": "RADIO IZKLOPLJEN",
+"radioOn": "RADIO VKLOPLJEN"
+},
+"search": {
+"placeholder": "Išči...",
+"placeholderFull": "Išči skladbe, sezname predvajanja, URL-je...",
+"localMatches": "Lokalni rezultati",
+"recent": "Nedavno",
+"clearHistory": "Počisti",
+"searching": "Iskanje...",
+"noResults": "Ni rezultatov",
+"networkSource": "Omrežje",
+"librarySource": "Knjižnica"
+},
+"channels": {
+"selectTitle": "Izberite govorni kanal",
+"selectSubtitle": "Za izbranega bota",
+"searching": "Iskanje kanalov...",
+"noChannels": "Ni vidnih govornih kanalov."
+},
+"settings": {
+"language": "Jezik"
+}
+}

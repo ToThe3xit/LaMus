@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "This file was generated using an AI model and has not been verified by a professional translator.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Density",
+"online": "Online",
+"back": "Back",
+"close": "Close",
+"loading": "Loading..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Log in via Discord to access the control panel.",
+"loginButton": "Log in via Discord",
+"logoutButton": "Log out",
+"status": "Status: Logged in",
+"settingsTitle": "Settings"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Select instance",
+"playingMusic": "▶ Playing music",
+"selectBot": "Select bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instances",
+"active": "Active",
+"yourInstance": "Your instance",
+"activeInstances": "Active instances",
+"server": "Server",
+"bots": "Bots",
+"controlling": "Controlling"
+},
+"botSelector": {
+"title": "Select bot",
+"backToServers": "Back to servers",
+"scanningFleet": "Scanning fleet...",
+"limitTitle": "Limit reached!",
+"limitStop": "STOP",
+"limitDescription": "There are already {{max}} bots in your voice channel. You must kick one to summon another.",
+"returnToLobby": "RETURN TO LOBBY"
+},
+"botCard": {
+"busy": "Busy elsewhere",
+"joinChannel": "Join channel!",
+"ready": "Ready for action"
+},
+"player": {
+"waitingForTrack": "Waiting for track...",
+"noCover": "NO COVER",
+"leave": "LEAVE",
+"backToCurrent": "Back to current",
+"controlling": "Controlling"
+},
+"controls": {
+"previous": "Previous",
+"playPause": "Play / Pause",
+"skip": "Skip",
+"loop": "Loop"
+},
+"volume": {
+"mute": "MUTE",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Now playing",
+"upNext": "Up next",
+"previous": "Previous",
+"empty": "QUEUE EMPTY",
+"clear": "CLEAR QUEUE",
+"clearConfirm": "Are you sure you want to clear the queue?",
+"shuffle": "SHUFFLE",
+"dedup": "DEDUP",
+"sortTitle": "A–Z",
+"sortDuration": "TIME",
+"radioOff": "RADIO OFF",
+"radioOn": "RADIO ON"
+},
+"search": {
+"placeholder": "Search...",
+"placeholderFull": "Search tracks, playlists, URLs...",
+"localMatches": "Local matches",
+"recent": "Recent",
+"clearHistory": "Clear",
+"searching": "Searching...",
+"noResults": "No results",
+"networkSource": "Network",
+"librarySource": "Library"
+},
+"channels": {
+"selectTitle": "Select voice channel",
+"selectSubtitle": "For the selected bot",
+"searching": "Searching for channels...",
+"noChannels": "No visible voice channels."
+},
+"settings": {
+"language": "Language"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "تم إنشاء هذا الملف باستخدام نموذج ذكاء اصطناعي ولم يتم مراجعته من قبل مترجم محترف.",
+"common": {
+"bot": "بوت",
+"server": "خادم",
+"density": "الكثافة",
+"online": "متصل",
+"back": "رجوع",
+"close": "إغلاق",
+"loading": "جاري التحميل..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "سجل الدخول عبر Discord للوصول إلى لوحة التحكم.",
+"loginButton": "تسجيل الدخول بواسطة Discord",
+"logoutButton": "تسجيل الخروج",
+"status": "الحالة: متصل",
+"settingsTitle": "الإعدادات"
+},
+"lobby": {
+"title": "الردهة",
+"selectInstance": "اختر نسخة",
+"playingMusic": "▶ الموسيقى تعمل",
+"selectBot": "اختر بوتاً"
+},
+"sidebar": {
+"lobby": "الردهة",
+"instances": "النسخ",
+"active": "نشط",
+"yourInstance": "نسختك",
+"activeInstances": "النسخ النشطة",
+"server": "خادم",
+"bots": "البوتات",
+"controlling": "التحكم"
+},
+"botSelector": {
+"title": "اختر بوتاً",
+"backToServers": "العودة إلى الخوادم",
+"scanningFleet": "جاري فحص الأسطول...",
+"limitTitle": "تم الوصول للحد الأقصى!",
+"limitStop": "إيقاف",
+"limitDescription": "يوجد بالفعل {{max}} بوتات في قناتك الصوتية. يجب عليك طرد أحدهم لاستدعاء بوت آخر.",
+"returnToLobby": "العودة إلى الردهة"
+},
+"botCard": {
+"busy": "مشغول في مكان آخر",
+"joinChannel": "انضم إلى القناة!",
+"ready": "جاهز للعمل"
+},
+"player": {
+"waitingForTrack": "في انتظار الأغنية...",
+"noCover": "لا يوجد غلاف",
+"leave": "مغادرة",
+"backToCurrent": "العودة إلى الحالي",
+"controlling": "التحكم"
+},
+"controls": {
+"previous": "السابق",
+"playPause": "تشغيل / إيقاف مؤقت",
+"skip": "تخطي",
+"loop": "تكرار"
+},
+"volume": {
+"mute": "كتم الصوت",
+"label": "الصوت"
+},
+"queue": {
+"nowPlaying": "يعرض الآن",
+"upNext": "التالي",
+"previous": "السابق",
+"empty": "قائمة الانتظار فارغة",
+"clear": "مسح قائمة الانتظار",
+"clearConfirm": "هل أنت متأكد من أنك تريد مسح قائمة الانتظار؟",
+"shuffle": "خلط عشوائي",
+"dedup": "إزالة التكرار",
+"sortTitle": "أ–ي",
+"sortDuration": "الوقت",
+"radioOff": "الراديو مغلق",
+"radioOn": "الراديو مفعل"
+},
+"search": {
+"placeholder": "بحث...",
+"placeholderFull": "ابحث عن أغاني، قوائم تشغيل، روابط...",
+"localMatches": "النتائج المحلية",
+"recent": "الأخيرة",
+"clearHistory": "مسح",
+"searching": "جاري البحث...",
+"noResults": "لم يتم العثور على نتائج",
+"networkSource": "الشبكة",
+"librarySource": "المكتبة"
+},
+"channels": {
+"selectTitle": "اختر قناة صوتية",
+"selectSubtitle": "للبوت المحدد",
+"searching": "جاري البحث عن قنوات...",
+"noChannels": "لا توجد قنوات صوتية مرئية."
+},
+"settings": {
+"language": "اللغة"
+}
+}

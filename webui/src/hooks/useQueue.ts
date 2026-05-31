@@ -23,6 +23,12 @@ export default function useQueue() {
   const [shufflePressed, setShufflePressed] =
     useState(false);
 
+  const [dedupPressed, setDedupPressed] =
+    useState(false);
+
+  const [sortMode, setSortMode] =
+    useState<'title' | 'duration' /*| 'source' */| null>(null);
+
   return {
     draggedIndex,
     setDraggedIndex,
@@ -38,5 +44,9 @@ export default function useQueue() {
     setScrollQueueTop,
     shufflePressed,
     setShufflePressed,
+    dedupPressed,
+    setDedupPressed,
+    sortMode,
+    setSortMode,
   };
 }

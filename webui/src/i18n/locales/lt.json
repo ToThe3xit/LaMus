@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Šis failas buvo sugeneruotas naudojant dirbtinio intelekto modelį ir nebuvo patikrintas profesionalaus vertėjo.",
+"common": {
+"bot": "BOTAS",
+"server": "Serveris",
+"density": "Tankumas",
+"online": "Prisijungęs",
+"back": "Atgal",
+"close": "Uždaryti",
+"loading": "Kraunama..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Prisijunkite per „Discord“, kad pasiektumėte valdymo skydelį.",
+"loginButton": "Prisijungti su Discord",
+"logoutButton": "Atsijungti",
+"status": "Būsena: Prisijungta",
+"settingsTitle": "Nustatymai"
+},
+"lobby": {
+"title": "Laukiamasis",
+"selectInstance": "Pasirinkite instanciją",
+"playingMusic": "▶ Muzika groja",
+"selectBot": "Pasirinkite botą"
+},
+"sidebar": {
+"lobby": "Laukiamasis",
+"instances": "Instancijos",
+"active": "Aktyvus",
+"yourInstance": "Jūsų instancija",
+"activeInstances": "Aktyvios instancijos",
+"server": "Serveris",
+"bots": "Botai",
+"controlling": "Valdymas"
+},
+"botSelector": {
+"title": "Pasirinkite botą",
+"backToServers": "Atgal į serverius",
+"scanningFleet": "Skenuojamas parkas...",
+"limitTitle": "Pasiekta riba!",
+"limitStop": "STOP",
+"limitDescription": "Jūsų balso kanale jau yra {{max}} botai. Norėdami iškviesti kitą, turite vieną pašalinti.",
+"returnToLobby": "ATGAL Į LAUKIAMĄJĮ"
+},
+"botCard": {
+"busy": "Užimtas kitur",
+"joinChannel": "Prisijungti prie kanalo!",
+"ready": "Pasiruošęs veiksmui"
+},
+"player": {
+"waitingForTrack": "Laukiama kūrinio...",
+"noCover": "NĖRA VIRŠELIO",
+"leave": "IŠEITI",
+"backToCurrent": "Atgal į dabartinį",
+"controlling": "Valdymas"
+},
+"controls": {
+"previous": "Atgal",
+"playPause": "Groti / Pauzė",
+"skip": "Praleisti",
+"loop": "Kartoti"
+},
+"volume": {
+"mute": "NUTILDYTI",
+"label": "GARS"
+},
+"queue": {
+"nowPlaying": "Dabar groja",
+"upNext": "Kitas eilėje",
+"previous": "Ankstesni",
+"empty": "EILĖ TUŠČIA",
+"clear": "IŠVALYTI EILĘ",
+"clearConfirm": "Ar tikrai norite išvalyti eilę?",
+"shuffle": "SUMIŠTI",
+"dedup": "PAŠALINTI DUBLIKATUS",
+"sortTitle": "A–Ž",
+"sortDuration": "TRUKMĖ",
+"radioOff": "RADIJAS IŠJ.",
+"radioOn": "RADIJAS ĮJ."
+},
+"search": {
+"placeholder": "Ieškoti...",
+"placeholderFull": "Ieškokite kūrinių, grojaraščių, nuorodų...",
+"localMatches": "Vietiniai rezultatai",
+"recent": "Pastarieji",
+"clearHistory": "Išvalyti",
+"searching": "Ieškoma...",
+"noResults": "Rezultatų nerasta",
+"networkSource": "Tinklas",
+"librarySource": "Biblioteka"
+},
+"channels": {
+"selectTitle": "Pasirinkite balso kanalą",
+"selectSubtitle": "Pasirinktam botui",
+"searching": "Ieškoma kanalų...",
+"noChannels": "Nėra matomų balso kanalų."
+},
+"settings": {
+"language": "Kalba"
+}
+}

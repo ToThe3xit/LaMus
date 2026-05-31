@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Ce fichier a été généré à l'aide d'un modèle d'IA et n'a pas été vérifié par un traducteur professionnel.",
+"common": {
+"bot": "BOT",
+"server": "Serveur",
+"density": "Densité",
+"online": "En ligne",
+"back": "Retour",
+"close": "Fermer",
+"loading": "Chargement..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Connectez-vous via Discord pour accéder au panneau de contrôle.",
+"loginButton": "Se connecter via Discord",
+"logoutButton": "Se déconnecter",
+"status": "Statut : Connecté",
+"settingsTitle": "Paramètres"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Sélectionner une instance",
+"playingMusic": "▶ Musique en cours",
+"selectBot": "Sélectionner un bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instances",
+"active": "Active",
+"yourInstance": "Votre instance",
+"activeInstances": "Instances actives",
+"server": "Serveur",
+"bots": "Bots",
+"controlling": "Contrôle"
+},
+"botSelector": {
+"title": "Sélectionner un bot",
+"backToServers": "Retour aux serveurs",
+"scanningFleet": "Analyse de la flotte...",
+"limitTitle": "Limite atteinte !",
+"limitStop": "STOP",
+"limitDescription": "Il y a déjà {{max}} bots dans votre salon vocal. Vous devez en exclure un pour en appeler un autre.",
+"returnToLobby": "RETOURNER AU LOBBY"
+},
+"botCard": {
+"busy": "Occupé ailleurs",
+"joinChannel": "Rejoindre le salon !",
+"ready": "Prêt à l'action"
+},
+"player": {
+"waitingForTrack": "En attente d'une piste...",
+"noCover": "PAS DE COUVERTURE",
+"leave": "QUITTER",
+"backToCurrent": "Retour au titre actuel",
+"controlling": "Contrôle"
+},
+"controls": {
+"previous": "Précédent",
+"playPause": "Lecture / Pause",
+"skip": "Passer",
+"loop": "Boucle"
+},
+"volume": {
+"mute": "MUTER",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "En cours de lecture",
+"upNext": "À suivre",
+"previous": "Précédents",
+"empty": "FILE D'ATTENTE VIDE",
+"clear": "EFFACER LA FILE D'ATTENTE",
+"clearConfirm": "Êtes-vous sûr de vouloir effacer la file d'attente ?",
+"shuffle": "ALÉATOIRE",
+"dedup": "DÉDOUBLONNER",
+"sortTitle": "A–Z",
+"sortDuration": "DURÉE",
+"radioOff": "RADIO DÉSACTIVÉE",
+"radioOn": "RADIO ACTIVÉE"
+},
+"search": {
+"placeholder": "Rechercher...",
+"placeholderFull": "Rechercher des pistes, playlists, URL...",
+"localMatches": "Résultats locaux",
+"recent": "Récents",
+"clearHistory": "Effacer",
+"searching": "Recherche...",
+"noResults": "Aucun résultat",
+"networkSource": "Réseau",
+"librarySource": "Bibliothèque"
+},
+"channels": {
+"selectTitle": "Sélectionner un salon vocal",
+"selectSubtitle": "Pour le bot sélectionné",
+"searching": "Recherche de salons...",
+"noChannels": "Aucun salon vocal visible."
+},
+"settings": {
+"language": "Langue"
+}
+}

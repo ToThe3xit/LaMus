@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import logo from './assets/logo.png';
 
-// Komponenty
 import CoverImage from './components/player/CoverImage';
 import PlayerControls from './components/player/PlayerControls';
 import QueuePanel from './components/queue/QueuePanel';
@@ -9,7 +8,6 @@ import Sidebar from './components/layout/Sidebar';
 import TopBar from './components/layout/TopBar';
 import BotSelector from './components/bots/BotSelector';
 
-// Hooki
 import useTheme from './hooks/useTheme';
 import useWebSocket from './hooks/useWebSocket';
 import usePlayerState from './hooks/usePlayerState';
@@ -17,8 +15,10 @@ import useBots from './hooks/useBots';
 import useQueue from './hooks/useQueue';
 import useChannels from './hooks/useChannels';
 import useAuth from './hooks/useAuth';
+import useLanguage from './hooks/useLanguage';
+import { SUPPORTED_LANGUAGES } from './i18n/index';
+import { useTranslation } from 'react-i18next';
 
-// Typy
 import type { PlayerState } from './types/player';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -28,7 +28,6 @@ function App() {
     document.title = 'LaMus';
   }, []);
 
-  // ── Widok i nawigacja ──────────────────────────────────────
   const [currentView, setCurrentView] = useState<'servers' | 'bots' | 'player'>(() => {
     const saved = localStorage.getItem('mbv2_view') as any;
     if (saved === 'player' && !localStorage.getItem('mbv2_active_server')) {
@@ -51,13 +50,12 @@ function App() {
     }
   }, [activeServerId]);
 
-  // ── Autoryzacja ───────────────────────────────────────────
   const { currentUser, isSuperadmin, logout } = useAuth();
 
-  // ── Motyw ─────────────────────────────────────────────────
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
+  const { language, setLanguage } = useLanguage();
 
-  // ── Boty i serwery ────────────────────────────────────────
   const {
     botInstances,
     systemBots,
@@ -66,27 +64,18 @@ function App() {
     channelBotLimitInfo,
   } = useBots({ activeServerId, currentView });
 
-  // ── Kanały głosowe ────────────────────────────────────────
   const { availableChannels, isLoadingChannels, fetchChannels } = useChannels();
 
-  // ── Aktywny gracz ─────────────────────────────────────────
   const [activePlayerKey, setActivePlayerKey] = useState<string | null>(null);
 
-  // ── Stan gracza ───────────────────────────────────────────
   const { playerState, setPlayerState, activePlayers, handleWsData } =
     usePlayerState({ activePlayerKey, isSuperadmin, setSystemBots });
 
-  // ── POPRAWKA 1: useCallback stabilizuje referencję handleWsData
-  // żeby useWebSocket nie restartował połączenia przy każdym re-renderze.
-  // useWebSocket samodzielnie obsługuje to przez ref, ale dla pewności
-  // stabilizujemy też tutaj.
   const stableHandleWsData = useCallback(handleWsData, []);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  void stableHandleWsData; // suppress lint - używamy handleWsData bezpośrednio niżej
+  void stableHandleWsData;
 
   useWebSocket(!!currentUser, handleWsData);
 
-  // ── Kolejka (drag & drop) ─────────────────────────────────
   const {
     draggedIndex, setDraggedIndex,
     dragOverIndex, setDragOverIndex,
@@ -95,26 +84,24 @@ function App() {
     startQueueY, setStartQueueY,
     scrollQueueTop, setScrollQueueTop,
     shufflePressed, setShufflePressed,
+    dedupPressed, setDedupPressed,
+    sortMode, setSortMode,
   } = useQueue();
 
-  // ── UI state ──────────────────────────────────────────────
   const [gridCols, setGridCols] = useState(3);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedBotIndex, setSelectedBotIndex] = useState<number | null>(null);
   const [openServerFolder, setOpenServerFolder] = useState<string | null>(null);
 
-  // ── Refs ──────────────────────────────────────────────────
   const currentTrackRef = useRef<HTMLDivElement>(null);
   const queueScrollRef = useRef<HTMLDivElement>(null);
   const mainScrollRef = useRef<HTMLDivElement>(null);
   const sidebarScrollRef = useRef<HTMLElement>(null);
 
-  // ── Sidebar scroll drag ───────────────────────────────────
   const [isDraggingSidebar, setIsDraggingSidebar] = useState(false);
   const [startSidebarY, setStartSidebarY] = useState(0);
   const [scrollSidebarTop, setScrollSidebarTop] = useState(0);
 
-  // ── Tytuł — animacja marquee ──────────────────────────────
   const titleContainerRef = useRef<HTMLDivElement>(null);
   const titleTextRef = useRef<HTMLDivElement>(null);
   const [shouldAnimateTitle, setShouldAnimateTitle] = useState(false);
@@ -138,7 +125,6 @@ function App() {
     return () => { clearTimeout(timer); window.removeEventListener('resize', check); };
   }, [playerState.trackName]);
 
-  // ── Głośność ──────────────────────────────────────────────
   const lastVolumeSendTime = useRef<number>(0);
   const [localVolume, setLocalVolume] = useState<number | null>(null);
   const [lastVolume, setLastVolume] = useState<number>(100);
@@ -147,11 +133,9 @@ function App() {
     if (playerState.volume > 0) setLastVolume(playerState.volume);
   }, [playerState.volume]);
 
-  // ── Postęp odtwarzania ────────────────────────────────────
   const lastProgressSendTime = useRef<number>(0);
   const [localProgress, setLocalProgress] = useState<number | null>(null);
 
-  // ── Mały ekran ────────────────────────────────────────────
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -161,25 +145,21 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // ── Sync serwera z playerState ────────────────────────────
   useEffect(() => {
     if (playerState.serverId && !activeServerId) {
       setActiveServerId(playerState.serverId);
     }
   }, [playerState.serverId, activeServerId]);
 
-  // ── Reset radio po zmianie gracza ─────────────────────────
   useEffect(() => {
     if (!activePlayerKey) return;
     setPlayerState((prev) => ({ ...prev, isRadioActive: false }));
   }, [activePlayerKey]);
 
-  // ── Dane kolejki ──────────────────────────────────────────
   const historyList = playerState.history || [];
   const unifiedList = [...historyList, ...playerState.upNext];
   const currentIndex = historyList.length;
 
-  // ── Grupowanie graczy per serwer (admin) ──────────────────
   const playersByServer = Object.entries(activePlayers).reduce(
     (acc, [key, state]) => {
       if (!acc[state.serverId]) acc[state.serverId] = [];
@@ -189,7 +169,6 @@ function App() {
     {} as Record<string, { key: string; state: PlayerState }[]>
   );
 
-  // ── Komendy API ───────────────────────────────────────────
   const sendCommand = async (action: string, payload?: string, source?: string) => {
     if (!activeServerId) return;
     try {
@@ -212,14 +191,12 @@ function App() {
 
   const toggleLoop = () => sendCommand('toggle_loop');
 
-  // ── Obsługa kliknięcia serwera ────────────────────────────
   const handleServerClick = (server: { id: string }) => {
     setActiveServerId(server.id);
     setCurrentView('bots');
     fetchChannels(server.id);
   };
 
-  // ── Dołączanie do kanału ──────────────────────────────────
   const joinChannel = async (channelId: string, botIndex: number) => {
     if (!activeServerId) return;
     setSelectedBotIndex(null);
@@ -244,16 +221,11 @@ function App() {
     }
   };
 
-  // ── POPRAWKA 3: Scroll do bieżącego utworu ────────────────
-  // Używamy getBoundingClientRect() zamiast offsetTop,
-  // bo offsetTop jest relative do rodzica, nie do scrollowalnego kontenera.
-  // Odejmujemy 32px żeby nagłówek "Now Playing" był widoczny powyżej elementu.
   const scrollToCurrent = () => {
     if (!currentTrackRef.current) return;
     const element = currentTrackRef.current;
 
     if (window.innerWidth >= 1280) {
-      // Tryb wide (xl): queue jest po prawej, scrollujemy queueScrollRef
       if (queueScrollRef.current) {
         const container = queueScrollRef.current;
         const containerRect = container.getBoundingClientRect();
@@ -266,7 +238,6 @@ function App() {
         });
       }
     } else if (mainScrollRef.current) {
-      // Tryb narrow/mobile: scrollujemy mainScrollRef
       const container = mainScrollRef.current;
       const elementRect = element.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
@@ -282,7 +253,7 @@ function App() {
   };
 
   // ══════════════════════════════════════════════════════════
-  // RENDER: Ekran logowania OAuth2
+  // LOGIN SCREEN OAuth2
   // ══════════════════════════════════════════════════════════
   if (!currentUser) {
     return (
@@ -296,9 +267,9 @@ function App() {
               style={{ animationDuration: '3s' }}
             />
           </div>
-          <h2 className="text-4xl font-black mb-2 text-orange-500 tracking-tighter">LaMus</h2>
+          <h2 className="text-4xl font-black mb-2 text-orange-500 tracking-tighter">{t('auth.loginTitle')}</h2>
           <p className="text-sm text-zinc-500 font-bold mb-10">
-            Log in via Discord to access the command panel.
+            {t('auth.loginSubtitle')}
           </p>
           <button
             onClick={() => (window.location.href = `${API_URL}/api/auth/login`)}
@@ -307,7 +278,7 @@ function App() {
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
             </svg>
-            Log in with Discord
+            {t('auth.loginButton')}
           </button>
         </div>
       </div>
@@ -315,12 +286,11 @@ function App() {
   }
 
   // ══════════════════════════════════════════════════════════
-  // RENDER: Główna aplikacja SPA
+  // MAIN APPLICATION SPA
   // ══════════════════════════════════════════════════════════
   return (
     <div className={`fixed inset-0 h-[100dvh] w-full max-w-full flex flex-col-reverse md:flex-row overflow-x-hidden overflow-y-hidden transition-colors duration-300 font-sans select-none ${theme === 'dark' ? 'bg-black text-zinc-100' : 'bg-white text-zinc-900'}`}>
 
-      {/* Panel ustawień */}
       {isSettingsOpen && (
         <div
           className="fixed inset-0 bg-black/70 z-[140] backdrop-blur-md animate-in fade-in duration-300"
@@ -331,7 +301,7 @@ function App() {
       <aside className={`fixed top-0 right-0 h-full w-80 z-[150] transform transition-transform duration-500 ease-in-out p-8 flex flex-col ${isSettingsOpen ? 'translate-x-0' : 'translate-x-full'} ${theme === 'dark' ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200 shadow-2xl'} border-l`}>
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-xl font-black uppercase text-zinc-500 tracking-widest">
-            Settings
+            {t('auth.settingsTitle')}
           </h2>
           <button onClick={() => setIsSettingsOpen(false)} className="text-2xl p-2 hover:scale-125 transition">
             ✕
@@ -345,22 +315,43 @@ function App() {
             <div>
               <h3 className="text-xl font-black">{currentUser.name}</h3>
               <p className="text-[10px] text-green-500 font-black uppercase tracking-widest mt-1">
-                Status: Logged in
+                {t('auth.status')}
               </p>
             </div>
           </section>
+
+          <section className="space-y-2">
+            <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">
+              {t('settings.language')}
+            </p>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className={`w-full px-4 py-3 rounded-xl font-bold text-sm border outline-none transition-colors ${
+                theme === 'dark'
+                  ? 'bg-zinc-800 border-zinc-700 text-white'
+                  : 'bg-zinc-100 border-zinc-300 text-black'
+              }`}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.label}
+                </option>
+              ))}
+            </select>
+          </section>
+
           <div className="mt-auto">
             <button
               onClick={() => { logout(); setIsSettingsOpen(false); }}
               className="w-full py-4 rounded-xl bg-red-900/10 text-red-500 font-bold border border-red-900/30 hover:bg-red-900/20 transition"
             >
-              Log out
+              {t('auth.logoutButton')}
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Sidebar */}
       <Sidebar
         theme={theme}
         currentView={currentView}
@@ -385,10 +376,8 @@ function App() {
         setScrollSidebarTop={setScrollSidebarTop}
       />
 
-      {/* Główna treść */}
       <main className="flex-1 flex flex-col min-w-0 relative h-[calc(100dvh-5rem)] md:h-full overflow-hidden">
 
-        {/* TopBar — nagłówek z wyszukiwarką, motywem, avatarem */}
         <TopBar
           theme={theme}
           currentView={currentView}
@@ -400,16 +389,14 @@ function App() {
           sendCommand={sendCommand}
         />
 
-        {/* Obszar treści */}
         <div
           ref={mainScrollRef}
           className="flex-1 flex flex-col xl:flex-row p-4 md:p-6 gap-6 overflow-y-auto xl:overflow-hidden min-h-0 relative pb-24 md:pb-6"
         >
-          {/* ════ WIDOK: GRACZ ════ */}
+          {/* ════ VIEW: PLAYER ════ */}
           {currentView === 'player' ? (
             <>
               <div className="w-full xl:flex-1 flex flex-col items-center">
-                {/* Info o bieżącym bocie */}
                 {(() => {
                   const controlledBot = systemBots.find((sb) => sb.id === playerState.botId);
                   const controlledServer = botInstances.find((b) => b.id === playerState.serverId);
@@ -444,7 +431,6 @@ function App() {
                   );
                 })()}
 
-                {/* Okładka + tytuł + kontrolki */}
                 <div className="w-full flex flex-col items-center my-auto min-h-max pt-20 sm:pt-0 pb-8">
                   <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3.5rem] shadow-2xl mb-10 border-4 border-zinc-300 dark:border-zinc-800 overflow-hidden shrink-0 flex items-center justify-center bg-white dark:bg-zinc-900">
                     <CoverImage url={playerState.thumbnailUrl} />
@@ -477,7 +463,6 @@ function App() {
                     </p>
                   </div>
 
-                  {/* PlayerControls — BEZ Radio i Shuffle (są tylko w QueuePanel) */}
                   <PlayerControls
                     theme={theme}
                     playerState={playerState}
@@ -499,7 +484,6 @@ function App() {
                 </div>
               </div>
 
-              {/* QueuePanel — tutaj są Radio i Shuffle */}
               <QueuePanel
                 theme={theme}
                 playerState={playerState}
@@ -517,6 +501,10 @@ function App() {
                 scrollQueueTop={scrollQueueTop}
                 shufflePressed={shufflePressed}
                 setShufflePressed={setShufflePressed}
+                dedupPressed={dedupPressed}
+                setDedupPressed={setDedupPressed}
+                sortMode={sortMode}
+                setSortMode={setSortMode}
                 setDraggedIndex={setDraggedIndex}
                 setDragOverIndex={setDragOverIndex}
                 setActiveDragHandle={setActiveDragHandle}
@@ -527,7 +515,6 @@ function App() {
               />
             </>
 
-          /* ════ WIDOK: WYBÓR BOTA ════ */
           ) : currentView === 'bots' ? (
             <BotSelector
               theme={theme}
@@ -543,7 +530,6 @@ function App() {
               fetchChannels={fetchChannels}
             />
 
-          /* ════ WIDOK: LOBBY (SERWERY) ════ */
           ) : (
             <div className="flex-1 overflow-y-auto hide-scrollbar p-6 md:p-20 relative">
               <div className="md:hidden flex justify-center mb-8">
@@ -582,7 +568,7 @@ function App() {
                         {server.serverName}
                       </h3>
                       <p className={`text-[10px] font-black tracking-[0.3em] uppercase opacity-80 ${server.isLocked ? 'text-green-500' : 'text-zinc-500'}`}>
-                        {server.isLocked ? '▶ Playing music' : 'Select bot'}
+                        {server.isLocked ? t('lobby.playingMusic') : t('lobby.selectBot')}
                       </p>
                     </div>
                   </div>
@@ -592,15 +578,14 @@ function App() {
           )}
         </div>
 
-        {/* Modal: wybór kanału głosowego */}
         {selectedBotIndex !== null && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
             <div className={`w-full max-w-md p-8 rounded-[2rem] shadow-2xl border ${theme === 'dark' ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'}`}>
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h3 className="text-xl font-black">Select voice channel</h3>
+                  <h3 className="text-xl font-black">{t('channels.selectTitle')}</h3>
                   <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">
-                    For selected bot
+                    {t('channels.selectSubtitle')}
                   </p>
                 </div>
                 <button
@@ -613,7 +598,7 @@ function App() {
               <div className="max-h-64 overflow-y-auto pr-2 space-y-2 hide-scrollbar">
                 {isLoadingChannels ? (
                   <div className="text-center py-8 text-zinc-500 font-bold animate-pulse">
-                    Searching for channels...
+                    {t('channels.searching')}
                   </div>
                 ) : availableChannels.length > 0 ? (
                   availableChannels.map((channel) => (
@@ -627,7 +612,7 @@ function App() {
                   ))
                 ) : (
                   <div className="text-center py-8 text-red-500 font-bold">
-                    No visible voice channels.
+                    {t('channels.noChannels')}
                   </div>
                 )}
               </div>
@@ -635,12 +620,11 @@ function App() {
           </div>
         )}
 
-        {/* Przycisk "przewiń do bieżącego" */}
         {currentView === 'player' && (
           <button
             onClick={scrollToCurrent}
             className={`absolute bottom-24 right-4 sm:right-6 md:bottom-8 md:right-8 z-[150] w-14 h-14 border-2 rounded-full flex items-center justify-center text-xs font-black shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-all active:scale-90 hover:scale-110 ${theme === 'dark' ? 'bg-zinc-800 border-zinc-600 text-white hover:bg-zinc-700 hover:border-green-500' : 'bg-white border-zinc-300 text-black hover:bg-zinc-100 hover:border-green-500'}`}
-            title="Back to current track"
+            title={t('player.backToCurrent')}
           >
             UP
           </button>

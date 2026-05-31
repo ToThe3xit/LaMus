@@ -4,7 +4,6 @@ import type { CurrentUser } from '../types/bot';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// ── Dozwolone originy dla avatara (tylko CDN Discorda) ────────
 const ALLOWED_AVATAR_ORIGINS = [
   'https://cdn.discordapp.com',
   'https://media.discordapp.net',
@@ -20,7 +19,6 @@ function sanitizeAvatarUrl(url: string | null): string {
       return url;
     }
   } catch {
-    // nieprawidłowy URL — fallback
   }
   return AVATAR_FALLBACK;
 }
@@ -36,7 +34,6 @@ export default function useAuth() {
   const [isSuperadmin, setIsSuperadmin] =
     useState(false);
 
-  // Sprawdź uprawnienia admina
   useEffect(() => {
     if (currentUser) {
       fetch(`${API_URL}/api/me/admin`, {
@@ -52,7 +49,6 @@ export default function useAuth() {
     }
   }, [currentUser]);
 
-  // Obsługa powrotu z OAuth2
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 

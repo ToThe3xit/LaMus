@@ -1,7 +1,7 @@
 // ============================================================ //
 // ==== TRACK DATA AND SOURCE REPRESENTATION ================== //
 // ============================================================ //
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TrackId(pub String);
 
 impl From<String> for TrackId{

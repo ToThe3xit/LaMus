@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "이 파일은 인공지능 모델에 의해 생성되었으며, 전문 번역가의 검토를 거치지 않았습니다.",
+"common": {
+"bot": "봇",
+"server": "서버",
+"density": "간격",
+"online": "온라인",
+"back": "뒤로",
+"close": "닫기",
+"loading": "로딩 중..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "대시보드에 접속하려면 Discord로 로그인하세요.",
+"loginButton": "Discord로 로그인",
+"logoutButton": "로그아웃",
+"status": "상태: 로그인됨",
+"settingsTitle": "설정"
+},
+"lobby": {
+"title": "로비",
+"selectInstance": "인스턴스 선택",
+"playingMusic": "▶ 음악 재생 중",
+"selectBot": "봇 선택"
+},
+"sidebar": {
+"lobby": "로비",
+"instances": "인스턴스",
+"active": "활성",
+"yourInstance": "내 인스턴스",
+"activeInstances": "활성 인스턴스",
+"server": "서버",
+"bots": "봇",
+"controlling": "제어 중"
+},
+"botSelector": {
+"title": "봇 선택",
+"backToServers": "서버 목록으로 돌아가기",
+"scanningFleet": "봇 플릿 스캔 중...",
+"limitTitle": "제한 도달!",
+"limitStop": "정지",
+"limitDescription": "음성 채널에 이미 {{max}}대의 봇이 있습니다. 다른 봇을 호출하려면 기존 봇 중 하나를 내보내야 합니다.",
+"returnToLobby": "로비로 돌아가기"
+},
+"botCard": {
+"busy": "다른 곳에서 사용 중",
+"joinChannel": "채널 참여!",
+"ready": "준비 완료"
+},
+"player": {
+"waitingForTrack": "트랙 대기 중...",
+"noCover": "커버 이미지 없음",
+"leave": "나가기",
+"backToCurrent": "현재 재생으로 돌아가기",
+"controlling": "제어 중"
+},
+"controls": {
+"previous": "이전 곡",
+"playPause": "재생 / 일시정지",
+"skip": "건너뛰기",
+"loop": "반복"
+},
+"volume": {
+"mute": "음소거",
+"label": "볼륨"
+},
+"queue": {
+"nowPlaying": "현재 재생 중",
+"upNext": "다음 재생 예정",
+"previous": "이전 재생 기록",
+"empty": "대기열이 비어 있습니다",
+"clear": "대기열 비우기",
+"clearConfirm": "정말로 재생 대기열을 비우시겠습니까?",
+"shuffle": "셔플",
+"dedup": "중복 제거",
+"sortTitle": "가나다순 정렬",
+"sortDuration": "시간순 정렬",
+"radioOff": "라디오 끄기",
+"radioOn": "라디오 켜기"
+},
+"search": {
+"placeholder": "검색...",
+"placeholderFull": "곡, 재생목록, URL 링크 검색...",
+"localMatches": "로컬 검색 결과",
+"recent": "최근 검색",
+"clearHistory": "지우기",
+"searching": "검색 중...",
+"noResults": "검색 결과가 없습니다",
+"networkSource": "네트워크",
+"librarySource": "라이브러리"
+},
+"channels": {
+"selectTitle": "음성 채널 선택",
+"selectSubtitle": "선택한 봇에 적용",
+"searching": "채널 검색 중...",
+"noChannels": "표시할 수 있는 음성 채널이 없습니다."
+},
+"settings": {
+"language": "언어"
+}
+}

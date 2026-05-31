@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Fail ini dijana menggunakan model AI dan belum disemak oleh penterjemah profesional.",
+"common": {
+"bot": "BOT",
+"server": "Pelayan",
+"density": "Kepadatan",
+"online": "Dalam Talian",
+"back": "Kembali",
+"close": "Tutup",
+"loading": "Memuatkan..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Log masuk melalui Discord untuk mengakses panel kawalan.",
+"loginButton": "Log Masuk dengan Discord",
+"logoutButton": "Log Keluar",
+"status": "Status: Log Masuk",
+"settingsTitle": "Tetapan"
+},
+"lobby": {
+"title": "Lobi",
+"selectInstance": "Pilih Instans",
+"playingMusic": "▶ Muzik sedang dimainkan",
+"selectBot": "Pilih Bot"
+},
+"sidebar": {
+"lobby": "Lobi",
+"instances": "Instans",
+"active": "Aktif",
+"yourInstance": "Instans Anda",
+"activeInstances": "Instans Aktif",
+"server": "Pelayan",
+"bots": "Bot",
+"controlling": "Mengawal"
+},
+"botSelector": {
+"title": "Pilih Bot",
+"backToServers": "Kembali ke Pelayan",
+"scanningFleet": "Mengimbas armada bot...",
+"limitTitle": "Had Tercapai!",
+"limitStop": "BERHENTI",
+"limitDescription": "Sudah ada {{max}} bot dalam saluran suara anda. Anda perlu mengeluarkan satu bot untuk memanggil bot yang lain.",
+"returnToLobby": "KEMBALI KE LOBI"
+},
+"botCard": {
+"busy": "Sibuk di tempat lain",
+"joinChannel": "Sertai Saluran!",
+"ready": "Sedia Beraksi"
+},
+"player": {
+"waitingForTrack": "Menunggu lagu...",
+"noCover": "TIADA KULIT ALBUM",
+"leave": "TINGGALKAN",
+"backToCurrent": "Kembali ke Lagu Semasa",
+"controlling": "Mengawal"
+},
+"controls": {
+"previous": "Sebelumnya",
+"playPause": "Main / Jeda",
+"skip": "Langkau",
+"loop": "Ulang"
+},
+"volume": {
+"mute": "SENYAP",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Sedang Dimainkan",
+"upNext": "Seterusnya",
+"previous": "Sebelumnya",
+"empty": "GILIRAN KOSONG",
+"clear": "BERSIHKAN GILIRAN",
+"clearConfirm": "Adakah anda pasti mahu membersihkan giliran lagu?",
+"shuffle": "RAWAK",
+"dedup": "BUANG DUPLIKASI",
+"sortTitle": "A–Z",
+"sortDuration": "DURASI",
+"radioOff": "RADIO TUTUP",
+"radioOn": "RADIO BUKA"
+},
+"search": {
+"placeholder": "Cari...",
+"placeholderFull": "Cari lagu, senarai main, pautan URL...",
+"localMatches": "Padanan Tempatan",
+"recent": "Terbaru",
+"clearHistory": "Bersihkan",
+"searching": "Mencari...",
+"noResults": "Keputusan tidak ditemui",
+"networkSource": "Rangkaian",
+"librarySource": "Perpustakaan"
+},
+"channels": {
+"selectTitle": "Pilih Saluran Suara",
+"selectSubtitle": "Untuk bot yang dipilih",
+"searching": "Mencari saluran...",
+"noChannels": "Tiada saluran suara yang kelihatan."
+},
+"settings": {
+"language": "Bahasa"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "该文件由人工智能模型生成，未经专业翻译人员审核。",
+"common": {
+"bot": "机器人",
+"server": "服务器",
+"density": "间距",
+"online": "在线",
+"back": "返回",
+"close": "关闭",
+"loading": "加载中..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "通过 Discord 登录以访问控制面板。",
+"loginButton": "通过 Discord 登录",
+"logoutButton": "退出登录",
+"status": "状态：已登录",
+"settingsTitle": "设置"
+},
+"lobby": {
+"title": "大厅",
+"selectInstance": "选择实例",
+"playingMusic": "▶ 音乐播放中",
+"selectBot": "选择机器人"
+},
+"sidebar": {
+"lobby": "大厅",
+"instances": "实例",
+"active": "活跃",
+"yourInstance": "您的实例",
+"activeInstances": "活跃实例",
+"server": "服务器",
+"bots": "机器人",
+"controlling": "控制"
+},
+"botSelector": {
+"title": "选择机器人",
+"backToServers": "返回服务器列表",
+"scanningFleet": "正在扫描机器人集群...",
+"limitTitle": "已达上限！",
+"limitStop": "停止",
+"limitDescription": "您的语音频道中已有 {{max}} 个机器人。必须移出一个才能召唤另一个。",
+"returnToLobby": "返回大厅"
+},
+"botCard": {
+"busy": "在其他地方忙碌",
+"joinChannel": "加入频道！",
+"ready": "准备就绪"
+},
+"player": {
+"waitingForTrack": "正在等待曲目...",
+"noCover": "暂无封面",
+"leave": "离开",
+"backToCurrent": "返回当前播放",
+"controlling": "控制"
+},
+"controls": {
+"previous": "上一首",
+"playPause": "播放 / 暂停",
+"skip": "跳过",
+"loop": "循环"
+},
+"volume": {
+"mute": "静音",
+"label": "音量"
+},
+"queue": {
+"nowPlaying": "正在播放",
+"upNext": "即将播放",
+"previous": "历史播放",
+"empty": "队列为空",
+"clear": "清空队列",
+"clearConfirm": "确定要清空播放队列吗？",
+"shuffle": "随机播放",
+"dedup": "去除重复",
+"sortTitle": "A–Z 排序",
+"sortDuration": "按时长排序",
+"radioOff": "电台关闭",
+"radioOn": "电台开启"
+},
+"search": {
+"placeholder": "搜索...",
+"placeholderFull": "搜索曲目、歌单、URL 链接...",
+"localMatches": "本地匹配结果",
+"recent": "最近搜索",
+"clearHistory": "清除",
+"searching": "正在搜索...",
+"noResults": "未找到相关结果",
+"networkSource": "网络资源",
+"librarySource": "媒体库"
+},
+"channels": {
+"selectTitle": "选择语音频道",
+"selectSubtitle": "针对所选机器人",
+"searching": "正在搜索频道...",
+"noChannels": "未发现可见的语音频道。"
+},
+"settings": {
+"language": "语言"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Acest fișier a fost generat utilizând un model de IA și nu a fost verificat de un traducător profesionist.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Densitate",
+"online": "Online",
+"back": "Înapoi",
+"close": "Închide",
+"loading": "Se încarcă..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Conectează-te prin Discord pentru a accesa panoul de control.",
+"loginButton": "Conectează-te prin Discord",
+"logoutButton": "Deconectează-te",
+"status": "Status: Conectat",
+"settingsTitle": "Setări"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Selectează instanța",
+"playingMusic": "▶ Muzica redă",
+"selectBot": "Selectează botul"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanțe",
+"active": "Activ",
+"yourInstance": "Instanța ta",
+"activeInstances": "Instanțe active",
+"server": "Server",
+"bots": "Boți",
+"controlling": "Control"
+},
+"botSelector": {
+"title": "Selectează botul",
+"backToServers": "Înapoi la servere",
+"scanningFleet": "Se scanează flota...",
+"limitTitle": "Limită atinsă!",
+"limitStop": "STOP",
+"limitDescription": "Sunt deja {{max}} boți pe canalul tău vocal. Trebuie să dai afară unul pentru a chema altul.",
+"returnToLobby": "ÎNAPOI ÎN LOBBY"
+},
+"botCard": {
+"busy": "Ocupat în altă parte",
+"joinChannel": "Alătură-te canalului!",
+"ready": "Pregătit de acțiune"
+},
+"player": {
+"waitingForTrack": "Se așteaptă piesa...",
+"noCover": "FĂRĂ COPERTĂ",
+"leave": "PĂRĂSEȘTE",
+"backToCurrent": "Înapoi la cea actuală",
+"controlling": "Control"
+},
+"controls": {
+"previous": "Precedentă",
+"playPause": "Redare / Pauză",
+"skip": "Omite",
+"loop": "Repetare"
+},
+"volume": {
+"mute": "MUT",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Redă acum",
+"upNext": "Urmează",
+"previous": "Precedente",
+"empty": "COADĂ GOLĂ",
+"clear": "GOLEȘTE COADA",
+"clearConfirm": "Sigur vrei să golești coada?",
+"shuffle": "ALEATORIU",
+"dedup": "DEDUP",
+"sortTitle": "A–Z",
+"sortDuration": "TIMP",
+"radioOff": "RADIO OPRIT",
+"radioOn": "RADIO PORNIT"
+},
+"search": {
+"placeholder": "Caută...",
+"placeholderFull": "Caută piese, liste de redare, URL-uri...",
+"localMatches": "Rezultate locale",
+"recent": "Recente",
+"clearHistory": "Șterge",
+"searching": "Se caută...",
+"noResults": "Niciun rezultat",
+"networkSource": "Rețea",
+"librarySource": "Bibliotecă"
+},
+"channels": {
+"selectTitle": "Selectează canalul vocal",
+"selectSubtitle": "Pentru botul selectat",
+"searching": "Se caută canale...",
+"noChannels": "Nu există canale vocale vizibile."
+},
+"settings": {
+"language": "Limbă"
+}
+}

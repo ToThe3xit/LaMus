@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Tập tin này được tạo ra bằng mô hình AI và chưa được kiểm duyệt bởi dịch thuật viên chuyên nghiệp.",
+"common": {
+"bot": "BOT",
+"server": "Máy chủ",
+"density": "Mật độ",
+"online": "Trực tuyến",
+"back": "Quay lại",
+"close": "Đóng",
+"loading": "Đang tải..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Đăng nhập bằng Discord để truy cập bảng điều khiển.",
+"loginButton": "Đăng nhập bằng Discord",
+"logoutButton": "Đăng xuất",
+"status": "Trạng thái: Đã đăng nhập",
+"settingsTitle": "Cài đặt"
+},
+"lobby": {
+"title": "Sảnh chờ",
+"selectInstance": "Chọn thực thể",
+"playingMusic": "▶ Đang phát nhạc",
+"selectBot": "Chọn bot"
+},
+"sidebar": {
+"lobby": "Sảnh chờ",
+"instances": "Thực thể",
+"active": "Hoạt động",
+"yourInstance": "Thực thể của bạn",
+"activeInstances": "Thực thể đang hoạt động",
+"server": "Máy chủ",
+"bots": "Bot",
+"controlling": "Điều khiển"
+},
+"botSelector": {
+"title": "Chọn bot",
+"backToServers": "Quay lại danh sách máy chủ",
+"scanningFleet": "Đang quét đội ngũ bot...",
+"limitTitle": "Đã đạt giới hạn!",
+"limitStop": "DỪNG",
+"limitDescription": "Đã có {{max}} bot trong kênh thoại của bạn. Bạn cần trục xuất một bot để mời bot khác vào.",
+"returnToLobby": "QUAY LẠI SẢNH CHỜ"
+},
+"botCard": {
+"busy": "Đang bận ở nơi khác",
+"joinChannel": "Vào kênh ngay!",
+"ready": "Sẵn sàng hoạt động"
+},
+"player": {
+"waitingForTrack": "Đang chờ bài hát...",
+"noCover": "KHÔNG CÓ ẢNH BÌA",
+"leave": "RỜI KHỎI",
+"backToCurrent": "Quay lại bài hiện tại",
+"controlling": "Điều khiển"
+},
+"controls": {
+"previous": "Bài trước",
+"playPause": "Phát / Tạm dừng",
+"skip": "Bỏ qua",
+"loop": "Lặp lại"
+},
+"volume": {
+"mute": "TẮT TIẾNG",
+"label": "ÂM LƯỢNG"
+},
+"queue": {
+"nowPlaying": "Đang phát",
+"upNext": "Tiếp theo",
+"previous": "Bài hát trước đó",
+"empty": "DANH SÁCH CHỜ TRỐNG",
+"clear": "XÓA DANH SÁCH CHỜ",
+"clearConfirm": "Bạn có chắc chắn muốn xóa danh sách chờ không?",
+"shuffle": "PHÁT TRỘN",
+"dedup": "XÓA TRÙNG LẶP",
+"sortTitle": "Sắp xếp A–Z",
+"sortDuration": "Sắp xếp theo thời lượng",
+"radioOff": "TẮT RADIO",
+"radioOn": "BẬT RADIO"
+},
+"search": {
+"placeholder": "Tìm kiếm...",
+"placeholderFull": "Tìm bài hát, danh sách phát, đường dẫn URL...",
+"localMatches": "Kết quả nội bộ",
+"recent": "Gần đây",
+"clearHistory": "Xóa lịch sử",
+"searching": "Đang tìm kiếm...",
+"noResults": "Không tìm thấy kết quả",
+"networkSource": "Mạng internet",
+"librarySource": "Thư viện"
+},
+"channels": {
+"selectTitle": "Chọn kênh thoại",
+"selectSubtitle": "Cho bot đã chọn",
+"searching": "Đang tìm kênh...",
+"noChannels": "Không tìm thấy kênh thoại nào khả dụng."
+},
+"settings": {
+"language": "Ngôn ngữ"
+}
+}

@@ -57,6 +57,8 @@ impl CoreState{
             Command::PlayIndex { index } => self.handle_play_index(index),
             Command::ToggleLoop => self.handle_toggle_loop(),
             Command::ShuffleQueue => self.handle_shuffle_queue(),
+            Command::DeduplicateQueue => self.handle_dedup_queue(),
+            Command::SortQueue { mode } => self.handle_sort_queue(mode),
         }
     }
 
@@ -422,5 +424,13 @@ impl CoreState{
         vec![
             Event::QueueShuffled,
         ]
+    }
+    fn handle_dedup_queue(&mut self) -> Vec<Event> {
+        self.queue.dedup_upcoming();
+        vec![Event::QueueDeduplicated]
+    }
+    fn handle_sort_queue(&mut self, mode: crate::queue::SortMode) -> Vec<Event> {
+        self.queue.sort_upcoming(mode);
+        vec![Event::QueueSorted]
     }
 }

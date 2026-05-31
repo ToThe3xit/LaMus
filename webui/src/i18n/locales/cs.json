@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Tento soubor byl vygenerován pomocí modelu AI a nebyl ověřen profesionálním překladatelem.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Hustota",
+"online": "Online",
+"back": "Zpět",
+"close": "Zavřít",
+"loading": "Načítání..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Přihlaste se přes Discord pro přístup k ovládacímu panelu.",
+"loginButton": "Přihlásit se přes Discord",
+"logoutButton": "Odhlásit se",
+"status": "Stav: Přihlášen",
+"settingsTitle": "Nastavení"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Vyberte instanci",
+"playingMusic": "▶ Hraje hudba",
+"selectBot": "Vyberte bota"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instance",
+"active": "Aktivní",
+"yourInstance": "Vaše instance",
+"activeInstances": "Aktivní instance",
+"server": "Server",
+"bots": "Boti",
+"controlling": "Ovládání"
+},
+"botSelector": {
+"title": "Vyberte bota",
+"backToServers": "Zpět na servery",
+"scanningFleet": "Skenování flotily...",
+"limitTitle": "Limit dosažen!",
+"limitStop": "STOP",
+"limitDescription": "Ve vašem hlasovém kanálu je již {{max}} botů. Musíte jednoho vyhodit, abyste mohli přivolat dalšího.",
+"returnToLobby": "ZPĚT DO LOBBY"
+},
+"botCard": {
+"busy": "Obsazen jinde",
+"joinChannel": "Připojit se ke kanálu!",
+"ready": "Připraven k akci"
+},
+"player": {
+"waitingForTrack": "Čekání na skladbu...",
+"noCover": "BEZ OBALU",
+"leave": "OPUSTIT",
+"backToCurrent": "Zpět na aktuální",
+"controlling": "Ovládání"
+},
+"controls": {
+"previous": "Předchozí",
+"playPause": "Přehrát / Pozastavit",
+"skip": "Přeskočit",
+"loop": "Smyčka"
+},
+"volume": {
+"mute": "ZTLUMIT",
+"label": "HLAS"
+},
+"queue": {
+"nowPlaying": "Právě hraje",
+"upNext": "Následující",
+"previous": "Předchozí",
+"empty": "PRÁZDNÁ FRONTA",
+"clear": "VYČISTIT FRONTU",
+"clearConfirm": "Opravdu chcete vyčistit frontu?",
+"shuffle": "NAHODNĚ",
+"dedup": "ODSTRANIT DUPLICITY",
+"sortTitle": "A–Z",
+"sortDuration": "ČAS",
+"radioOff": "RÁDIO VYP.",
+"radioOn": "RÁDIO ZAP."
+},
+"search": {
+"placeholder": "Hledat...",
+"placeholderFull": "Hledat skladby, playlisty, URL...",
+"localMatches": "Lokální výsledky",
+"recent": "Nedávné",
+"clearHistory": "Vymazat",
+"searching": "Hledám...",
+"noResults": "Žádné výsledky",
+"networkSource": "Síť",
+"librarySource": "Knihovna"
+},
+"channels": {
+"selectTitle": "Vyberte hlasový kanál",
+"selectSubtitle": "Pro vybraného bota",
+"searching": "Hledám kanály...",
+"noChannels": "Žádné viditelné hlasové kanály."
+},
+"settings": {
+"language": "Jazyk"
+}
+}

@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Цей файл був створений за допомогою моделі ШІ та не був перевірений професійним перекладачем.",
+"common": {
+"bot": "БОТ",
+"server": "Сервер",
+"density": "Щільність",
+"online": "Онлайн",
+"back": "Назад",
+"close": "Закрити",
+"loading": "Завантаження..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Увійдіть через Discord, щоб отримати доступ до панелі керування.",
+"loginButton": "Увійти через Discord",
+"logoutButton": "Вийти",
+"status": "Статус: В мережі",
+"settingsTitle": "Налаштування"
+},
+"lobby": {
+"title": "Лоббі",
+"selectInstance": "Виберіть інстанс",
+"playingMusic": "▶ Грає музика",
+"selectBot": "Виберіть бота"
+},
+"sidebar": {
+"lobby": "Лоббі",
+"instances": "Інстанси",
+"active": "Активний",
+"yourInstance": "Ваш інстанс",
+"activeInstances": "Активні інстанси",
+"server": "Сервер",
+"bots": "Боти",
+"controlling": "Керування"
+},
+"botSelector": {
+"title": "Виберіть бота",
+"backToServers": "Назад до серверів",
+"scanningFleet": "Сканування флоту...",
+"limitTitle": "Ліміт досягнуто!",
+"limitStop": "СТОП",
+"limitDescription": "У вашому голосовому каналі вже є {{max}} ботів. Ви повинні відключити одного, щоб призвати наступного.",
+"returnToLobby": "ПОВЕРНУТИСЯ ДО ЛОББІ"
+},
+"botCard": {
+"busy": "Зайнятий в іншому місці",
+"joinChannel": "Приєднатися до каналу!",
+"ready": "Готовий до дій"
+},
+"player": {
+"waitingForTrack": "Очікування треку...",
+"noCover": "НЕМАЄ ОБКЛАДИНКИ",
+"leave": "ПОКИНУТИ",
+"backToCurrent": "Назад до поточного",
+"controlling": "Керування"
+},
+"controls": {
+"previous": "Попередній",
+"playPause": "Відтворення / Пауза",
+"skip": "Пропустити",
+"loop": "Повтор"
+},
+"volume": {
+"mute": "ВИМК. ЗВУК",
+"label": "ГУЧН"
+},
+"queue": {
+"nowPlaying": "Зараз грає",
+"upNext": "Далі",
+"previous": "Попередні",
+"empty": "ЧЕРГА ПУСТА",
+"clear": "ОЧИСТИТИ ЧЕРГУ",
+"clearConfirm": "Ви впевнені, що хочете очистити чергу?",
+"shuffle": "ПЕРЕМІШАТИ",
+"dedup": "ВИДАЛИТИ ДУБЛІ",
+"sortTitle": "А–Я",
+"sortDuration": "ЧАС",
+"radioOff": "РАДІО ВИМК.",
+"radioOn": "РАДІО ВВІМК."
+},
+"search": {
+"placeholder": "Пошук...",
+"placeholderFull": "Пошук треків, плейлістів, URL...",
+"localMatches": "Локальні збіги",
+"recent": "Недавні",
+"clearHistory": "Очистити",
+"searching": "Пошук...",
+"noResults": "Немає результатів",
+"networkSource": "Мережа",
+"librarySource": "Бібліотека"
+},
+"channels": {
+"selectTitle": "Виберіть голосовий канал",
+"selectSubtitle": "Для вибраного бота",
+"searching": "Пошук каналів...",
+"noChannels": "Немає видимих голосових каналів."
+},
+"settings": {
+"language": "Мова"
+}
+}

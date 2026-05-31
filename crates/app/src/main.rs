@@ -620,7 +620,40 @@ async fn main() {
                                 node.audio.clone()
                             ).await;
                         }
-                    },                    
+                    },
+                    CoreMessage::DeduplicateQueue { server_id, bot_index } => {
+                        if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
+                            let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+                            let events = {
+                                let mut c = node.core.lock().await;
+                                c.handle_command(Command::DeduplicateQueue)
+                            };
+                            musicbot_discord_adapter::discord::commands::process_core_events(
+                                guild_id,
+                                events,
+                                node.audio.clone()
+                            ).await;
+                        }
+                    },
+                    CoreMessage::SortQueue { server_id, bot_index, mode } => {
+                        if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
+                            let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+                            let sort_mode = match mode.as_str() {
+                                "duration" => musicbot_core::queue::SortMode::Duration,
+                                //"source"   => musicbot_core::queue::SortMode::Source,
+                                _          => musicbot_core::queue::SortMode::Title,
+                            };
+                            let events = {
+                                let mut c = node.core.lock().await;
+                                c.handle_command(Command::SortQueue { mode: sort_mode })
+                            };
+                            musicbot_discord_adapter::discord::commands::process_core_events(
+                                guild_id,
+                                events,
+                                node.audio.clone()
+                            ).await;
+                        }
+                    },                
                 }
             }
         }

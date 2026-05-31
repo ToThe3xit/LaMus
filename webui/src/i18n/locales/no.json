@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Denne filen ble generert ved hjelp av en AI-modell og har ikke blitt verifisert av en profesjonell oversetter.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Tetthet",
+"online": "Online",
+"back": "Tilbake",
+"close": "Lukk",
+"loading": "Laster..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Logg inn via Discord for å få tilgang til kontrollpanelet.",
+"loginButton": "Logg inn med Discord",
+"logoutButton": "Logg ut",
+"status": "Status: Logget inn",
+"settingsTitle": "Innstillinger"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Velg instans",
+"playingMusic": "▶ Musikken spiller",
+"selectBot": "Velg bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Instanser",
+"active": "Aktiv",
+"yourInstance": "Din instans",
+"activeInstances": "Aktive instanser",
+"server": "Server",
+"bots": "Botter",
+"controlling": "Kontroll"
+},
+"botSelector": {
+"title": "Velg bot",
+"backToServers": "Tilbake til servere",
+"scanningFleet": "Skanner flåten...",
+"limitTitle": "Grense nådd!",
+"limitStop": "STOPP",
+"limitDescription": "Det er allerede {{max}} botter i talekanalen din. Du må kaste ut én for å tilkalle en ny.",
+"returnToLobby": "TILBAKE TIL LOBBY"
+},
+"botCard": {
+"busy": "Opptatt et annet sted",
+"joinChannel": "Bli med i kanalen!",
+"ready": "Klar til aksjon"
+},
+"player": {
+"waitingForTrack": "Venter på spor...",
+"noCover": "INGEN COVER",
+"leave": "FORLAT",
+"backToCurrent": "Tilbake til gjeldende",
+"controlling": "Kontroll"
+},
+"controls": {
+"previous": "Forrige",
+"playPause": "Spill / Pause",
+"skip": "Hopp over",
+"loop": "Sløyfe"
+},
+"volume": {
+"mute": "DEMP",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "Spilles nå",
+"upNext": "Neste",
+"previous": "Forrige",
+"empty": "TOM KØ",
+"clear": "TØM KØ",
+"clearConfirm": "Er du sikker på at du vil tømme køen?",
+"shuffle": "BLAND",
+"dedup": "FJERN DUPLIKATER",
+"sortTitle": "A–Å",
+"sortDuration": "TID",
+"radioOff": "RADIO AV",
+"radioOn": "RADIO PÅ"
+},
+"search": {
+"placeholder": "Søk...",
+"placeholderFull": "Søk etter spor, spillelister, URL-er...",
+"localMatches": "Lokale treff",
+"recent": "Siste",
+"clearHistory": "Tøm",
+"searching": "Søker...",
+"noResults": "Ingen resultater",
+"networkSource": "Nettverk",
+"librarySource": "Bibliotek"
+},
+"channels": {
+"selectTitle": "Velg talekanal",
+"selectSubtitle": "For valgt bot",
+"searching": "Søker etter kanaler...",
+"noChannels": "Ingen synlige talekanaler."
+},
+"settings": {
+"language": "Språk"
+}
+}

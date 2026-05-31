@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "Questo file è stato generato utilizzando un modello di IA e non è stato verificato da un traduttore professionista.",
+"common": {
+"bot": "BOT",
+"server": "Server",
+"density": "Densità",
+"online": "Online",
+"back": "Indietro",
+"close": "Chiudi",
+"loading": "Caricamento..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "Accedi tramite Discord para accedere al pannello di controllo.",
+"loginButton": "Accedi con Discord",
+"logoutButton": "Disconnettiti",
+"status": "Stato: Connesso",
+"settingsTitle": "Impostazioni"
+},
+"lobby": {
+"title": "Lobby",
+"selectInstance": "Seleziona istanza",
+"playingMusic": "▶ Riproduzione musica",
+"selectBot": "Seleziona bot"
+},
+"sidebar": {
+"lobby": "Lobby",
+"instances": "Istanze",
+"active": "Attiva",
+"yourInstance": "La tua istanza",
+"activeInstances": "Istanze attive",
+"server": "Server",
+"bots": "Bot",
+"controlling": "Controllo"
+},
+"botSelector": {
+"title": "Seleziona bot",
+"backToServers": "Torna ai server",
+"scanningFleet": "Scansione della flotta...",
+"limitTitle": "Limite raggiunto!",
+"limitStop": "STOP",
+"limitDescription": "Ci sono già {{max}} bot nel tuo canale vocale. Devi espellerne uno per evocarne un altro.",
+"returnToLobby": "TORNA ALLA LOBBY"
+},
+"botCard": {
+"busy": "Occupato altrove",
+"joinChannel": "Entra nel canale!",
+"ready": "Pronto all'azione"
+},
+"player": {
+"waitingForTrack": "In attesa di un brano...",
+"noCover": "NESSUNA COPERTINA",
+"leave": "LASCIA",
+"backToCurrent": "Torna al brano attuale",
+"controlling": "Controllo"
+},
+"controls": {
+"previous": "Precedente",
+"playPause": "Riproduci / Pausa",
+"skip": "Salta",
+"loop": "Ripeti"
+},
+"volume": {
+"mute": "MUTO",
+"label": "VOL"
+},
+"queue": {
+"nowPlaying": "In riproduzione",
+"upNext": "Prossimi",
+"previous": "Precedenti",
+"empty": "CODA VUOTA",
+"clear": "SVUOTA CODA",
+"clearConfirm": "Sei sicuro di voler svuotare la coda?",
+"shuffle": "PROVA CASUALE",
+"dedup": "RIMUOVI DUPLICATI",
+"sortTitle": "A–Z",
+"sortDuration": "DURATA",
+"radioOff": "RADIO OFF",
+"radioOn": "RADIO ON"
+},
+"search": {
+"placeholder": "Cerca...",
+"placeholderFull": "Cerca brani, playlist, URL...",
+"localMatches": "Risultati locali",
+"recent": "Recenti",
+"clearHistory": "Cancella",
+"searching": "Ricerca in corso...",
+"noResults": "Nessun risultato",
+"networkSource": "Rete",
+"librarySource": "Libreria"
+},
+"channels": {
+"selectTitle": "Seleziona canale vocale",
+"selectSubtitle": "Per il bot selezionato",
+"searching": "Ricerca canali...",
+"noChannels": "Nessun canale vocale visibile."
+},
+"settings": {
+"language": "Lingua"
+}
+}

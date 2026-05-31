@@ -1,0 +1,102 @@
+{
+"_generatedBy": "AI",
+"_warning": "ไฟล์นี้ถูกสร้างขึ้นโดยใช้โมเดลปัญญาประดิษฐ์ และยังไม่ได้รับการตรวจสอบโดยผู้แปลมืออาชีพ",
+"common": {
+"bot": "บอท",
+"server": "เซิร์ฟเวอร์",
+"density": "ความหนาแน่น",
+"online": "ออนไลน์",
+"back": "ย้อนกลับ",
+"close": "ปิด",
+"loading": "กำลังโหลด..."
+},
+"auth": {
+"loginTitle": "LaMus",
+"loginSubtitle": "เข้าสู่ระบบผ่าน Discord เพื่อเข้าสู่แผงควบคุม",
+"loginButton": "เข้าสู่ระบบด้วย Discord",
+"logoutButton": "ออกจากระบบ",
+"status": "สถานะ: เข้าสู่ระบบแล้ว",
+"settingsTitle": "การตั้งค่า"
+},
+"lobby": {
+"title": "ล็อบบี้",
+"selectInstance": "เลือกอินสแตนซ์",
+"playingMusic": "▶ กำลังเล่นเพลง",
+"selectBot": "เลือกบอท"
+},
+"sidebar": {
+"lobby": "ล็อบบี้",
+"instances": "อินสแตนซ์",
+"active": "ใช้งานอยู่",
+"yourInstance": "อินสแตนซ์ของคุณ",
+"activeInstances": "อินสแตนซ์ที่ใช้งานอยู่",
+"server": "เซิร์ฟเวอร์",
+"bots": "บอท",
+"controlling": "การควบคุม"
+},
+"botSelector": {
+"title": "เลือกบอท",
+"backToServers": "กลับไปที่เซิร์ฟเวอร์",
+"scanningFleet": "กำลังสแกนกลุ่มบอท...",
+"limitTitle": "ถึงขีดจำกัดแล้ว!",
+"limitStop": "หยุด",
+"limitDescription": "มีบอทอยู่ค้างในช่องแยกเสียงของคุณแล้ว {{max}} ตัว คุณต้องนำออกหนึ่งตัวก่อนจะเรียกตัวอื่นได้",
+"returnToLobby": "กลับไปที่ล็อบบี้"
+},
+"botCard": {
+"busy": "ไม่ว่าง (อยู่ที่อื่น)",
+"joinChannel": "เข้าร่วมช่องเสียง!",
+"ready": "พร้อมทำงาน"
+},
+"player": {
+"waitingForTrack": "กำลังรอเพลง...",
+"noCover": "ไม่มีภาพปก",
+"leave": "ออกจากช่อง",
+"backToCurrent": "กลับไปที่เพลงปัจจุบัน",
+"controlling": "การควบคุม"
+},
+"controls": {
+"previous": "เพลงก่อนหน้า",
+"playPause": "เล่น / สต็อป",
+"skip": "ข้าม",
+"loop": "วนลูป"
+},
+"volume": {
+"mute": "ปิดเสียง",
+"label": "ระดับเสียง"
+},
+"queue": {
+"nowPlaying": "กำลังเล่นอยู่",
+"upNext": "เพลงถัดไป",
+"previous": "เพลงก่อนหน้า",
+"empty": "ไม่มีเพลงในคิว",
+"clear": "ล้างคิวเพลง",
+"clearConfirm": "คุณแน่ใจหรือไม่ว่าต้องการล้างคิวเพลงทั้งหมด?",
+"shuffle": "สุ่มเพลง",
+"dedup": "ลบเพลงซ้ำ",
+"sortTitle": "เรียงตาม ก-ฮ / A-Z",
+"sortDuration": "เรียงตามความยาวเพลง",
+"radioOff": "ปิดวิทยุ",
+"radioOn": "เปิดวิทยุ"
+},
+"search": {
+"placeholder": "ค้นหา...",
+"placeholderFull": "ค้นหาเพลง, เพลย์ลิสต์, ลิงก์ URL...",
+"localMatches": "ผลลัพธ์ในเครื่อง",
+"recent": "ล่าสุด",
+"clearHistory": "ล้างประวัติ",
+"searching": "กำลังค้นหา...",
+"noResults": "ไม่พบผลลัพธ์",
+"networkSource": "เครือข่าย",
+"librarySource": "คลังเพลง"
+},
+"channels": {
+"selectTitle": "เลือกช่องเสียง",
+"selectSubtitle": "สำหรับบอทที่เลือก",
+"searching": "กำลังค้นหาช่องเสียง...",
+"noChannels": "ไม่พบช่องเสียงที่สามารถมองเห็นได้"
+},
+"settings": {
+"language": "ภาษา"
+}
+}
