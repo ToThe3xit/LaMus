@@ -290,28 +290,47 @@ async fn handle_socket(
     let mut rx = state.ws_rx.clone();
 
     loop {
-        if rx.changed().await.is_err() { break; }
-        let current_state = rx.borrow().clone();
-        
-        if is_superadmin || user_id.is_empty() {
-            let msg = serde_json::to_string(&current_state).unwrap();
-            if socket.send(Message::Text(msg)).await.is_err() { break; }
-        } else {
-            let mut allowed_state = std::collections::HashMap::new();
-            
-            let user_id_u64 = user_id.parse::<u64>().unwrap_or(0);
-            let user_channel_info = state.hivemind.get_user_channel(user_id_u64).await;
-            
-            for (key, player) in current_state {
-                if let Some((u_guild, u_channel)) = user_channel_info {
-                    if player.server_id == u_guild.to_string() && player.channel_id == u_channel.to_string() {
-                        allowed_state.insert(key, player);
+        tokio::select! {
+            result = rx.changed() => {
+                if result.is_err() { break; }
+                let current_state = rx.borrow().clone();
+                
+                let msg = if is_superadmin || user_id.is_empty() {
+                    serde_json::to_string(&current_state).unwrap()
+                } else {
+                    let mut allowed_state = std::collections::HashMap::new();
+                    let user_id_u64 = user_id.parse::<u64>().unwrap_or(0);
+                    let user_channel_info = state.hivemind.get_user_channel(user_id_u64).await;
+                    
+                    for (key, player) in current_state {
+                        if let Some((u_guild, u_channel)) = user_channel_info {
+                            if player.server_id == u_guild.to_string() 
+                               && player.channel_id == u_channel.to_string() 
+                            {
+                                allowed_state.insert(key, player);
+                            }
+                        }
                     }
+                    serde_json::to_string(&allowed_state).unwrap()
+                };
+                
+                if socket.send(Message::Text(msg)).await.is_err() { break; }
+            }
+
+            msg = socket.recv() => {
+                match msg {
+                    Some(Ok(Message::Text(text))) => {
+                        if let Ok(val) = serde_json::from_str::<serde_json::Value>(&text) {
+                            if val.get("type").and_then(|v| v.as_str()) == Some("ping") {
+                                let pong = serde_json::json!({"type": "pong"}).to_string();
+                                if socket.send(Message::Text(pong)).await.is_err() { break; }
+                            }
+                        }
+                    }
+                    Some(Ok(Message::Close(_))) | None => break,
+                    _ => {}
                 }
             }
-            
-            let msg = serde_json::to_string(&allowed_state).unwrap();
-            if socket.send(Message::Text(msg)).await.is_err() { break; }
         }
     }
 }

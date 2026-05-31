@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import type { CurrentUser } from '../types/bot';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -34,20 +33,35 @@ export default function useAuth() {
   const [isSuperadmin, setIsSuperadmin] =
     useState(false);
 
+  const [sessionVerified, setSessionVerified] =
+    useState(false);
+
   useEffect(() => {
-    if (currentUser) {
-      fetch(`${API_URL}/api/me/admin`, {
-        credentials: 'include',
-      })
-        .then(res => res.json())
-        .then(data => setIsSuperadmin(data))
-        .catch(err =>
-          console.error('Admin verification error:', err)
-        );
-    } else {
-      setIsSuperadmin(false);
+    if (!currentUser) {
+      setSessionVerified(true);
+      return;
     }
-  }, [currentUser]);
+
+    fetch(`${API_URL}/api/me/admin`, {
+      credentials: 'include',
+    })
+      .then(res => {
+        if (!res.ok) {
+          localStorage.removeItem('mbv2_user');
+          localStorage.removeItem('mbv2_view');
+          localStorage.removeItem('mbv2_active_server');
+          setCurrentUser(null);
+          setIsSuperadmin(false);
+        } else {
+          return res.json().then(data => setIsSuperadmin(data));
+        }
+      })
+      .catch(() => {
+      })
+      .finally(() => {
+        setSessionVerified(true);
+      });
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -67,19 +81,28 @@ export default function useAuth() {
 
       localStorage.setItem('mbv2_user', JSON.stringify(user));
       setCurrentUser(user);
+      fetch(`${API_URL}/api/me/admin`, { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => setIsSuperadmin(data))
+        .catch(() => {});
+      setSessionVerified(true);
       window.history.replaceState({}, document.title, '/');
     }
   }, []);
 
   const logout = () => {
     localStorage.removeItem('mbv2_user');
+    localStorage.removeItem('mbv2_view');
+    localStorage.removeItem('mbv2_active_server');
     setCurrentUser(null);
+    setIsSuperadmin(false);
   };
 
   return {
     currentUser,
     setCurrentUser,
     isSuperadmin,
+    sessionVerified,
     logout,
   };
 }

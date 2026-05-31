@@ -50,7 +50,7 @@ function App() {
     }
   }, [activeServerId]);
 
-  const { currentUser, isSuperadmin, logout } = useAuth();
+  const { currentUser, isSuperadmin, sessionVerified, logout } = useAuth();
 
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
@@ -66,7 +66,17 @@ function App() {
 
   const { availableChannels, isLoadingChannels, fetchChannels } = useChannels();
 
-  const [activePlayerKey, setActivePlayerKey] = useState<string | null>(null);
+  const [activePlayerKey, setActivePlayerKey] = useState<string | null>(
+    () => localStorage.getItem('mbv2_active_player_key') || null
+  );
+
+  useEffect(() => {
+    if (activePlayerKey) {
+      localStorage.setItem('mbv2_active_player_key', activePlayerKey);
+    } else {
+      localStorage.removeItem('mbv2_active_player_key');
+    }
+  }, [activePlayerKey]);
 
   const { playerState, setPlayerState, activePlayers, handleWsData } =
     usePlayerState({ activePlayerKey, isSuperadmin, setSystemBots });
@@ -172,7 +182,7 @@ function App() {
   const sendCommand = async (action: string, payload?: string, source?: string) => {
     if (!activeServerId) return;
     try {
-      await fetch(`${API_URL}/api/command`, {
+      const res = await fetch(`${API_URL}/api/command`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -184,6 +194,16 @@ function App() {
           source: source || null,
         }),
       });
+
+      if (res.status === 401) {
+        localStorage.removeItem('mbv2_user');
+        localStorage.removeItem('mbv2_view');
+        localStorage.removeItem('mbv2_active_server');
+        localStorage.removeItem('mbv2_active_player_key');
+        window.location.reload();
+        return;
+      }
+
     } catch (err) {
       console.error('Command sending error:', err);
     }
@@ -255,6 +275,20 @@ function App() {
   // ══════════════════════════════════════════════════════════
   // LOGIN SCREEN OAuth2
   // ══════════════════════════════════════════════════════════
+  if (!sessionVerified) {
+    return (
+      <div className={`fixed inset-0 h-[100dvh] w-full flex items-center justify-center ${
+        theme === 'dark' ? 'bg-black' : 'bg-zinc-100'
+      }`}>
+        <img
+          src={logo}
+          alt="LaMus"
+          className="w-20 h-20 object-contain animate-bounce opacity-60"
+          style={{ animationDuration: '1.5s' }}
+        />
+      </div>
+    );
+  }  
   if (!currentUser) {
     return (
       <div className={`fixed inset-0 h-[100dvh] w-full flex items-center justify-center transition-colors duration-300 font-sans select-none ${theme === 'dark' ? 'bg-black text-zinc-100' : 'bg-zinc-100 text-zinc-900'}`}>

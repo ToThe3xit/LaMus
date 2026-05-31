@@ -8,6 +8,7 @@ use axum::{
 use serde::Deserialize;
 use std::sync::Arc;
 use tower_cookies::{Cookie, Cookies};
+use tower_cookies::cookie::time::Duration;
 
 // ============================================================ //
 // ==== DATA STRUCTURES AND AUTHENTICATION STATE ============== //
@@ -112,6 +113,8 @@ async fn callback_handler(
     let mut session_cookie = Cookie::new("mbv2_session", user_data.id.clone());
     session_cookie.set_path("/");
     session_cookie.set_http_only(true);
+    session_cookie.set_max_age(Duration::days(30));
+    session_cookie.set_same_site(tower_cookies::cookie::SameSite::Lax);
     cookies.add(session_cookie);
 
     let avatar_hash = user_data.avatar.unwrap_or_default();

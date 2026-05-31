@@ -539,7 +539,7 @@ The following features are planned for the next release:
 ### ~~Queue Shuffle~~ - DONE
 Randomise the active playback queue in-place. The currently playing track is not interrupted and playback history is preserved.
 
-### Bulk Queue Operations
+### ~~Bulk Queue Operations~~ - DONE
 - **Deduplication** — automatically remove duplicate tracks from the queue based on their internal track ID.
 - **Advanced sorting** — sort queued tracks by duration or by playback source (local vs. network).
 
@@ -549,7 +549,7 @@ After the queue is exhausted, the system will automatically fetch and enqueue re
 ### Volume Normalisation (Auto-Volume)
 An RMS/LUFS analysis pass run at track load time. Equalises perceived loudness when transitioning between local files (which may have inconsistent mastering) and YouTube streams, eliminating the need for manual volume correction between tracks.
 
-### Multi-Language Support (i18n)
+### ~~Multi-Language Support (i18n)~~ - DONE
 Full architectural refactor of the WebUI string layer to support runtime language switching (Polish, English, German as initial targets). This is a prerequisite for opening the project to an international community and for the eventual option of running LaMus as a public bot.
 
 ### Bot Session Ownership

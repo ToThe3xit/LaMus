@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL;
+const HEARTBEAT_INTERVAL_MS = 30_000;
+const HEARTBEAT_TIMEOUT_MS  = 10_000;
 
 export default function useWebSocket(
   enabled: boolean,
@@ -26,15 +28,57 @@ export default function useWebSocket(
 
     let ws: WebSocket;
     let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let heartbeatTimer: ReturnType<typeof setInterval> | null = null;
+    let pongTimer: ReturnType<typeof setTimeout> | null = null;
     let destroyed = false;
+
+    const clearTimers = () => {
+      if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
+      if (pongTimer) { clearTimeout(pongTimer); pongTimer = null; }
+    };
+
+    const scheduleReconnect = () => {
+      clearTimers();
+      if (!destroyed) {
+        reconnectTimer = setTimeout(connect, 2000);
+      }
+    };
 
     const connect = () => {
       if (destroyed) return;
+      if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
+
       ws = new WebSocket(getWsUrl());
+
+      ws.onopen = () => {
+        heartbeatTimer = setInterval(() => {
+          if (ws.readyState !== WebSocket.OPEN) {
+            scheduleReconnect();
+            return;
+          }
+          try {
+            ws.send(JSON.stringify({ type: 'ping' }));
+          } catch {
+            scheduleReconnect();
+            return;
+          }
+          pongTimer = setTimeout(() => {
+            console.warn('[WS] Heartbeat timeout — reconnecting');
+            ws.close();
+            scheduleReconnect();
+          }, HEARTBEAT_TIMEOUT_MS);
+        }, HEARTBEAT_INTERVAL_MS);
+      };
 
       ws.onmessage = (e) => {
         try {
           const data = JSON.parse(e.data);
+
+          if (data?.type === 'pong') {
+            if (pongTimer) { clearTimeout(pongTimer); pongTimer = null; }
+            return;
+          }
+
           onMessageRef.current(data);
         } catch (err) {
           console.error('WebSocket parse error:', err);
@@ -46,9 +90,8 @@ export default function useWebSocket(
       };
 
       ws.onclose = () => {
-        if (!destroyed) {
-          reconnectTimer = setTimeout(connect, 2000);
-        }
+        clearTimers();
+        scheduleReconnect();
       };
     };
 
@@ -56,6 +99,7 @@ export default function useWebSocket(
 
     return () => {
       destroyed = true;
+      clearTimers();
       if (reconnectTimer) clearTimeout(reconnectTimer);
       ws?.close();
     };
