@@ -536,7 +536,7 @@ The interface adapts automatically down to approximately 360 px wide. Below that
 
 The following features are planned for the next release:
 
-### Queue Shuffle
+### ~~Queue Shuffle~~ - DONE
 Randomise the active playback queue in-place. The currently playing track is not interrupted and playback history is preserved.
 
 ### Bulk Queue Operations
