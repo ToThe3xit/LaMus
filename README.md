@@ -546,11 +546,14 @@ Randomise the active playback queue in-place. The currently playing track is not
 ### ~~Smart Autoplay (Recommendation Algorithm)~~ - DONE
 After the queue is exhausted, the system will automatically fetch and enqueue related tracks from YouTube (based on the YouTube Related Tracks API). This replaces the current Radio module with a smarter, zero-configuration continuation engine.
 
-### Volume Normalisation (Auto-Volume)
-An RMS/LUFS analysis pass run at track load time. Equalises perceived loudness when transitioning between local files (which may have inconsistent mastering) and YouTube streams, eliminating the need for manual volume correction between tracks.
-
 ### ~~Multi-Language Support (i18n)~~ - DONE
 Full architectural refactor of the WebUI string layer to support runtime language switching (Polish, English, German as initial targets). This is a prerequisite for opening the project to an international community and for the eventual option of running LaMus as a public bot.
+
+### ~~Volume Normalisation (Auto-Volume)~~ - DEFERRED
+
+*Deferred to a future major release. A proper implementation would require a dedicated Lavalink plugin capable of exposing loudness metadata or performing audio normalisation directly within the Lavalink audio processing pipeline. Since this functionality cannot be reliably implemented from the LaMus side alone, it has been postponed and will most likely become the primary focus of Patch 0.4.0.*
+
+An RMS/LUFS analysis pass run at track load time. Equalises perceived loudness when transitioning between local files (which may have inconsistent mastering) and YouTube streams, eliminating the need for manual volume correction between tracks.
 
 ### Bot Session Ownership
 The user who invites a bot to a channel becomes its owner for that session. Ownership grants exclusive control, with the option to delegate permissions to specific users or open the session to the entire voice channel.
