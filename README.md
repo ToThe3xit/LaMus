@@ -543,7 +543,7 @@ Randomise the active playback queue in-place. The currently playing track is not
 - **Deduplication** — automatically remove duplicate tracks from the queue based on their internal track ID.
 - **Advanced sorting** — sort queued tracks by duration or by playback source (local vs. network).
 
-### Smart Autoplay (Recommendation Algorithm)
+### ~~Smart Autoplay (Recommendation Algorithm)~~ - DONE
 After the queue is exhausted, the system will automatically fetch and enqueue related tracks from YouTube (based on the YouTube Related Tracks API). This replaces the current Radio module with a smarter, zero-configuration continuation engine.
 
 ### Volume Normalisation (Auto-Volume)

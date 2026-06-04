@@ -44,7 +44,7 @@ pub async fn handle_interaction(
 
     if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, c)| *g == u_guild && *c == u_chan) {
         target_bot_index = Some(*b_idx);
-    } 
+    }
 
     if target_bot_index.is_none() {
         let bots_guard = hivemind.bots.read().await;
@@ -152,7 +152,10 @@ pub async fn trigger_radio(
     docker_tracks_dir: Arc<String>,
 ) {
     println!("[RADIO] Initializing Auto-Radio algorithm (Source: {:?})", source);
-    let time = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_micros() as usize;
+    let time = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_micros() as usize;
 
     match source {
         musicbot_core::event::RadioSource::Local => {
@@ -160,34 +163,90 @@ pub async fn trigger_radio(
             if tracks_len > 0 {
                 let random_idx = time % tracks_len;
                 let local_track = &tracks_preview.tracks[random_idx];
-                
+
                 let (file_path, _) = db.get(&local_track.id)
                     .map(|(p, d)| (p.to_string_lossy().to_string(), *d))
                     .unwrap_or_else(|| ("".to_string(), 0));
 
-                let docker_path = file_path.replace(local_tracks_dir.as_str(), docker_tracks_dir.as_str());
+                let docker_path = file_path.replace(
+                    local_tracks_dir.as_str(),
+                    docker_tracks_dir.as_str(),
+                );
 
                 if let Some(mut lavalink_tracks) = resolve_tracks(&docker_path, &lavalink_password).await {
                     if !lavalink_tracks.is_empty() {
                         let mut track = lavalink_tracks.remove(0);
                         track.title = local_track.title.clone();
-                        println!("[RADIO] Queuing track: {}", track.title);
+                        println!("[RADIO] Local radio queuing: {}", track.title);
                         add_track_and_autoplay_bg(guild_id, track, core, audio).await;
                     }
                 }
             }
         }
-        musicbot_core::event::RadioSource::Network => {
-            let queries = ["creepy nuts", "creepy nuts mirage", "creepy nuts dandandan", "ado", "ado mirror"];
-            let query = queries[time % queries.len()];
-            
-            let prefix = std::str::from_utf8(&[121, 116, 115, 101, 97, 114, 99, 104, 58]).unwrap();
 
-            if let Some(mut lavalink_tracks) = resolve_tracks(&format!("{}{}", prefix, query), &lavalink_password).await {
-                if !lavalink_tracks.is_empty() {
-                    let track = lavalink_tracks.remove(0);
-                    println!("[RADIO] Network radio automatically adding: {}", track.title);
-                    add_track_and_autoplay_bg(guild_id, track, core, audio).await;
+        musicbot_core::event::RadioSource::Network => {
+            let last_track_json = {
+                let c = core.lock().await;
+                c.queue.current_track()
+                    .and_then(|t| t.lavalink_id.clone())
+                    .or_else(|| {
+                        c.history.iter().rev()
+                            .find(|t| t.lavalink_id.is_some())
+                            .and_then(|t| t.lavalink_id.clone())
+                    })
+            };
+
+            let mut used_recommendation = false;
+
+            if let Some(ref track_json) = last_track_json {
+                if let Some(video_id) = musicbot_audio_lavalink::extract_video_id_from_track_json(track_json) {
+                    println!("[RADIO] Fetching InnerTube recommendation for video_id: {}", video_id);
+
+                    if let Some(related_id) = musicbot_audio_lavalink::get_related_video_id(&video_id).await {
+                    musicbot_audio_lavalink::mark_as_played(&related_id).await;
+                    musicbot_audio_lavalink::mark_as_played(&video_id).await;
+
+                    let related_url = {
+                            let https = std::str::from_utf8(&[104,116,116,112,115,58,47,47]).unwrap();
+                            let www   = std::str::from_utf8(&[119,119,119,46]).unwrap();
+                            let yt    = std::str::from_utf8(&[121,111,117,116,117,98,101,46,99,111,109]).unwrap();
+                            let path  = std::str::from_utf8(&[47,119,97,116,99,104,63,118,61]).unwrap();
+                            format!("{}{}{}{}{}", https, www, yt, path, related_id)
+                        };
+
+                        if let Some(mut lavalink_tracks) = resolve_tracks(&related_url, &lavalink_password).await {
+                            if !lavalink_tracks.is_empty() {
+                                let track = lavalink_tracks.remove(0);
+                                println!("[RADIO] InnerTube recommendation queued: {}", track.title);
+                                add_track_and_autoplay_bg(guild_id, track, core.clone(), audio.clone()).await;
+                                used_recommendation = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if !used_recommendation {
+                println!("[RADIO] InnerTube unavailable, falling back to search");
+                
+                let time_secs = std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs() as usize;
+                
+                let queries = ["creepy nuts", "ado", "yoasobi", "kenshi yonezu", "eve"];
+                let query = queries[(time_secs / 30) % queries.len()];
+                let prefix = std::str::from_utf8(&[121,116,115,101,97,114,99,104,58]).unwrap();
+
+                if let Some(mut lavalink_tracks) = resolve_tracks(
+                    &format!("{}{}", prefix, query),
+                    &lavalink_password,
+                ).await {
+                    if !lavalink_tracks.is_empty() {
+                        let track = lavalink_tracks.remove(0);
+                        println!("[RADIO] Fallback radio queued: {}", track.title);
+                        add_track_and_autoplay_bg(guild_id, track, core, audio).await;
+                    }
                 }
             }
         }

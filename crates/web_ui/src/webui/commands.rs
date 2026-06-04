@@ -24,9 +24,13 @@ pub async fn trigger_radio(
     lavalink_password: Arc<String>,
     local_tracks_dir: Arc<String>,
     docker_tracks_dir: Arc<String>,
+    last_track_json: Option<String>,
 ) {
     println!("[WEBUI-RADIO] Stream triggered for bot #{} (Source: {:?})", bot_index, source);
-    let time = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_micros() as usize;
+    let time = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_micros() as usize;
 
     match source {
         RadioSource::Local => {
@@ -34,28 +38,82 @@ pub async fn trigger_radio(
             if tracks_len > 0 {
                 let random_idx = time % tracks_len;
                 let local_track = &tracks_preview.tracks[random_idx];
-                
+
                 if let Some((file_path, _)) = db.get(&local_track.id) {
-                    let docker_path = file_path.to_string_lossy().replace(local_tracks_dir.as_str(), docker_tracks_dir.as_str());
+                    let docker_path = file_path
+                        .to_string_lossy()
+                        .replace(local_tracks_dir.as_str(), docker_tracks_dir.as_str());
+
                     if let Some(mut lavalink_tracks) = resolve_tracks(&docker_path, &lavalink_password).await {
                         if !lavalink_tracks.is_empty() {
                             let mut track = lavalink_tracks.remove(0);
                             track.title = local_track.title.clone();
-                            let _ = tx.send(CoreMessage::PlayTrack { server_id: server_id.clone(), bot_index, track }).await;
+                            let _ = tx.send(CoreMessage::PlayTrack {
+                                server_id: server_id.clone(),
+                                bot_index,
+                                track,
+                            }).await;
                         }
                     }
                 }
             }
         }
+
         RadioSource::Network => {
-            let queries = ["creepy nuts", "creepy nuts mirage", "creepy nuts dandandan", "ado", "ado mirror"];
-            let query = queries[time % queries.len()];
-            
-            let prefix = std::str::from_utf8(&[121, 116, 115, 101, 97, 114, 99, 104, 58]).unwrap();
-            if let Some(mut lavalink_tracks) = resolve_tracks(&format!("{}{}", prefix, query), &lavalink_password).await {
-                if !lavalink_tracks.is_empty() {
-                    let track = lavalink_tracks.remove(0);
-                    let _ = tx.send(CoreMessage::PlayTrack { server_id: server_id.clone(), bot_index, track }).await;
+            let mut used_recommendation = false;
+
+            if let Some(ref track_json) = last_track_json {
+                if let Some(video_id) = musicbot_audio_lavalink::extract_video_id_from_track_json(track_json) {
+                    println!("[WEBUI-RADIO] Fetching InnerTube recommendation for: {}", video_id);
+
+                    if let Some(related_id) = musicbot_audio_lavalink::get_related_video_id(&video_id).await {
+                    musicbot_audio_lavalink::mark_as_played(&related_id).await;
+                    musicbot_audio_lavalink::mark_as_played(&video_id).await;
+
+                    let related_url = {
+                            let https = std::str::from_utf8(&[104,116,116,112,115,58,47,47]).unwrap();
+                            let www   = std::str::from_utf8(&[119,119,119,46]).unwrap();
+                            let yt    = std::str::from_utf8(&[121,111,117,116,117,98,101,46,99,111,109]).unwrap();
+                            let path  = std::str::from_utf8(&[47,119,97,116,99,104,63,118,61]).unwrap();
+                            format!("{}{}{}{}{}", https, www, yt, path, related_id)
+                        };
+
+                        if let Some(mut lavalink_tracks) = resolve_tracks(&related_url, &lavalink_password).await {
+                            if !lavalink_tracks.is_empty() {
+                                let track = lavalink_tracks.remove(0);
+                                println!("[WEBUI-RADIO] Recommendation queued: {}", track.title);
+                                let _ = tx.send(CoreMessage::PlayTrack {
+                                    server_id: server_id.clone(),
+                                    bot_index,
+                                    track,
+                                }).await;
+                                used_recommendation = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if !used_recommendation {
+                let time_secs = std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs() as usize;
+                let queries = ["creepy nuts", "ado", "yoasobi", "kenshi yonezu", "eve"];
+                let query = queries[(time_secs / 30) % queries.len()];
+                let prefix = std::str::from_utf8(&[121,116,115,101,97,114,99,104,58]).unwrap();
+                if let Some(mut lavalink_tracks) = resolve_tracks(
+                    &format!("{}{}", prefix, query),
+                    &lavalink_password,
+                ).await {
+                    if !lavalink_tracks.is_empty() {
+                        let track = lavalink_tracks.remove(0);
+                        let _ = tx.send(CoreMessage::PlayTrack {
+                            server_id: server_id.clone(),
+                            bot_index,
+                            track,
+                        }).await;
+                    }
                 }
             }
         }
@@ -74,43 +132,40 @@ pub async fn handle_command(
     let session_cookie = cookies.get("mbv2_session");
     if session_cookie.is_none() {
         println!("[WEBUI-WARN] Unauthorized API request rejected (Action: {})", command.action);
-        return Json(CommandResponse { 
-            success: false, 
-            message: "Unauthorized! Please log in again.".into(), 
-            results: None 
+        return Json(CommandResponse {
+            success: false,
+            message: "Unauthorized! Please log in again.".into(),
+            results: None,
         });
     }
 
     let user_id = session_cookie.unwrap().value().to_string();
     let server_id = command.server_id.clone();
-    
+
     let user_id_u64 = user_id.parse::<u64>().unwrap_or(0);
     let server_id_u64 = server_id.parse::<u64>().unwrap_or(0);
     let is_superadmin = state.superadmin_ids.contains(&user_id);
-    
+
     let mut target_bot = command.bot_id.unwrap_or(0);
 
     if command.bot_id.is_none() && command.action != "join" {
         let busy_bots = state.hivemind.get_all_busy_bots().await;
-        
+
         if let Some((u_guild, u_chan)) = state.hivemind.get_user_channel(user_id_u64).await {
             if u_guild == server_id_u64 {
                 if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, c)| *g == u_guild && *c == u_chan) {
                     target_bot = *b_idx;
-                } 
-                else if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, _)| *g == server_id_u64) {
+                } else if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, _)| *g == server_id_u64) {
                     target_bot = *b_idx;
                 }
             }
-        } else {
-            if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, _)| *g == server_id_u64) {
-                target_bot = *b_idx;
-            }
+        } else if let Some((b_idx, _, _)) = busy_bots.iter().find(|(_, g, _)| *g == server_id_u64) {
+            target_bot = *b_idx;
         }
     } else if command.action == "join" {
         target_bot = command.source.as_deref().unwrap_or("0").parse::<usize>().unwrap_or(0);
     }
-    
+
     let has_permission = is_superadmin || {
         if let Some((u_guild, u_channel)) = state.hivemind.get_user_channel(user_id_u64).await {
             if u_guild == server_id_u64 {
@@ -126,10 +181,10 @@ pub async fn handle_command(
 
     if !has_permission {
         println!("[WEBUI-AUTH] Access denied (User: {} is not in the audio channel)", user_id);
-        return Json(CommandResponse { 
-            success: false, 
-            message: "Access denied! You must be in a voice channel with the bot.".into(), 
-            results: None 
+        return Json(CommandResponse {
+            success: false,
+            message: "Access denied! You must be in a voice channel with the bot.".into(),
+            results: None,
         });
     }
 
@@ -137,16 +192,16 @@ pub async fn handle_command(
         "play" => {
             if let Some(query) = &command.payload {
                 let source = command.source.as_deref().unwrap_or("network");
-                
+
                 if source == "network" {
-                    let search_query = if query.starts_with("http") { 
-                        query.clone() 
-                    } else { 
+                    let search_query = if query.starts_with("http") {
+                        query.clone()
+                    } else {
                         let prefix = std::str::from_utf8(&[121, 116, 115, 101, 97, 114, 99, 104, 58]).unwrap();
-                        format!("{}{}", prefix, query) 
+                        format!("{}{}", prefix, query)
                     };
-                    
-                    if let Some(mut tracks) = resolve_tracks(&search_query, &state.lavalink_password).await { 
+
+                    if let Some(mut tracks) = resolve_tracks(&search_query, &state.lavalink_password).await {
                         if !tracks.is_empty() {
                             let track = tracks.remove(0);
                             let _ = state.core_tx.send(CoreMessage::PlayTrack { server_id, bot_index: target_bot, track }).await;
@@ -162,12 +217,10 @@ pub async fn handle_command(
                             if let Some((file_path, _)) = state.db.get(&track_id) {
                                 let docker_path = file_path.to_string_lossy().replace(state.local_tracks_dir.as_str(), state.docker_tracks_dir.as_str());
                                 if let Some(mut tracks) = resolve_tracks(&docker_path, &state.lavalink_password).await {
-                                    let mut track = tracks.remove(0); 
-                                    
+                                    let mut track = tracks.remove(0);
                                     if let Some(local_track) = state.tracks_preview.tracks.iter().find(|t| t.id == track_id) {
                                         track.title = local_track.title.clone();
                                     }
-
                                     let _ = state.core_tx.send(CoreMessage::PlayTrack { server_id, bot_index: target_bot, track }).await;
                                     return Json(CommandResponse { success: true, message: "Local: Added!".into(), results: None });
                                 }
@@ -180,11 +233,10 @@ pub async fn handle_command(
                                 "title": r.title,
                                 "score": r.score
                             })).collect();
-                            
-                            return Json(CommandResponse { 
-                                success: true, 
-                                message: "Results found".into(), 
-                                results: Some(serde_json::Value::Array(json_results)) 
+                            return Json(CommandResponse {
+                                success: true,
+                                message: "Results found".into(),
+                                results: Some(serde_json::Value::Array(json_results)),
                             });
                         }
                     }
@@ -192,14 +244,12 @@ pub async fn handle_command(
                     if let Some((file_path, _)) = state.db.get(query) {
                         let docker_path = file_path.to_string_lossy().replace(state.local_tracks_dir.as_str(), state.docker_tracks_dir.as_str());
                         if let Some(mut tracks) = resolve_tracks(&docker_path, &state.lavalink_password).await {
-                            let mut track = tracks.remove(0); 
-                            
+                            let mut track = tracks.remove(0);
                             if let Some(local_track) = state.tracks_preview.tracks.iter().find(|t| t.id == *query) {
                                 track.title = local_track.title.clone();
                             } else {
                                 track.title = "Local track".into();
                             }
-
                             let _ = state.core_tx.send(CoreMessage::PlayTrack { server_id, bot_index: target_bot, track }).await;
                             return Json(CommandResponse { success: true, message: "Selected from list: Added!".into(), results: None });
                         }
@@ -230,58 +280,60 @@ pub async fn handle_command(
             return Json(CommandResponse { success: true, message: "Queue shuffled".into(), results: None });
         },
         "dedup_queue" => {
-            let _ = state.core_tx.send(CoreMessage::DeduplicateQueue {
-                server_id,
-                bot_index: target_bot,
-            }).await;
-            return Json(CommandResponse {
-                success: true,
-                message: "Queue deduplicated".into(),
-                results: None,
-            });
+            let _ = state.core_tx.send(CoreMessage::DeduplicateQueue { server_id, bot_index: target_bot }).await;
+            return Json(CommandResponse { success: true, message: "Queue deduplicated".into(), results: None });
         },
         "sort_queue" => {
             let mode = command.payload.clone().unwrap_or_else(|| "title".to_string());
-            let _ = state.core_tx.send(CoreMessage::SortQueue {
-                server_id,
-                bot_index: target_bot,
-                mode,
-            }).await;
-            return Json(CommandResponse {
-                success: true,
-                message: "Queue sorted".into(),
-                results: None,
-            });
+            let _ = state.core_tx.send(CoreMessage::SortQueue { server_id, bot_index: target_bot, mode }).await;
+            return Json(CommandResponse { success: true, message: "Queue sorted".into(), results: None });
         },
-        "radio_network" => { 
-            let _ = state.core_tx.send(CoreMessage::ToggleNetworkRadio { server_id: server_id.clone(), bot_index: target_bot }).await; 
-            
+        "radio_network" => {
+            let _ = state.core_tx.send(CoreMessage::ToggleNetworkRadio { server_id: server_id.clone(), bot_index: target_bot }).await;
+
             let is_idle = {
                 let players = state.ws_rx.borrow();
                 if let Some(player) = players.values().find(|p| p.server_id == server_id && p.bot_id == target_bot) {
                     !player.is_playing
                 } else {
-                    true 
+                    true
                 }
+            };
+
+            let last_track_json = {
+                let players = state.ws_rx.borrow();
+                players.values()
+                    .find(|p| p.server_id == server_id && p.bot_id == target_bot)
+                    .and_then(|p| p.thumbnail_url.clone())
+                    .filter(|id| id.len() == 11)
+                    .map(|id| {
+                        let https = std::str::from_utf8(&[104,116,116,112,115,58,47,47]).unwrap();
+                        let www   = std::str::from_utf8(&[119,119,119,46]).unwrap();
+                        let yt    = std::str::from_utf8(&[121,111,117,116,117,98,101,46,99,111,109]).unwrap();
+                        let path  = std::str::from_utf8(&[47,119,97,116,99,104,63,118,61]).unwrap();
+                        let base  = format!("{}{}{}{}", https, www, yt, path);
+                        format!("{{\"info\":{{\"uri\":\"{}{}\"}}}}", base, id)
+                    })
             };
 
             if is_idle {
                 trigger_radio(
-                    server_id.clone(), 
+                    server_id.clone(),
                     target_bot,
-                    RadioSource::Network, 
-                    state.db.clone(), 
-                    state.tracks_preview.clone(), 
-                    state.core_tx.clone(), 
-                    state.lavalink_password.clone(), 
-                    state.local_tracks_dir.clone(), 
+                    RadioSource::Network,
+                    state.db.clone(),
+                    state.tracks_preview.clone(),
+                    state.core_tx.clone(),
+                    state.lavalink_password.clone(),
+                    state.local_tracks_dir.clone(),
                     state.docker_tracks_dir.clone(),
+                    last_track_json,
                 ).await;
             }
         },
-        "radio_local" => { 
-            let _ = state.core_tx.send(CoreMessage::ToggleLocalRadio { server_id: server_id.clone(), bot_index: target_bot }).await; 
-            
+        "radio_local" => {
+            let _ = state.core_tx.send(CoreMessage::ToggleLocalRadio { server_id: server_id.clone(), bot_index: target_bot }).await;
+
             let is_idle = {
                 let players = state.ws_rx.borrow();
                 if let Some(player) = players.values().find(|p| p.server_id == server_id && p.bot_id == target_bot) {
@@ -293,15 +345,16 @@ pub async fn handle_command(
 
             if is_idle {
                 trigger_radio(
-                    server_id.clone(), 
+                    server_id.clone(),
                     target_bot,
-                    RadioSource::Local, 
-                    state.db.clone(), 
-                    state.tracks_preview.clone(), 
-                    state.core_tx.clone(), 
-                    state.lavalink_password.clone(), 
-                    state.local_tracks_dir.clone(), 
-                    state.docker_tracks_dir.clone()
+                    RadioSource::Local,
+                    state.db.clone(),
+                    state.tracks_preview.clone(),
+                    state.core_tx.clone(),
+                    state.lavalink_password.clone(),
+                    state.local_tracks_dir.clone(),
+                    state.docker_tracks_dir.clone(),
+                    None,
                 ).await;
             }
         },
@@ -326,7 +379,7 @@ pub async fn handle_command(
             let index = command.payload.clone().unwrap_or_default().parse::<usize>().unwrap_or(0);
             let _ = state.core_tx.send(CoreMessage::PlayIndex { server_id, bot_index: target_bot, index }).await;
             return Json(CommandResponse { success: true, message: "Playing selected index".into(), results: None });
-        }
+        },
         "volume" => {
             if let Some(vol_str) = &command.payload {
                 if let Ok(volume) = vol_str.parse::<u8>() {
@@ -339,12 +392,12 @@ pub async fn handle_command(
             if let Some(channel_id) = command.payload {
                 let chan_u64 = channel_id.parse::<u64>().unwrap_or(0);
                 let bots_in_this_channel = state.hivemind.get_bots_in_channel(server_id_u64, chan_u64).await;
-                
+
                 if bots_in_this_channel >= state.max_bots_per_channel {
-                    return Json(CommandResponse { 
-                        success: false, 
-                        message: format!("Maximum bot limit ({}) reached in this channel!", state.max_bots_per_channel), 
-                        results: None 
+                    return Json(CommandResponse {
+                        success: false,
+                        message: format!("Maximum bot limit ({}) reached in this channel!", state.max_bots_per_channel),
+                        results: None,
                     });
                 }
 

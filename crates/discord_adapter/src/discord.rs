@@ -461,6 +461,7 @@ pub async fn start_discord(
                         let mut active = active_vc_clone.lock().await; *active = Some(channel_id);
                         let audio_lock = audio_web_clone.lock().await;
                         audio_lock.backend.provide_voice_state(guild_id, channel_id.get(), conn_info.session_id, conn_info.token, conn_info.endpoint).await;
+                        tokio::time::sleep(std::time::Duration::from_millis(800)).await;
                         let current_vol = { core_web_clone.lock().await.playback.volume };
                         audio_lock.backend.set_volume(guild_id, current_vol).await;
                         let mut _state = web_state_clone.write().await;

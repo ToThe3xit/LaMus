@@ -78,6 +78,12 @@ async fn main() {
         panic!("Critical scanning error: {}", e); 
     }
 
+    // ============================================================ //
+    // ==== PRE-WARM INNERTUBE VERSION CACHE ====================== //
+    // ============================================================ //
+    println!("[MAIN] Resolving InnerTube client version...");
+    musicbot_audio_lavalink::fetch_innertube_client_version().await;
+
     let tracks_preview = Arc::new(load_tracks_preview(Path::new(&config.tracks_preview_path))
         .expect("Failed to load tracks preview"));
     let db = Arc::new(DbRuntime::load(Path::new(&config.db_path))
@@ -185,6 +191,37 @@ async fn main() {
                     
                     if c.playback.mode == musicbot_core::playback::PlaybackMode::Playing {
                         c.playback.position_seconds += 1;
+
+                        if let Some(track) = c.queue.current_track() {
+                            let pos = c.playback.position_seconds;
+                            let dur = track.duration_seconds;
+                            let is_network = track.source == musicbot_core::track::AudioSource::Lavalink;
+                            let radio_on = c.network_radio_enabled || c.local_radio_enabled;
+
+                            if is_network && radio_on && dur > 0 {
+                                let threshold = if dur > 60 {
+                                    (dur / 2).min(dur.saturating_sub(30))
+                                } else {
+                                    dur / 2
+                                };
+
+                                if pos == threshold {
+                                    if let Some(track_json) = track.lavalink_id.clone() {
+                                        let hm = clock_hivemind.clone();
+                                        let bot_idx = clock_bot_index;
+                                        tokio::spawn(async move {
+                                            if let Some(vid) = musicbot_audio_lavalink::extract_video_id_from_track_json(&track_json) {
+                                                if let Some(related) = musicbot_audio_lavalink::get_related_video_id(&vid).await {
+                                                    musicbot_audio_lavalink::mark_as_played(&related).await;
+                                                    hm.prefetched_radio.write().await.insert(bot_idx, related);
+                                                    println!("[RADIO] Pre-fetched next recommendation for bot #{}", bot_idx);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
                     }
                     
                     let mut cached_state = musicbot_core::hivemind::CachedPlayerState {
@@ -532,7 +569,31 @@ async fn main() {
                             for ev in &events { if let musicbot_core::event::Event::RadioTriggered { source } = ev { radio_source = Some(source.clone()); } }
                             musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
                             if let Some(source) = radio_source {
-                                musicbot_discord_adapter::discord::commands::trigger_radio(guild_id, source, node.core.clone(), node.audio.clone(), router_db.clone(), router_tracks.clone(), router_pass.clone(), router_local.clone(), router_docker.clone()).await;
+                                let prefetched = hivemind.prefetched_radio.write().await.remove(&bot_index);
+                                if let Some(ref pre_id) = prefetched {
+                                    println!("[RADIO] Using pre-fetched recommendation: {}", pre_id);
+                                    let related_url = {
+                                        let https = std::str::from_utf8(&[104,116,116,112,115,58,47,47]).unwrap();
+                                        let www   = std::str::from_utf8(&[119,119,119,46]).unwrap();
+                                        let yt    = std::str::from_utf8(&[121,111,117,116,117,98,101,46,99,111,109]).unwrap();
+                                        let path  = std::str::from_utf8(&[47,119,97,116,99,104,63,118,61]).unwrap();
+                                        format!("{}{}{}{}{}", https, www, yt, path, pre_id)
+                                    };
+                                    if let Some(mut lavalink_tracks) = musicbot_discord_adapter::discord::commands::resolve_tracks(&related_url, &router_pass).await {
+                                        if !lavalink_tracks.is_empty() {
+                                            let track = lavalink_tracks.remove(0);
+                                            println!("[RADIO] Pre-fetched track queued: {}", track.title);
+                                            let guild_id2 = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+                                            musicbot_discord_adapter::discord::commands::add_track_and_autoplay_bg(guild_id2, track, node.core.clone(), node.audio.clone()).await;
+                                        } else {
+                                            musicbot_discord_adapter::discord::commands::trigger_radio(guild_id, source, node.core.clone(), node.audio.clone(), router_db.clone(), router_tracks.clone(), router_pass.clone(), router_local.clone(), router_docker.clone()).await;
+                                        }
+                                    } else {
+                                        musicbot_discord_adapter::discord::commands::trigger_radio(guild_id, source, node.core.clone(), node.audio.clone(), router_db.clone(), router_tracks.clone(), router_pass.clone(), router_local.clone(), router_docker.clone()).await;
+                                    }
+                                } else {
+                                    musicbot_discord_adapter::discord::commands::trigger_radio(guild_id, source, node.core.clone(), node.audio.clone(), router_db.clone(), router_tracks.clone(), router_pass.clone(), router_local.clone(), router_docker.clone()).await;
+                                }
                             }
                         }
                     },

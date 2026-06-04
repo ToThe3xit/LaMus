@@ -168,7 +168,9 @@ impl CoreState{
                         if self.playback.is_looping {
                             Some(track.id.clone())
                         } else {
-                            self.history.push(track.clone());
+                            if self.playback.position_seconds >= 5 {
+                                self.history.push(track.clone());
+                            }
                             
                             let mut tracks = self.queue.tracks().to_vec();
                             if !tracks.is_empty() {

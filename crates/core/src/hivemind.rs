@@ -43,6 +43,7 @@ pub struct HiveMind {
     pub player_states: RwLock<HashMap<usize, CachedPlayerState>>,
     pub discord_ids: RwLock<HashMap<u64, usize>>,
     pub guild_channels_cache: RwLock<HashMap<u64, Vec<(String, String)>>>,
+    pub prefetched_radio: RwLock<HashMap<usize, String>>,
 }
 
 impl HiveMind {
@@ -64,6 +65,7 @@ impl HiveMind {
             player_states: RwLock::new(HashMap::new()),
             discord_ids: RwLock::new(HashMap::new()),
             guild_channels_cache: RwLock::new(HashMap::new()),
+            prefetched_radio: RwLock::new(HashMap::new()),
         }
     }
 
