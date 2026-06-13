@@ -90,6 +90,20 @@
 "networkSource": "نیٹ ورک",
 "librarySource": "لائبریری"
 },
+"vote": {
+"noControlInfo": "چھوڑنے، صاف کرنے یا رابطہ منقطع کرنے کے لیے ووٹنگ شروع کریں",
+"active": "ووٹنگ جاری ہے",
+"requestFor": "درخواست",
+"votes": "ووٹ",
+"voteYes": "ہاں میں ووٹ دیں",
+"cancel": "ووٹنگ منسوخ کریں",
+"rollback": "آخری ووٹنگ واپس لیں"
+},
+"ownership": {
+"youOwn": "آپ اس سیشن کے مالک ہیں",
+"owner": "سیشن کا مالک",
+"delegated": "تفویض کردہ کنٹرول"
+},
 "channels": {
 "selectTitle": "وائس چینل منتخب کریں",
 "selectSubtitle": "منتخب کردہ بوٹ کے لیے",

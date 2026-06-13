@@ -90,6 +90,20 @@
 "networkSource": "Rete",
 "librarySource": "Libreria"
 },
+"vote": {
+"noControlInfo": "Avvia una votazione per saltare, cancellare o disconnettere",
+"active": "Votazione in corso",
+"requestFor": "Richiesta",
+"votes": "voti",
+"voteYes": "Vota SÌ",
+"cancel": "Annulla votazione",
+"rollback": "Annulla l'ultima votazione"
+},
+"ownership": {
+"youOwn": "Sei il proprietario di questa sessione",
+"owner": "Proprietario della sessione",
+"delegated": "Controllo delegato"
+},
 "channels": {
 "selectTitle": "Seleziona canale vocale",
 "selectSubtitle": "Per il bot selezionato",

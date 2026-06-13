@@ -90,6 +90,20 @@
 "networkSource": "Sieť",
 "librarySource": "Knižnica"
 },
+"vote": {
+"noControlInfo": "Spustite hlasovanie o preskočení, vymazaní alebo odpojení",
+"active": "Hlasovanie prebieha",
+"requestFor": "Požiadavka",
+"votes": "hlasov",
+"voteYes": "Hlasovať ZA",
+"cancel": "Zrušiť hlasovanie",
+"rollback": "Vrátiť posledné hlasovanie"
+},
+"ownership": {
+"youOwn": "Ste vlastníkom tejto relácie",
+"owner": "Vlastník relácie",
+"delegated": "Delegované riadenie"
+},
 "channels": {
 "selectTitle": "Vyberte hlasový kanál",
 "selectSubtitle": "Pre vybraného bota",

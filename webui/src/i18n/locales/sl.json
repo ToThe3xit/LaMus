@@ -90,6 +90,20 @@
 "networkSource": "Omrežje",
 "librarySource": "Knjižnica"
 },
+"vote": {
+"noControlInfo": "Spustite glasanje za preskakanje, brisanje ili prekid veze",
+"active": "Glasovanje poteka",
+"requestFor": "Zahteva",
+"votes": "glasov",
+"voteYes": "Glasuj ZA",
+"cancel": "Prekliči glasovanje",
+"rollback": "Razveljavi zadnje glasovanje"
+},
+"ownership": {
+"youOwn": "Ste lastnik te seje",
+"owner": "Lastnik seje",
+"delegated": "Preneseno upravljanje"
+},
 "channels": {
 "selectTitle": "Izberite govorni kanal",
 "selectSubtitle": "Za izbranega bota",

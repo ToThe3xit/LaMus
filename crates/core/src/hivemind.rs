@@ -35,7 +35,14 @@ pub struct CachedPlayerState {
     pub volume: u8,
     pub is_looping: bool,
     pub is_radio_active: bool,
+    pub owner_id: Option<String>,
+    pub owner_name: Option<String>,
+    pub delegated_user_ids: Vec<String>,
+    pub active_vote: Option<crate::governance::VoteStateInfo>,
+    pub has_rollback: bool,
+    pub rollback_seconds_left: u64,
 }
+
 pub struct HiveMind {
     pub bots: RwLock<HashMap<usize, BotRecord>>,
     pub user_voice_states: RwLock<HashMap<u64, (u64, u64)>>,
@@ -44,19 +51,31 @@ pub struct HiveMind {
     pub discord_ids: RwLock<HashMap<u64, usize>>,
     pub guild_channels_cache: RwLock<HashMap<u64, Vec<(String, String)>>>,
     pub prefetched_radio: RwLock<HashMap<usize, String>>,
+    pub governance: crate::governance::SessionGovernance,
+    pub superadmin_ids: Vec<String>,
+    pub bot_discord_ids: RwLock<HashMap<u64, usize>>,
 }
 
 impl HiveMind {
     pub fn new(bot_count: usize) -> Self {
+        Self::new_with_governance(bot_count, 50, 15, Vec::new())
+    }
+
+    pub fn new_with_governance(
+        bot_count: usize,
+        vote_pct: u8,
+        vote_timeout: u64,
+        superadmin_ids: Vec<String>,
+    ) -> Self {
         let mut bots = HashMap::new();
         for i in 0..bot_count {
-            bots.insert(i, BotRecord { 
-            index: i, 
-            state: BotState::Idle,
-            name: format!("Bot #{}", i),
-            avatar_url: "".into(),
-            guilds: HashSet::new(),
-        });
+            bots.insert(i, BotRecord {
+                index: i,
+                state: BotState::Idle,
+                name: format!("Bot #{}", i),
+                avatar_url: "".into(),
+                guilds: HashSet::new(),
+            });
         }
         Self {
             bots: RwLock::new(bots),
@@ -66,6 +85,9 @@ impl HiveMind {
             discord_ids: RwLock::new(HashMap::new()),
             guild_channels_cache: RwLock::new(HashMap::new()),
             prefetched_radio: RwLock::new(HashMap::new()),
+            governance: crate::governance::SessionGovernance::new(vote_pct, vote_timeout),
+            superadmin_ids,
+            bot_discord_ids: RwLock::new(HashMap::new()),
         }
     }
 
@@ -138,6 +160,7 @@ impl HiveMind {
 
     pub async fn register_bot_discord_id(&self, discord_id: u64, bot_index: usize) {
         self.discord_ids.write().await.insert(discord_id, bot_index);
+        self.bot_discord_ids.write().await.insert(discord_id, bot_index);
         println!("[HIVEMIND] Registered bot identity: Index {} = Discord ID {}", bot_index, discord_id);
     }
 
@@ -184,5 +207,15 @@ impl HiveMind {
         if let Some(bot) = self.bots.write().await.get_mut(&bot_index) {
             bot.guilds.remove(&guild_id);
         }
+    }
+    pub async fn get_channel_human_members(&self, guild_id: u64, channel_id: u64) -> Vec<u64> {
+    self.user_voice_states.read().await
+        .iter()
+        .filter(|(_, (g, c))| *g == guild_id && *c == channel_id)
+        .map(|(uid, _)| *uid)
+        .collect()
+    }
+    pub async fn is_bot_discord_id(&self, discord_id: u64) -> bool {
+        self.discord_ids.read().await.contains_key(&discord_id)
     }
 }

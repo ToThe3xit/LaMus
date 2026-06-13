@@ -90,6 +90,20 @@
 "networkSource": "Rede",
 "librarySource": "Biblioteca"
 },
+"vote": {
+"noControlInfo": "Inicie uma votação para pular, limpar ou desconectar",
+"active": "Votação em andamento",
+"requestFor": "Solicitação",
+"votes": "votos",
+"voteYes": "Votar SIM",
+"cancel": "Cancelar votação",
+"rollback": "Desfazer última votação"
+},
+"ownership": {
+"youOwn": "Você é o proprietário desta sessão",
+"owner": "Proprietário da sessão",
+"delegated": "Controle delegado"
+},
 "channels": {
 "selectTitle": "Selecionar canal de voz",
 "selectSubtitle": "Para o bot selecionado",

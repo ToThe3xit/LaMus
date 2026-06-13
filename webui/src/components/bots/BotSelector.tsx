@@ -15,7 +15,7 @@ interface BotSelectorProps {
   setGridCols: Dispatch<SetStateAction<number>>;
   setCurrentView: Dispatch<SetStateAction<'servers' | 'bots' | 'player'>>;
   setSelectedBotIndex: Dispatch<SetStateAction<number | null>>;
-  fetchChannels: (serverId: string) => void;
+  fetchChannels: (serverId: string, isSuperadmin?: boolean) => void;
 }
 
 const BotSelector = ({
@@ -96,7 +96,7 @@ const BotSelector = ({
                 bot={bot}
                 onSelect={(botId) => {
                   setSelectedBotIndex(botId);
-                  if (activeServerId) fetchChannels(activeServerId);
+                  if (activeServerId) fetchChannels(activeServerId, isSuperadmin);
                 }}
               />
             ))

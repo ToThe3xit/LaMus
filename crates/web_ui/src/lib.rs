@@ -47,13 +47,18 @@ pub enum CoreMessage {
     MoveTrack { server_id: String, bot_index: usize, from: usize, to: usize },
     Previous { server_id: String, bot_index: usize },
     PlayIndex { server_id: String, bot_index: usize, index: usize },
-    JoinChannel { server_id: String, channel_id: String, bot_index: usize },
+    JoinChannel { server_id: String, channel_id: String, bot_index: usize, requester_id: Option<u64>, requester_name: Option<String> },
     LeaveChannel { server_id: String, bot_index: usize },
     SetVolume { server_id: String, bot_index: usize, volume: u8 },
     ToggleLoop { server_id: String, bot_index: usize },
     ShuffleQueue { server_id: String, bot_index: usize },
     DeduplicateQueue { server_id: String, bot_index: usize },
     SortQueue { server_id: String, bot_index: usize, mode: String },
+    CastVote { server_id: String, bot_index: usize, voter_id: u64 },
+    CancelVote { server_id: String, bot_index: usize },
+    RollbackLastVote { server_id: String, bot_index: usize },
+    DelegatePermission { server_id: String, bot_index: usize, caller_id: u64, target_id: u64 },
+    RevokeDelegate { server_id: String, bot_index: usize, target_id: u64 },
 }
 
 // ============================================================ //
@@ -118,6 +123,21 @@ pub struct PlayerState {
     #[serde(rename = "isLooping")]
     pub is_looping: bool,
     pub is_radio_active: bool,
+    pub owner_id: Option<String>,
+    pub owner_name: Option<String>,
+    pub delegated_user_ids: Vec<String>,
+    pub active_vote: Option<VoteStateInfo>,
+    pub has_rollback: bool,
+    pub rollback_seconds_left: u64,
+}
+#[derive(Serialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct VoteStateInfo {
+    pub action: String,
+    pub current_votes: usize,
+    pub required_votes: usize,
+    pub seconds_remaining: u64,
+    pub initiated_by: String,
 }
 
 // ============================================================ //
@@ -170,6 +190,7 @@ pub async fn start_server(
         .route("/api/bots/:id/channels", get(get_bot_channels))
         .route("/api/command", post(webui::commands::handle_command))
         .route("/api/me/admin", get(check_admin))
+        .route("/api/me/voice_channel/:server_id", get(get_my_voice_channel))
         .route("/ws", get(ws_handler))
         .with_state(state) 
         .nest("/api/auth", musicbot_auth::auth_router(
@@ -249,7 +270,7 @@ async fn get_bot_channels(
     let guild_id_u64 = server_id.parse::<u64>().unwrap_or(0);
     
     let cache = state.hivemind.guild_channels_cache.read().await;
-    let channels = if let Some(cached_channels) = cache.get(&guild_id_u64) {
+    let mut channels: Vec<VoiceChannelInfo> = if let Some(cached_channels) = cache.get(&guild_id_u64) {
         cached_channels.iter().map(|(id, name)| VoiceChannelInfo {
             id: id.clone(),
             name: name.clone(),
@@ -257,6 +278,8 @@ async fn get_bot_channels(
     } else {
         Vec::new()
     };
+
+    channels.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
 
     Json(channels)
 }
@@ -363,4 +386,34 @@ pub async fn search_local(
     }
     
     Json(out)
+}
+async fn get_my_voice_channel(
+    Path(server_id): Path<String>,
+    State(state): State<AppState>,
+    cookies: Cookies,
+) -> impl IntoResponse {
+    let user_id_str = cookies.get("mbv2_session")
+        .map(|c| c.value().to_string())
+        .unwrap_or_default();
+    let user_id_u64 = user_id_str.parse::<u64>().unwrap_or(0);
+    let server_id_u64 = server_id.parse::<u64>().unwrap_or(0);
+
+    if let Some((guild_id, channel_id)) = state.hivemind.get_user_channel(user_id_u64).await {
+        if guild_id == server_id_u64 {
+            let cache = state.hivemind.guild_channels_cache.read().await;
+            if let Some(channels) = cache.get(&guild_id) {
+                if let Some((id, name)) = channels.iter().find(|(cid, _)| {
+                    cid.parse::<u64>().unwrap_or(0) == channel_id
+                }) {
+                    let channel = VoiceChannelInfo {
+                        id: id.clone(),
+                        name: name.clone(),
+                    };
+                    return axum::Json(serde_json::json!(channel)).into_response();
+                }
+            }
+        }
+    }
+
+    axum::Json(serde_json::Value::Null).into_response()
 }

@@ -82,12 +82,14 @@ impl EventHandler for ObserverHandler {
                 ).await;
             }
         }
-        let voice_channels: Vec<(String, String)> = guild.channels
+        let mut voice_channels: Vec<(String, String)> = guild.channels
             .values()
             .filter(|c| c.kind == serenity::model::channel::ChannelType::Voice)
             .map(|c| (c.id.get().to_string(), c.name.clone()))
             .collect();
-        
+
+        voice_channels.sort_by(|a, b| a.1.to_lowercase().cmp(&b.1.to_lowercase()));
+
         self.hivemind.guild_channels_cache.write().await.insert(guild.id.get(), voice_channels);
         println!("[OBSERVER] Buffered {} channels for server: {}", guild.channels.len(), guild.name);
     }
@@ -322,7 +324,7 @@ pub async fn disconnect_bot(ctx: &Context, guild_id: GuildId, handler: &Handler)
         let mut active = handler.active_voice_channel.lock().await;
         *active = None;
     }
-
+    handler.hivemind.governance.clear_session(handler.bot_index).await;
     {
         let audio_lock = handler.audio.lock().await;
         audio_lock.backend.delete_player(guild_id).await;

@@ -90,6 +90,20 @@
 "networkSource": "الشبكة",
 "librarySource": "المكتبة"
 },
+"vote": {
+"noControlInfo": "ابدأ تصويتًا للتخطي، أو المسح، أو قطع الاتصال",
+"active": "التصويت جاري",
+"requestFor": "طلب",
+"votes": "أصوات",
+"voteYes": "التصويت بنعم",
+"cancel": "إلغاء التصويت",
+"rollback": "تراجع عن التصويت الأخير"
+},
+"ownership": {
+"youOwn": "أنت مالك هذه الجلسة",
+"owner": "مالك الجلسة",
+"delegated": "التحكم المفوّض"
+},
 "channels": {
 "selectTitle": "اختر قناة صوتية",
 "selectSubtitle": "للبوت المحدد",

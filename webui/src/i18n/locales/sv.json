@@ -90,6 +90,20 @@
 "networkSource": "Nätverk",
 "librarySource": "Bibliotek"
 },
+"vote": {
+"noControlInfo": "Starta en omröstning för att hoppa över, rensa eller koppla från",
+"active": "Omröstning pågår",
+"requestFor": "Begäran",
+"votes": "röster",
+"voteYes": "Rösta JA",
+"cancel": "Avbryt omröstning",
+"rollback": "Ångra senaste omröstningen"
+},
+"ownership": {
+"youOwn": "Du är ägare av denna session",
+"owner": "Sessionsägare",
+"delegated": "Delegerad kontroll"
+},
 "channels": {
 "selectTitle": "Välj röstkanal",
 "selectSubtitle": "För den valda botten",

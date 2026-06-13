@@ -90,6 +90,20 @@
 "networkSource": "Ağ",
 "librarySource": "Kitaplık"
 },
+"vote": {
+"noControlInfo": "Atlamak, temizlemek veya bağlantıyı kesmek için bir oylama başlatın",
+"active": "Oylama devam ediyor",
+"requestFor": "Talep",
+"votes": "oy",
+"voteYes": "EVET Oyu Ver",
+"cancel": "Oylamayı İptal Et",
+"rollback": "Son Oylamayı Geri Al"
+},
+"ownership": {
+"youOwn": "Bu oturumun sahibi sizsiniz",
+"owner": "Oturum sahibi",
+"delegated": "Devredilen kontrol"
+},
 "channels": {
 "selectTitle": "Ses kanalı seçin",
 "selectSubtitle": "Seçilen bot için",

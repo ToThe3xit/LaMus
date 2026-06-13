@@ -90,6 +90,20 @@
 "networkSource": "Rangkaian",
 "librarySource": "Perpustakaan"
 },
+"vote": {
+"noControlInfo": "Sāciet balsošanu, lai izlaistu, notīrītu vai atvienotu",
+"active": "Undian sedang berlangsung",
+"requestFor": "Permintaan",
+"votes": "undi",
+"voteYes": "Undi YA",
+"cancel": "Batalkan undian",
+"rollback": "Batalkan undian terakhir"
+},
+"ownership": {
+"youOwn": "Anda adalah pemilik sesi ini",
+"owner": "Pemilik sesi",
+"delegated": "Kawalan didelegasikan"
+},
 "channels": {
 "selectTitle": "Pilih Saluran Suara",
 "selectSubtitle": "Untuk bot yang dipilih",

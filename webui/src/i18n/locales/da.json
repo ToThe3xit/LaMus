@@ -90,6 +90,20 @@
 "networkSource": "Netværk",
 "librarySource": "Bibliotek"
 },
+"vote": {
+"noControlInfo": "Start en afstemning for at springe over, rydde eller afbryde forbindelsen",
+"active": "Afstemning i gang",
+"requestFor": "Anmodning",
+"votes": "stemmer",
+"voteYes": "Stem JA",
+"cancel": "Annuller afstemning",
+"rollback": "Fortryd seneste afstemning"
+},
+"ownership": {
+"youOwn": "Du ejer denne session",
+"owner": "Sessionsejer",
+"delegated": "Delegeret kontrol"
+},
 "channels": {
 "selectTitle": "Vælg talekanal",
 "selectSubtitle": "For den valgte bot",

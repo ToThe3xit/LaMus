@@ -90,6 +90,20 @@
 "networkSource": "Rețea",
 "librarySource": "Bibliotecă"
 },
+"vote": {
+"noControlInfo": "Inițiați un vot pentru a omite, șterge sau deconecta",
+"active": "Votare în curs",
+"requestFor": "Cerere",
+"votes": "voturi",
+"voteYes": "Votează DA",
+"cancel": "Anulează votarea",
+"rollback": "Anulează ultimul vot"
+},
+"ownership": {
+"youOwn": "Ești proprietarul acestei sesiuni",
+"owner": "Proprietarul sesiunii",
+"delegated": "Control delegat"
+},
 "channels": {
 "selectTitle": "Selectează canalul vocal",
 "selectSubtitle": "Pentru botul selectat",

@@ -21,6 +21,9 @@ import { useTranslation } from 'react-i18next';
 
 import type { PlayerState } from './types/player';
 
+import VoteBanner from './components/governance/VoteBanner';
+import OwnerBadge from './components/governance/OwnerBadge';
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
@@ -86,6 +89,39 @@ function App() {
 
   useWebSocket(!!currentUser, handleWsData);
 
+  const missingActiveTicksRef = useRef(0);
+
+  useEffect(() => {
+    if (!activePlayerKey) return;
+    if (currentView !== 'player') return;
+    const isStillActive = activePlayers[activePlayerKey] !== undefined;
+    const justJoined = Date.now() - joinedAtRef.current < 4000;
+
+    if (isStillActive) {
+      missingActiveTicksRef.current = 0;
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+        redirectTimeoutRef.current = null;
+      }
+      return;
+    }
+
+    if (justJoined) return;
+
+    missingActiveTicksRef.current += 1;
+    if (missingActiveTicksRef.current >= 15 && !redirectTimeoutRef.current) {
+      redirectTimeoutRef.current = setTimeout(() => {
+        setCurrentView((view) => {
+          if (view === 'player') {
+            setActivePlayerKey(null);
+            return 'servers';
+          }
+          return view;
+        });
+      }, 1500);
+    }
+  }, [activePlayers, activePlayerKey, currentView]);
+
   const {
     draggedIndex, setDraggedIndex,
     dragOverIndex, setDragOverIndex,
@@ -102,8 +138,10 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [selectedBotIndex, setSelectedBotIndex] = useState<number | null>(null);
   const [openServerFolder, setOpenServerFolder] = useState<string | null>(null);
+  const [leaveDebounce, setLeaveDebounce] = useState<Record<number, boolean>>({});
 
   const currentTrackRef = useRef<HTMLDivElement>(null);
+  const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const queueScrollRef = useRef<HTMLDivElement>(null);
   const mainScrollRef = useRef<HTMLDivElement>(null);
   const sidebarScrollRef = useRef<HTMLElement>(null);
@@ -179,6 +217,10 @@ function App() {
     {} as Record<string, { key: string; state: PlayerState }[]>
   );
 
+  const isCurrentUserOwner = playerState.ownerId === currentUser?.id;
+  const isCurrentUserDelegate = playerState.delegatedUserIds.includes(currentUser?.id ?? '');
+  const hasDirectControl = isSuperadmin || isCurrentUserOwner || isCurrentUserDelegate;
+
   const sendCommand = async (action: string, payload?: string, source?: string) => {
     if (!activeServerId) return;
     try {
@@ -203,10 +245,19 @@ function App() {
         window.location.reload();
         return;
       }
-
     } catch (err) {
       console.error('Command sending error:', err);
     }
+  };
+
+  const sendLeaveWithDebounce = async () => {
+    const botId = playerState.botId;
+    if (leaveDebounce[botId]) return;
+    setLeaveDebounce(prev => ({ ...prev, [botId]: true }));
+    await sendCommand('leave');
+    setTimeout(() => {
+      setLeaveDebounce(prev => ({ ...prev, [botId]: false }));
+    }, 2000);
   };
 
   const toggleLoop = () => sendCommand('toggle_loop');
@@ -214,13 +265,16 @@ function App() {
   const handleServerClick = (server: { id: string }) => {
     setActiveServerId(server.id);
     setCurrentView('bots');
-    fetchChannels(server.id);
+    fetchChannels(server.id, isSuperadmin);
   };
+
+  const joinedAtRef = useRef<number>(0);
 
   const joinChannel = async (channelId: string, botIndex: number) => {
     if (!activeServerId) return;
     setSelectedBotIndex(null);
     const expectedKey = `${activeServerId}_${botIndex}`;
+    joinedAtRef.current = Date.now();
     setActivePlayerKey(expectedKey);
     setCurrentView('player');
     setOpenServerFolder(null);
@@ -233,7 +287,7 @@ function App() {
           serverId: activeServerId,
           action: 'join',
           payload: channelId,
-          source: botIndex.toString(),
+          source: `${botIndex}:${currentUser?.name ?? ''}`,
         }),
       });
     } catch (err) {
@@ -244,67 +298,42 @@ function App() {
   const scrollToCurrent = () => {
     if (!currentTrackRef.current) return;
     const element = currentTrackRef.current;
-
     if (window.innerWidth >= 1280) {
       if (queueScrollRef.current) {
         const container = queueScrollRef.current;
         const containerRect = container.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
-        const targetScrollTop =
-          container.scrollTop + (elementRect.top - containerRect.top) - 32;
-        container.scrollTo({
-          top: Math.max(0, targetScrollTop),
-          behavior: 'smooth',
-        });
+        const targetScrollTop = container.scrollTop + (elementRect.top - containerRect.top) - 32;
+        container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
       }
     } else if (mainScrollRef.current) {
       const container = mainScrollRef.current;
       const elementRect = element.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-      const targetScrollTop =
-        container.scrollTop + (elementRect.top - containerRect.top) - 32;
-      container.scrollTo({
-        top: Math.max(0, targetScrollTop),
-        behavior: 'smooth',
-      });
+      const targetScrollTop = container.scrollTop + (elementRect.top - containerRect.top) - 32;
+      container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
     } else {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  // ══════════════════════════════════════════════════════════
-  // LOGIN SCREEN OAuth2
-  // ══════════════════════════════════════════════════════════
   if (!sessionVerified) {
     return (
-      <div className={`fixed inset-0 h-[100dvh] w-full flex items-center justify-center ${
-        theme === 'dark' ? 'bg-black' : 'bg-zinc-100'
-      }`}>
-        <img
-          src={logo}
-          alt="LaMus"
-          className="w-20 h-20 object-contain animate-bounce opacity-60"
-          style={{ animationDuration: '1.5s' }}
-        />
+      <div className={`fixed inset-0 h-[100dvh] w-full flex items-center justify-center ${theme === 'dark' ? 'bg-black' : 'bg-zinc-100'}`}>
+        <img src={logo} alt="LaMus" className="w-20 h-20 object-contain animate-bounce opacity-60" style={{ animationDuration: '1.5s' }} />
       </div>
     );
-  }  
+  }
+
   if (!currentUser) {
     return (
       <div className={`fixed inset-0 h-[100dvh] w-full flex items-center justify-center transition-colors duration-300 font-sans select-none ${theme === 'dark' ? 'bg-black text-zinc-100' : 'bg-zinc-100 text-zinc-900'}`}>
         <div className={`max-w-md w-full p-12 rounded-[3rem] shadow-2xl border-4 text-center ${theme === 'dark' ? 'bg-zinc-950 border-zinc-900' : 'bg-white border-zinc-200'}`}>
           <div className="w-28 h-28 mx-auto rounded-[2.5rem] flex items-center justify-center mb-6 shadow-2xl drop-shadow-2xl">
-            <img
-              src={logo}
-              alt="LaMus Logo"
-              className="w-full h-full object-contain animate-bounce"
-              style={{ animationDuration: '3s' }}
-            />
+            <img src={logo} alt="LaMus Logo" className="w-full h-full object-contain animate-bounce" style={{ animationDuration: '3s' }} />
           </div>
           <h2 className="text-4xl font-black mb-2 text-orange-500 tracking-tighter">{t('auth.loginTitle')}</h2>
-          <p className="text-sm text-zinc-500 font-bold mb-10">
-            {t('auth.loginSubtitle')}
-          </p>
+          <p className="text-sm text-zinc-500 font-bold mb-10">{t('auth.loginSubtitle')}</p>
           <button
             onClick={() => (window.location.href = `${API_URL}/api/auth/login`)}
             className="w-full py-5 rounded-2xl bg-[#5865F2] text-white font-bold hover:bg-[#4752C4] transition-all hover:scale-105 active:scale-95 shadow-lg shadow-[#5865F2]/20 flex items-center justify-center gap-3"
@@ -319,27 +348,17 @@ function App() {
     );
   }
 
-  // ══════════════════════════════════════════════════════════
-  // MAIN APPLICATION SPA
-  // ══════════════════════════════════════════════════════════
   return (
     <div className={`fixed inset-0 h-[100dvh] w-full max-w-full flex flex-col-reverse md:flex-row overflow-x-hidden overflow-y-hidden transition-colors duration-300 font-sans select-none ${theme === 'dark' ? 'bg-black text-zinc-100' : 'bg-white text-zinc-900'}`}>
 
       {isSettingsOpen && (
-        <div
-          className="fixed inset-0 bg-black/70 z-[140] backdrop-blur-md animate-in fade-in duration-300"
-          onClick={() => setIsSettingsOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/70 z-[140] backdrop-blur-md animate-in fade-in duration-300" onClick={() => setIsSettingsOpen(false)} />
       )}
 
       <aside className={`fixed top-0 right-0 h-full w-80 z-[150] transform transition-transform duration-500 ease-in-out p-8 flex flex-col ${isSettingsOpen ? 'translate-x-0' : 'translate-x-full'} ${theme === 'dark' ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200 shadow-2xl'} border-l`}>
         <div className="flex justify-between items-center mb-10">
-          <h2 className="text-xl font-black uppercase text-zinc-500 tracking-widest">
-            {t('auth.settingsTitle')}
-          </h2>
-          <button onClick={() => setIsSettingsOpen(false)} className="text-2xl p-2 hover:scale-125 transition">
-            ✕
-          </button>
+          <h2 className="text-xl font-black uppercase text-zinc-500 tracking-widest">{t('auth.settingsTitle')}</h2>
+          <button onClick={() => setIsSettingsOpen(false)} className="text-2xl p-2 hover:scale-125 transition">✕</button>
         </div>
         <div className="flex-1 space-y-10 flex flex-col">
           <section className="space-y-4 text-center">
@@ -348,33 +367,21 @@ function App() {
             </div>
             <div>
               <h3 className="text-xl font-black">{currentUser.name}</h3>
-              <p className="text-[10px] text-green-500 font-black uppercase tracking-widest mt-1">
-                {t('auth.status')}
-              </p>
+              <p className="text-[10px] text-green-500 font-black uppercase tracking-widest mt-1">{t('auth.status')}</p>
             </div>
           </section>
-
           <section className="space-y-2">
-            <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">
-              {t('settings.language')}
-            </p>
+            <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">{t('settings.language')}</p>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl font-bold text-sm border outline-none transition-colors ${
-                theme === 'dark'
-                  ? 'bg-zinc-800 border-zinc-700 text-white'
-                  : 'bg-zinc-100 border-zinc-300 text-black'
-              }`}
+              className={`w-full px-4 py-3 rounded-xl font-bold text-sm border outline-none transition-colors ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-100 border-zinc-300 text-black'}`}
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.label}
-                </option>
+                <option key={lang.code} value={lang.code}>{lang.label}</option>
               ))}
             </select>
           </section>
-
           <div className="mt-auto">
             <button
               onClick={() => { logout(); setIsSettingsOpen(false); }}
@@ -410,7 +417,7 @@ function App() {
         setScrollSidebarTop={setScrollSidebarTop}
       />
 
-      <main className="flex-1 flex flex-col min-w-0 relative h-[calc(100dvh-5rem)] md:h-full overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 relative min-h-0 overflow-hidden">
 
         <TopBar
           theme={theme}
@@ -425,47 +432,73 @@ function App() {
 
         <div
           ref={mainScrollRef}
-          className="flex-1 flex flex-col xl:flex-row p-4 md:p-6 gap-6 overflow-y-auto xl:overflow-hidden min-h-0 relative pb-24 md:pb-6"
+          className="flex-1 flex flex-col xl:flex-row p-4 md:p-6 gap-6 overflow-y-auto xl:overflow-hidden min-h-0 relative pb-20 md:pb-6"
         >
-          {/* ════ VIEW: PLAYER ════ */}
           {currentView === 'player' ? (
             <>
-              <div className="w-full xl:flex-1 flex flex-col items-center">
-                {(() => {
-                  const controlledBot = systemBots.find((sb) => sb.id === playerState.botId);
-                  const controlledServer = botInstances.find((b) => b.id === playerState.serverId);
-                  return controlledBot && controlledServer && (
-                    <div className={`absolute top-4 left-4 sm:top-8 sm:left-8 flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-md shadow-lg z-0 animate-in fade-in duration-500 group transition-all duration-300 ${theme === 'dark' ? 'border-zinc-800 bg-zinc-950/70' : 'border-zinc-300 bg-white/70'}`}>
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center border overflow-hidden shrink-0 text-xs font-black ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200'}`}>
-                        {controlledBot.avatarUrl
-                          ? <img src={controlledBot.avatarUrl} alt="" className="w-full h-full object-cover" />
-                          : 'BOT'}
-                      </div>
-                      <div className="text-left flex-1 flex flex-col gap-0.5">
-                        <div className="truncate max-w-[150px]">
-                          <p className={`text-[8px] font-black uppercase tracking-widest ${theme === 'dark' ? 'text-green-500' : 'text-green-600'}`}>
-                            Controlling
-                          </p>
-                          <p className={`text-xs font-bold truncate ${theme === 'dark' ? 'text-white' : 'text-zinc-900'}`}>
-                            {controlledBot.name}
-                          </p>
+              <div className="w-full xl:flex-1 flex flex-col">
+                <div className="flex flex-col gap-2 p-2 pb-0">
+                  {(() => {
+                    const controlledBot = systemBots.find((sb) => sb.id === playerState.botId);
+                    const controlledServer = botInstances.find((b) => b.id === playerState.serverId);
+                    return controlledBot && controlledServer && (
+                      <div className={`flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-md shadow-lg animate-in fade-in duration-500 group transition-all duration-300 self-start ${theme === 'dark' ? 'border-zinc-800 bg-zinc-950/70' : 'border-zinc-300 bg-white/70'}`}>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center border overflow-hidden shrink-0 text-xs font-black ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200'}`}>
+                          {controlledBot.avatarUrl ? <img src={controlledBot.avatarUrl} alt="" className="w-full h-full object-cover" /> : 'BOT'}
                         </div>
-                        <div className={`mt-0.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto truncate max-w-[150px] ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                          <div className={`w-4 h-4 rounded-md overflow-hidden shrink-0 border shadow-inner text-[6px] font-black flex items-center justify-center ${theme === 'dark' ? 'border-zinc-800 bg-zinc-900' : 'border-zinc-300 bg-white'}`}>
-                            {controlledServer.iconUrl
-                              ? <img src={controlledServer.iconUrl} alt="Icon" className="w-full h-full object-cover" />
-                              : 'S'}
+                        <div className="text-left flex-1 flex flex-col gap-0.5">
+                          <div className="truncate max-w-[200px]">
+                            <p className={`text-[8px] font-black uppercase tracking-widest ${theme === 'dark' ? 'text-green-500' : 'text-green-600'}`}>
+                              {t('player.controlling')}
+                            </p>
+                            <p className={`text-xs font-bold truncate ${theme === 'dark' ? 'text-white' : 'text-zinc-900'}`}>
+                              {controlledBot.name}
+                            </p>
                           </div>
-                          <p className="text-[9px] font-medium truncate">
-                            Server: {controlledServer.serverName}
-                          </p>
+                          <div className={`mt-0.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto truncate max-w-[200px] ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                            <div className={`w-4 h-4 rounded-md overflow-hidden shrink-0 border shadow-inner text-[6px] font-black flex items-center justify-center ${theme === 'dark' ? 'border-zinc-800 bg-zinc-900' : 'border-zinc-300 bg-white'}`}>
+                              {controlledServer.iconUrl ? <img src={controlledServer.iconUrl} alt="Icon" className="w-full h-full object-cover" /> : 'S'}
+                            </div>
+                            <p className="text-[9px] font-medium truncate">
+                              {t('common.server')}: {controlledServer.serverName}
+                            </p>
+                          </div>
                         </div>
                       </div>
+                    );
+                  })()}
+                  <OwnerBadge
+                    theme={theme}
+                    ownerName={playerState.ownerName}
+                    ownerId={playerState.ownerId}
+                    delegatedIds={playerState.delegatedUserIds}
+                    currentUserId={currentUser.id}
+                    isSuperadmin={isSuperadmin}
+                    hasRollback={playerState.hasRollback}
+                    rollbackSeconds={playerState.rollbackSecondsLeft}
+                    onRollback={() => sendCommand('rollback_vote')}
+                  />
+                  {playerState.activeVote && (
+                    <VoteBanner
+                      theme={theme}
+                      action={playerState.activeVote.action}
+                      currentVotes={playerState.activeVote.currentVotes}
+                      requiredVotes={playerState.activeVote.requiredVotes}
+                      secondsRemaining={playerState.activeVote.secondsRemaining}
+                      currentUserId={currentUser.id}
+                      ownerId={playerState.ownerId}
+                      isSuperadmin={isSuperadmin}
+                      onVote={() => sendCommand('vote')}
+                      onCancel={() => sendCommand('cancel_vote')}
+                    />
+                  )}
+                  {!hasDirectControl && !playerState.activeVote && playerState.ownerId && (
+                    <div className={`text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-xl self-start ${theme === 'dark' ? 'text-zinc-600 bg-zinc-900/50' : 'text-zinc-400 bg-zinc-100'}`}>
+                      {t('vote.noControlInfo') ?? 'Vote to skip, clear or disconnect'}
                     </div>
-                  );
-                })()}
-
-                <div className="w-full flex flex-col items-center my-auto min-h-max pt-20 sm:pt-0 pb-8">
+                  )}
+                </div>
+                <div className="flex flex-col items-center w-full pb-8 mt-4">
                   <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3.5rem] shadow-2xl mb-10 border-4 border-zinc-300 dark:border-zinc-800 overflow-hidden shrink-0 flex items-center justify-center bg-white dark:bg-zinc-900">
                     <CoverImage url={playerState.thumbnailUrl} />
                   </div>
@@ -480,10 +513,7 @@ function App() {
                         className={`inline-block whitespace-nowrap ${shouldAnimateTitle ? 'animate-marquee-bounce px-8' : ''}`}
                         style={
                           shouldAnimateTitle
-                            ? ({
-                                '--overflow': `-${overflowAmountTitle}px`,
-                                '--duration': `${Math.max(10, playerState.trackName.length * 0.15)}s`,
-                              } as React.CSSProperties)
+                            ? ({ '--overflow': `-${overflowAmountTitle}px`, '--duration': `${Math.max(10, playerState.trackName.length * 0.15)}s` } as React.CSSProperties)
                             : {}
                         }
                       >
@@ -514,8 +544,10 @@ function App() {
                     shufflePressed={shufflePressed}
                     setShufflePressed={setShufflePressed}
                     setCurrentView={setCurrentView}
+                    onLeave={sendLeaveWithDebounce}
                   />
                 </div>
+
               </div>
 
               <QueuePanel
@@ -572,20 +604,14 @@ function App() {
                     Density: {gridCols}
                   </span>
                   <input
-                    type="range"
-                    min="1"
-                    max="4"
-                    value={gridCols}
+                    type="range" min="1" max="4" value={gridCols}
                     onChange={(e) => setGridCols(Number(e.target.value))}
                     className="w-24 accent-green-500 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
               </div>
 
-              <div
-                className="grid gap-16 justify-items-center w-full"
-                style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }}
-              >
+              <div className="grid gap-16 justify-items-center w-full" style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }}>
                 {botInstances.map((server) => (
                   <div
                     key={server.id}
@@ -593,14 +619,10 @@ function App() {
                     className={`max-w-xs w-full aspect-[4/5] p-10 rounded-[4rem] border-4 flex flex-col items-center justify-center gap-8 transition-all hover:scale-[1.05] active:scale-95 overflow-hidden cursor-pointer hover:border-green-500 hover:bg-green-500/10 hover:shadow-green-500/20 shadow-2xl ${theme === 'dark' ? 'bg-zinc-900/40 border-zinc-800' : 'bg-white border-zinc-200'} ${server.isLocked ? 'border-green-500 bg-green-500/10' : ''}`}
                   >
                     <div className={`w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-sm font-black shrink-0 border shadow-inner ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-200'}`}>
-                      {server.iconUrl ? (
-                        <img src={server.iconUrl} alt="" className="w-full h-full object-cover rounded-[2.5rem]" />
-                      ) : 'SRV'}
+                      {server.iconUrl ? <img src={server.iconUrl} alt="" className="w-full h-full object-cover rounded-[2.5rem]" /> : 'SRV'}
                     </div>
                     <div className="text-center">
-                      <h3 className="text-2xl font-black tracking-tight leading-tight mb-2 px-2">
-                        {server.serverName}
-                      </h3>
+                      <h3 className="text-2xl font-black tracking-tight leading-tight mb-2 px-2">{server.serverName}</h3>
                       <p className={`text-[10px] font-black tracking-[0.3em] uppercase opacity-80 ${server.isLocked ? 'text-green-500' : 'text-zinc-500'}`}>
                         {server.isLocked ? t('lobby.playingMusic') : t('lobby.selectBot')}
                       </p>
@@ -618,22 +640,13 @@ function App() {
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <h3 className="text-xl font-black">{t('channels.selectTitle')}</h3>
-                  <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">
-                    {t('channels.selectSubtitle')}
-                  </p>
+                  <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">{t('channels.selectSubtitle')}</p>
                 </div>
-                <button
-                  onClick={() => setSelectedBotIndex(null)}
-                  className="text-2xl p-2 hover:scale-110 transition opacity-50 hover:opacity-100 hover:text-red-500"
-                >
-                  ✕
-                </button>
+                <button onClick={() => setSelectedBotIndex(null)} className="text-2xl p-2 hover:scale-110 transition opacity-50 hover:opacity-100 hover:text-red-500">✕</button>
               </div>
               <div className="max-h-64 overflow-y-auto pr-2 space-y-2 hide-scrollbar">
                 {isLoadingChannels ? (
-                  <div className="text-center py-8 text-zinc-500 font-bold animate-pulse">
-                    {t('channels.searching')}
-                  </div>
+                  <div className="text-center py-8 text-zinc-500 font-bold animate-pulse">{t('channels.searching')}</div>
                 ) : availableChannels.length > 0 ? (
                   availableChannels.map((channel) => (
                     <button
@@ -645,9 +658,7 @@ function App() {
                     </button>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-red-500 font-bold">
-                    {t('channels.noChannels')}
-                  </div>
+                  <div className="text-center py-8 text-red-500 font-bold">{t('channels.noChannels')}</div>
                 )}
               </div>
             </div>

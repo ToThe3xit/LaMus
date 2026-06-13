@@ -90,6 +90,20 @@
 "networkSource": "Tinklas",
 "librarySource": "Biblioteka"
 },
+"vote": {
+"noControlInfo": "Pradėkite balsavimą, kad praleistumėte, išvalytumėte arba atjungtumėte",
+"active": "Balsavimas vyksta",
+"requestFor": "Prašymas",
+"votes": "balsai",
+"voteYes": "Balsuoti TAIP",
+"cancel": "Atšaukti balsavimą",
+"rollback": "Anuliuoti paskutinį balsą"
+},
+"ownership": {
+"youOwn": "Jūs esate šios sesijos savininkas",
+"owner": "Sesijos savininkas",
+"delegated": "Deleguotoji kontrolė"
+},
 "channels": {
 "selectTitle": "Pasirinkite balso kanalą",
 "selectSubtitle": "Pasirinktam botui",

@@ -90,6 +90,20 @@
 "networkSource": "Tīkls",
 "librarySource": "Bibliotēka"
 },
+"vote": {
+"noControlInfo": "Sāciet balsošanu, lai izlaistu, notīrītu vai atvienotu",
+"active": "Balsošana procesā",
+"requestFor": "Pieprasījums",
+"votes": "balsis",
+"voteYes": "Balsot PAR",
+"cancel": "Atcelt balsošanu",
+"rollback": "Atsaukt pēdējo balsojumu"
+},
+"ownership": {
+"youOwn": "Jūs esat šīs sesijas īpašnieks",
+"owner": "Sesijas īpašnieks",
+"delegated": "Deleģēta vadība"
+},
 "channels": {
 "selectTitle": "Izvēlieties balss kanālu",
 "selectSubtitle": "Izvēlētajam botam",

@@ -90,6 +90,20 @@
 "networkSource": "網路資源",
 "librarySource": "媒體庫"
 },
+"vote": {
+"noControlInfo": "發起投票以跳過、清空或斷開連接",
+"active": "投票正在進行中",
+"requestFor": "請求",
+"votes": "票數",
+"voteYes": "投贊成票",
+"cancel": "取消投票",
+"rollback": "撤銷上次投票"
+},
+"ownership": {
+"youOwn": "您是此工作階段 can 所有者",
+"owner": "工作階段擁有者",
+"delegated": "已委派的控制權"
+},
 "channels": {
 "selectTitle": "選擇語音頻道",
 "selectSubtitle": "針對所選機器人",

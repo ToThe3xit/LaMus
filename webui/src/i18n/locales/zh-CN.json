@@ -90,6 +90,20 @@
 "networkSource": "网络资源",
 "librarySource": "媒体库"
 },
+"vote": {
+"noControlInfo": "发起投票以跳过、清空或断开连接",
+"active": "投票正在进行中",
+"requestFor": "请求",
+"votes": "票数",
+"voteYes": "投赞成票",
+"cancel": "取消投票",
+"rollback": "撤销上次投票"
+},
+"ownership": {
+"youOwn": "您是此会话的所有者",
+"owner": "会话所有者",
+"delegated": "已委派的控制权"
+},
 "channels": {
 "selectTitle": "选择语音频道",
 "selectSubtitle": "针对所选机器人",

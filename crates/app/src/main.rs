@@ -4,8 +4,10 @@ use std::collections::HashMap;
 use tokio::sync::{mpsc, RwLock, Mutex};
 use serenity::http::Http;
 use serde::Deserialize;
+use serde_json;
 
 use musicbot_web_ui::{CoreMessage, PlayerState};
+use musicbot_web_ui::VoteStateInfo;
 
 use musicbot_discord_adapter::discord::start_discord;
 use musicbot_discord_adapter::db_runtime::DbRuntime;
@@ -15,10 +17,18 @@ use musicbot_discord_adapter::adapter::DiscordAudioAdapter;
 use musicbot_core::BotInstance;
 use musicbot_core::engine::CoreState;
 use musicbot_core::command::Command;
-
+use musicbot_core::governance::SessionSnapshot;
+use musicbot_core::governance::VoteAction;
+use musicbot_core::governance::VoteCastResult;
 // ============================================================ //
 // ==== CONFIGURATION STRUCTURES AND DATA ======================= //
 // ============================================================ //
+
+#[derive(Deserialize)]
+pub struct VoteControlConfig {
+    pub required_percentage: Option<u8>,
+    pub timeout_seconds: Option<u64>,
+}
 #[derive(Deserialize)]
 pub struct AppConfig {
     pub lavalink_password: String,
@@ -34,7 +44,8 @@ pub struct AppConfig {
     pub discord_client_id: String,
     pub discord_client_secret: String,
     pub discord_redirect_uri: String,
-    pub observer_bot_token: String
+    pub observer_bot_token: String,
+    pub vote_control: Option<VoteControlConfig>,
 }
 
 #[derive(Deserialize)]
@@ -96,7 +107,20 @@ async fn main() {
     let mut bot_discord_ids: std::collections::HashMap<u64, usize> = std::collections::HashMap::new();
 
     let (obs_tx, mut obs_rx) = tokio::sync::mpsc::unbounded_channel::<musicbot_discord_adapter::discord::ObserverMessage>();
-    let hivemind = Arc::new(musicbot_core::hivemind::HiveMind::new(config.bots.len()));
+    let vote_pct = config.vote_control.as_ref()
+        .and_then(|v| v.required_percentage)
+        .unwrap_or(50);
+    let vote_timeout = config.vote_control.as_ref()
+        .and_then(|v| v.timeout_seconds)
+        .unwrap_or(15);
+
+    let hivemind = Arc::new(musicbot_core::hivemind::HiveMind::new_with_governance(
+        config.bots.len(),
+        vote_pct,
+        vote_timeout,
+        config.superadmin_ids.clone(),
+    ));
+
     let hm_observer = hivemind.clone();
     let observer_token = config.observer_bot_token.clone();
     
@@ -240,6 +264,12 @@ async fn main() {
                         volume: c.playback.volume,
                         is_looping: c.playback.is_looping,
                         is_radio_active: c.network_radio_enabled || c.local_radio_enabled,
+                        owner_id: None,
+                        owner_name: None,
+                        delegated_user_ids: Vec::new(),
+                        active_vote: None,
+                        has_rollback: false,
+                        rollback_seconds_left: 0,
                     };
                     
                     cached_state.history.reverse();
@@ -269,7 +299,41 @@ async fn main() {
                     }
                     
                     drop(c);
-                    
+                    {
+                        let gov = clock_hivemind.governance.state.read().await;
+
+                        let ownership = gov.ownership.get(&clock_bot_index);
+                        cached_state.owner_id = ownership.and_then(|o| o.owner_id).map(|id| id.to_string());
+                        cached_state.owner_name = ownership.and_then(|o| o.owner_name.clone());
+                        cached_state.delegated_user_ids = ownership
+                            .map(|o| o.delegated_users.iter().map(|id| id.to_string()).collect())
+                            .unwrap_or_default();
+
+                        cached_state.active_vote = gov.active_vote.get(&clock_bot_index)
+                            .filter(|v| !v.is_expired())
+                            .map(|v| {
+                                let (cur, req, rem) = v.status();
+                                musicbot_core::governance::VoteStateInfo {
+                                    action: v.action.as_str().to_string(),
+                                    current_votes: cur,
+                                    required_votes: req,
+                                    seconds_remaining: rem,
+                                    initiated_by: v.initiated_by.to_string(),
+                                }
+                            });
+
+                        let snap = gov.snapshots.get(&clock_bot_index);
+                        cached_state.has_rollback = snap
+                            .map(|s| s.taken_at.elapsed() <= clock_hivemind.governance.rollback_window)
+                            .unwrap_or(false);
+                        cached_state.rollback_seconds_left = if cached_state.has_rollback {
+                            snap.map(|s| clock_hivemind.governance.rollback_window
+                                .saturating_sub(s.taken_at.elapsed()).as_secs())
+                            .unwrap_or(0)
+                        } else {
+                            0
+                        };
+                    }
                     clock_hivemind.update_cached_state(clock_bot_index, cached_state).await;
                 }else{
                     let mut states = clock_hivemind.player_states.write().await;
@@ -315,6 +379,18 @@ async fn main() {
                     volume: cached.volume,
                     is_looping: cached.is_looping,
                     is_radio_active: cached.is_radio_active,
+                    owner_id: cached.owner_id,
+                    owner_name: cached.owner_name,
+                    delegated_user_ids: cached.delegated_user_ids,
+                    active_vote: cached.active_vote.map(|v| VoteStateInfo {
+                        action: v.action,
+                        current_votes: v.current_votes,
+                        required_votes: v.required_votes,
+                        seconds_remaining: v.seconds_remaining,
+                        initiated_by: v.initiated_by,
+                    }),
+                    has_rollback: cached.has_rollback,
+                    rollback_seconds_left: cached.rollback_seconds_left,
                 };
                 
                 multi_state.insert(compound_key, ui_state);
@@ -423,7 +499,13 @@ async fn main() {
                         let bot_http = nodes.iter().find(|n| n.id == bot_index).map(|n| n.http.clone());
 
                         tokio::spawn(async move {
-                            let _ = web_tx.send(CoreMessage::JoinChannel { server_id: server_id.clone(), channel_id, bot_index }).await;
+                            let _ = web_tx.send(CoreMessage::JoinChannel {
+                                server_id: server_id.clone(),
+                                channel_id,
+                                bot_index,
+                                requester_id: None,
+                                requester_name: None,
+                            }).await;
                             let prefix = std::str::from_utf8(&[121, 116, 115, 101, 97, 114, 99, 104, 58]).unwrap();
                             let network_query = if query.starts_with("http") { query.to_string() } else { format!("{}{}", prefix, query) };
 
@@ -456,7 +538,13 @@ async fn main() {
                         let bot_http = nodes.iter().find(|n| n.id == bot_index).map(|n| n.http.clone());
 
                         tokio::spawn(async move {
-                            let _ = web_tx.send(CoreMessage::JoinChannel { server_id: server_id.clone(), channel_id, bot_index }).await;
+                            let _ = web_tx.send(CoreMessage::JoinChannel {
+                                server_id: server_id.clone(),
+                                channel_id,
+                                bot_index,
+                                requester_id: None,
+                                requester_name: None,
+                            }).await;
 
                             match musicbot_discord_adapter::search::search(&tracks_prev, &query) {
                                 musicbot_discord_adapter::search::SearchResult::Single { track_id } => {
@@ -533,12 +621,16 @@ async fn main() {
             },
             Some(msg) = web_rx.recv() => {
                 match msg {
-                    CoreMessage::JoinChannel { server_id, channel_id, bot_index } => {
+                    CoreMessage::JoinChannel { server_id, channel_id, bot_index, requester_id, requester_name } => {
                         let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
                         let c_id = serenity::model::id::ChannelId::new(channel_id.parse().unwrap_or(0));
                         if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
                             println!("[ROUTER] Join command sent to node '{}'", node.name);
                             let _ = node.cmd_tx.send(musicbot_discord_adapter::discord::WebDiscordCommand::Join(guild_id, c_id));
+                            if let Some(rid) = requester_id {
+                                let name = requester_name.unwrap_or_else(|| rid.to_string());
+                                hivemind.governance.set_owner(bot_index, rid, name).await;
+                            }
                         }
                     },
                     CoreMessage::SetVolume { server_id, volume, bot_index } => {
@@ -549,6 +641,7 @@ async fn main() {
                         }
                     },
                     CoreMessage::LeaveChannel { server_id, bot_index } => {
+                        hivemind.governance.clear_session(bot_index).await;
                         if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
                             println!("[ROUTER] Leave command sent to node '{}'", node.name);
                             let g_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
@@ -566,12 +659,15 @@ async fn main() {
                             let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
                             let events = { let mut c = node.core.lock().await; c.handle_command(Command::Skip) };
                             let mut radio_source = None;
-                            for ev in &events { if let musicbot_core::event::Event::RadioTriggered { source } = ev { radio_source = Some(source.clone()); } }
+                            for ev in &events {
+                                if let musicbot_core::event::Event::RadioTriggered { source } = ev {
+                                    radio_source = Some(source.clone());
+                                }
+                            }
                             musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
                             if let Some(source) = radio_source {
                                 let prefetched = hivemind.prefetched_radio.write().await.remove(&bot_index);
                                 if let Some(ref pre_id) = prefetched {
-                                    println!("[RADIO] Using pre-fetched recommendation: {}", pre_id);
                                     let related_url = {
                                         let https = std::str::from_utf8(&[104,116,116,112,115,58,47,47]).unwrap();
                                         let www   = std::str::from_utf8(&[119,119,119,46]).unwrap();
@@ -582,7 +678,6 @@ async fn main() {
                                     if let Some(mut lavalink_tracks) = musicbot_discord_adapter::discord::commands::resolve_tracks(&related_url, &router_pass).await {
                                         if !lavalink_tracks.is_empty() {
                                             let track = lavalink_tracks.remove(0);
-                                            println!("[RADIO] Pre-fetched track queued: {}", track.title);
                                             let guild_id2 = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
                                             musicbot_discord_adapter::discord::commands::add_track_and_autoplay_bg(guild_id2, track, node.core.clone(), node.audio.clone()).await;
                                         } else {
@@ -715,6 +810,132 @@ async fn main() {
                             ).await;
                         }
                     },                
+                    CoreMessage::CastVote { server_id, bot_index, voter_id } => {
+                        let result = hivemind.governance.cast_vote(bot_index, voter_id).await;
+                        match result {
+                            VoteCastResult::Passed(action, _payload) => {
+                                println!("[GOVERNANCE] Vote PASSED on bot #{}: {:?}", bot_index, action);
+                                if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
+                                    let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+                                    let snapshot = {
+                                        let c = node.core.lock().await;
+                                        SessionSnapshot {
+                                            queue_tracks_json: c.queue.tracks().iter()
+                                                .map(|t| serde_json::json!({
+                                                    "id": t.id.0,
+                                                    "title": t.title,
+                                                    "duration": t.duration_seconds,
+                                                    "lavalink_id": t.lavalink_id,
+                                                    "file_path": t.file_path,
+                                                    "source": format!("{:?}", t.source),
+                                                }).to_string())
+                                                .collect(),
+                                            current_track_index: 0,
+                                            position_seconds: c.playback.position_seconds,
+                                            radio_network: c.network_radio_enabled,
+                                            radio_local: c.local_radio_enabled,
+                                            taken_at: std::time::Instant::now(),
+                                        }
+                                    };
+                                    hivemind.governance.save_snapshot(bot_index, snapshot).await;
+
+                                    match action {
+                                        VoteAction::Skip => {
+                                            let events = { let mut c = node.core.lock().await; c.handle_command(Command::Skip) };
+                                            let mut radio_source = None;
+                                            for ev in &events {
+                                                if let musicbot_core::event::Event::RadioTriggered { source } = ev {
+                                                    radio_source = Some(source.clone());
+                                                }
+                                            }
+                                            musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                            if let Some(source) = radio_source {
+                                                musicbot_discord_adapter::discord::commands::trigger_radio(
+                                                    guild_id, source, node.core.clone(), node.audio.clone(),
+                                                    router_db.clone(), router_tracks.clone(),
+                                                    router_pass.clone(), router_local.clone(), router_docker.clone()
+                                                ).await;
+                                            }
+                                        },
+                                        VoteAction::ClearQueue => {
+                                            let events = { let mut c = node.core.lock().await; c.handle_command(Command::Clear) };
+                                            musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                        },
+                                        VoteAction::LeaveChannel => {
+                                            hivemind.governance.clear_session(bot_index).await;
+                                            let _ = node.cmd_tx.send(musicbot_discord_adapter::discord::WebDiscordCommand::Leave(guild_id));
+                                        },
+                                        VoteAction::TogglePause => {
+                                            let events = { let mut c = node.core.lock().await; c.handle_command(Command::Pause) };
+                                            musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                        },
+                                    }
+                                }
+                            }
+                            VoteCastResult::Recorded => {
+                                println!("[GOVERNANCE] Vote recorded on bot #{} by user {}", bot_index, voter_id);
+                            }
+                            _ => {}
+                        }
+                    },
+                    CoreMessage::CancelVote { server_id: _, bot_index } => {
+                        hivemind.governance.cancel_vote(bot_index).await;
+                        println!("[GOVERNANCE] Vote on bot #{} cancelled by moderator", bot_index);
+                    },
+                    CoreMessage::RollbackLastVote { server_id, bot_index } => {
+                        if let Some(snapshot) = hivemind.governance.take_snapshot(bot_index).await {
+                            if let Some(node) = nodes.iter().find(|n| n.id == bot_index) {
+                                let guild_id = serenity::model::id::GuildId::new(server_id.parse().unwrap_or(0));
+
+                                let clear_events = { let mut c = node.core.lock().await; c.handle_command(Command::Clear) };
+                                musicbot_discord_adapter::discord::commands::process_core_events(guild_id, clear_events, node.audio.clone()).await;
+
+                                for track_json in &snapshot.queue_tracks_json {
+                                    if let Ok(val) = serde_json::from_str::<serde_json::Value>(track_json) {
+                                        let title = val["title"].as_str().unwrap_or("").to_string();
+                                        let duration = val["duration"].as_u64().unwrap_or(0);
+                                        let id = val["id"].as_str().unwrap_or("").to_string();
+                                        let lavalink_id: Option<String> = val["lavalink_id"].as_str().map(|s: &str| s.to_string());
+                                        let file_path: Option<String> = val["file_path"].as_str().map(|s: &str| s.to_string());
+                                        let is_local = val["source"].as_str() == Some("Local");
+
+                                        let track = if is_local {
+                                            musicbot_core::track::Track::local(id, title, duration, file_path.unwrap_or_default())
+                                        } else {
+                                            musicbot_core::track::Track::lavalink(id, title, duration, lavalink_id.unwrap_or_default())
+                                        };
+
+                                        let events = { let mut c = node.core.lock().await; c.handle_command(Command::AddTrack { track }) };
+                                        musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                    }
+                                }
+
+                                if snapshot.current_track_index > 0 {
+                                    let events = { let mut c = node.core.lock().await; c.handle_command(Command::PlayIndex { index: snapshot.current_track_index }) };
+                                    musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                } else {
+                                    let events = { let mut c = node.core.lock().await; c.handle_command(Command::Play) };
+                                    musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                }
+
+                                if snapshot.position_seconds > 0 {
+                                    let events = { let mut c = node.core.lock().await; c.handle_command(Command::Seek { seconds: snapshot.position_seconds }) };
+                                    musicbot_discord_adapter::discord::commands::process_core_events(guild_id, events, node.audio.clone()).await;
+                                }
+
+                                println!("[GOVERNANCE] Rollback complete for bot #{}", bot_index);
+                            }
+                        } else {
+                            println!("[GOVERNANCE] No valid snapshot for bot #{}", bot_index);
+                        }
+                    },
+                    CoreMessage::DelegatePermission { server_id: _, bot_index, caller_id, target_id } => {
+                        let is_mod = hivemind.superadmin_ids.contains(&caller_id.to_string());
+                        hivemind.governance.delegate(bot_index, caller_id, target_id, is_mod).await;
+                    },
+                    CoreMessage::RevokeDelegate { server_id: _, bot_index, target_id } => {
+                        hivemind.governance.revoke_delegate(bot_index, target_id).await;
+                    },                    
                 }
             }
         }

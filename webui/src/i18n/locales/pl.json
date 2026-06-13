@@ -90,6 +90,20 @@
     "networkSource": "Sieć",
     "librarySource": "Biblioteka"
   },
+  "vote": {
+    "noControlInfo": "Zagłosuj żeby pominąć, wyczyścić lub rozłączyć",
+  "active": "Trwa głosowanie",
+  "requestFor": "Wniosek",
+  "votes": "głosów",
+  "voteYes": "Zagłosuj TAK",
+  "cancel": "Anuluj głosowanie",
+  "rollback": "Cofnij ostatnią akcję"
+},
+"ownership": {
+  "youOwn": "Jesteś właścicielem sesji",
+  "owner": "Właściciel sesji",
+  "delegated": "Delegowane uprawnienia"
+},
   "channels": {
     "selectTitle": "Wybierz kanał głosowy",
     "selectSubtitle": "Dla wybranego bota",

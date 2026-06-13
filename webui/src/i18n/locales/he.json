@@ -90,6 +90,20 @@
 "networkSource": "רשת",
 "librarySource": "ספריה"
 },
+"vote": {
+"noControlInfo": "התחל הצבעה כדי לדלג, לנקות או לנתק",
+"active": "הצבעה מתנהלת",
+"requestFor": "בקשה",
+"votes": "הצבעות",
+"voteYes": "הצבע כן",
+"cancel": "בטל הצבעה",
+"rollback": "בטל הצבעה אחרונה"
+},
+"ownership": {
+"youOwn": "אתה הבעלים של סשן זה",
+"owner": "בעל הסשן",
+"delegated": "שליטה מואצלת"
+},
 "channels": {
 "selectTitle": "בחר ערוץ קולי",
 "selectSubtitle": "עבור הבוט שנבחר",

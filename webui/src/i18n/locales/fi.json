@@ -90,6 +90,20 @@
 "networkSource": "Verkko",
 "librarySource": "Kirjasto"
 },
+"vote": {
+"noControlInfo": "Aloita äänestys ohittaaksesi, tyhjentääksesi tai katkaistaksesi yhteyden",
+"active": "Äänestys käynnissä",
+"requestFor": "Pyyntö",
+"votes": "ääntä",
+"voteYes": "Äänestä KYLLÄ",
+"cancel": "Peruuta äänestys",
+"rollback": "Kumoa viimeisin äänestys"
+},
+"ownership": {
+"youOwn": "Omistat tämän istunnon",
+"owner": "Istunnon omistaja",
+"delegated": "Delegoitu hallinta"
+},
 "channels": {
 "selectTitle": "Valitse puhekanava",
 "selectSubtitle": "Valitulle botille",

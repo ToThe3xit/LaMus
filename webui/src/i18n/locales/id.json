@@ -90,6 +90,20 @@
 "networkSource": "Jaringan",
 "librarySource": "Pustaka"
 },
+"vote": {
+"noControlInfo": "Mulai pemungutan suara untuk melompati, menghapus, otau memutuskan sambungan",
+"active": "Pemungutan suara sedang berlangsung",
+"requestFor": "Permintaan",
+"votes": "suara",
+"voteYes": "Pilih YA",
+"cancel": "Batalkan pemungutan suara",
+"rollback": "Batalkan pemungutan suara terakhir"
+},
+"ownership": {
+"youOwn": "Anda adalah pemilik sesi ini",
+"owner": "Pemilik sesi",
+"delegated": "Kontrol didelegasikan"
+},
 "channels": {
 "selectTitle": "Pilih Saluran Suara",
 "selectSubtitle": "Untuk bot yang dipilih",

@@ -90,6 +90,20 @@
 "networkSource": "Nettverk",
 "librarySource": "Bibliotek"
 },
+"vote": {
+"noControlInfo": "Start en avstemning for å hoppe over, tømme eller koble fra",
+"active": "Avstemning pågår",
+"requestFor": "Forespørsel",
+"votes": "stemmer",
+"voteYes": "Stem JA",
+"cancel": "Avbryt avstemning",
+"rollback": "Angre siste avstemning"
+},
+"ownership": {
+"youOwn": "Du eier denne økten",
+"owner": "Økteier",
+"delegated": "Delegert kontroll"
+},
 "channels": {
 "selectTitle": "Velg talekanal",
 "selectSubtitle": "For valgt bot",

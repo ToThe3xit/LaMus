@@ -187,7 +187,23 @@ pub async fn handle_command(
             results: None,
         });
     }
+    let owner_only_actions = ["play", "seek", "volume", "shuffle_queue", "sort_queue", 
+                            "dedup_queue", "toggle_loop", "move_track", "play_index", 
+                            "remove_track", "previous", "radio_network", "radio_local",
+                            "play_search", "delegate", "revoke_delegate"];
 
+    if owner_only_actions.contains(&command.action.as_str()) && !is_superadmin {
+        let has_gov_perm = state.hivemind.governance
+            .has_direct_permission(target_bot, user_id_u64, false)
+            .await;
+        if !has_gov_perm {
+            return Json(CommandResponse {
+                success: false,
+                message: "Only the session owner or delegated users can perform this action.".into(),
+                results: None,
+            });
+        }
+    }
     match command.action.as_str() {
         "play" => {
             if let Some(query) = &command.payload {
@@ -258,12 +274,6 @@ pub async fn handle_command(
                 return Json(CommandResponse { success: false, message: "Search error!".into(), results: None });
             }
         },
-        "skip" => { let _ = state.core_tx.send(CoreMessage::Skip { server_id, bot_index: target_bot }).await; },
-        "clear" => {
-            let _ = state.core_tx.send(CoreMessage::ClearQueue { server_id, bot_index: target_bot }).await;
-            return Json(CommandResponse { success: true, message: "Queue cleared!".into(), results: None });
-        }
-        "play_pause" => { let _ = state.core_tx.send(CoreMessage::TogglePause { server_id, bot_index: target_bot }).await; },
         "seek" => {
             if let Some(sec_str) = &command.payload {
                 if let Ok(seconds) = sec_str.parse::<u64>() {
@@ -391,8 +401,23 @@ pub async fn handle_command(
         "join" => {
             if let Some(channel_id) = command.payload {
                 let chan_u64 = channel_id.parse::<u64>().unwrap_or(0);
-                let bots_in_this_channel = state.hivemind.get_bots_in_channel(server_id_u64, chan_u64).await;
 
+                if !is_superadmin {
+                    let user_voice = state.hivemind.get_user_channel(user_id_u64).await;
+                    let is_in_target_channel = match user_voice {
+                        Some((g, c)) => g == server_id_u64 && c == chan_u64,
+                        None => false,
+                    };
+                    if !is_in_target_channel {
+                        return Json(CommandResponse {
+                            success: false,
+                            message: "You can only invite the bot to your own voice channel.".into(),
+                            results: None,
+                        });
+                    }
+                }
+
+                let bots_in_this_channel = state.hivemind.get_bots_in_channel(server_id_u64, chan_u64).await;
                 if bots_in_this_channel >= state.max_bots_per_channel {
                     return Json(CommandResponse {
                         success: false,
@@ -401,13 +426,144 @@ pub async fn handle_command(
                     });
                 }
 
-                let _ = state.core_tx.send(CoreMessage::JoinChannel { server_id, channel_id, bot_index: target_bot }).await;
+                let requester_id = user_id.parse::<u64>().ok();
+
+                let (bot_idx_from_source, requester_name) = if let Some(src) = &command.source {
+                    let parts: Vec<&str> = src.splitn(2, ':').collect();
+                    let idx = parts.get(0).and_then(|s| s.parse::<usize>().ok()).unwrap_or(target_bot);
+                    let name = parts.get(1).map(|s| s.to_string());
+                    (idx, name)
+                } else {
+                    (target_bot, None)
+                };
+
+                let _ = state.core_tx.send(CoreMessage::JoinChannel {
+                    server_id,
+                    channel_id,
+                    bot_index: bot_idx_from_source,
+                    requester_id,
+                    requester_name,
+                }).await;
                 return Json(CommandResponse { success: true, message: "Connecting to channel...".into(), results: None });
             }
         },
-        "leave" => {
-            let _ = state.core_tx.send(CoreMessage::LeaveChannel { server_id, bot_index: target_bot }).await;
-            return Json(CommandResponse { success: true, message: "Leaving channel...".into(), results: None });
+        "skip" | "clear" | "leave" | "play_pause" => {
+            let user_id_u64 = user_id.parse::<u64>().unwrap_or(0);
+            let has_perm = state.hivemind.governance
+                .has_direct_permission(target_bot, user_id_u64, is_superadmin)
+                .await;
+
+            if has_perm {
+                match command.action.as_str() {
+                    "skip" => { let _ = state.core_tx.send(CoreMessage::Skip { server_id, bot_index: target_bot }).await; }
+                    "clear" => { let _ = state.core_tx.send(CoreMessage::ClearQueue { server_id, bot_index: target_bot }).await; }
+                    "leave" => { let _ = state.core_tx.send(CoreMessage::LeaveChannel { server_id, bot_index: target_bot }).await; }
+                    "play_pause" => { let _ = state.core_tx.send(CoreMessage::TogglePause { server_id, bot_index: target_bot }).await; }
+                    _ => {}
+                }
+                return Json(CommandResponse { success: true, message: "Action executed".into(), results: None });
+            }
+
+            let vote_action = match command.action.as_str() {
+                "skip" => musicbot_core::governance::VoteAction::Skip,
+                "clear" => musicbot_core::governance::VoteAction::ClearQueue,
+                "leave" => musicbot_core::governance::VoteAction::LeaveChannel,
+                "play_pause" => musicbot_core::governance::VoteAction::TogglePause,
+                _ => return Json(CommandResponse { success: false, message: "Unknown action".into(), results: None }),
+            };
+
+            let bot_state = state.hivemind.get_bot_state(target_bot).await;
+            let (guild_id_u64, channel_id_u64) = match bot_state {
+                musicbot_core::hivemind::BotState::Busy { guild_id, channel_id } => (guild_id, channel_id),
+                _ => return Json(CommandResponse { success: false, message: "Bot not active".into(), results: None }),
+            };
+
+            let owner_id = state.hivemind.governance.get_owner_id(target_bot).await;
+            let mut channel_members = state.hivemind
+                .get_channel_human_members(guild_id_u64, channel_id_u64)
+                .await;
+
+            let hivemind_ref = &state.hivemind;
+            let mut eligible = Vec::new();
+            for member_id in channel_members.drain(..) {
+                let is_bot = hivemind_ref.is_bot_discord_id(member_id).await;
+                let is_owner = Some(member_id) == owner_id;
+                let is_superadmin_user = hivemind_ref.superadmin_ids.contains(&member_id.to_string());
+                if !is_bot && !is_owner && !is_superadmin_user {
+                    eligible.push(member_id);
+                }
+            }
+
+            let vote_pct = state.hivemind.governance.required_percentage;
+            match state.hivemind.governance.start_vote(
+                target_bot,
+                server_id.clone(),
+                vote_action,
+                command.payload.clone(),
+                user_id_u64,
+                eligible,
+                vote_pct,
+            ).await {
+                Ok(()) => {
+                    return Json(CommandResponse { success: true, message: "vote_started".into(), results: None });
+                }
+                Err(e) => {
+                    return Json(CommandResponse { success: false, message: e.into(), results: None });
+                }
+            }
+        },
+        "vote" => {
+            let voter_id = user_id.parse::<u64>().unwrap_or(0);
+            let _ = state.core_tx.send(CoreMessage::CastVote {
+                server_id,
+                bot_index: target_bot,
+                voter_id,
+            }).await;
+            return Json(CommandResponse { success: true, message: "Vote cast".into(), results: None });
+        },
+        "cancel_vote" => {
+            if !is_superadmin {
+                return Json(CommandResponse { success: false, message: "Moderator only".into(), results: None });
+            }
+            let _ = state.core_tx.send(CoreMessage::CancelVote {
+                server_id,
+                bot_index: target_bot,
+            }).await;
+            return Json(CommandResponse { success: true, message: "Vote cancelled".into(), results: None });
+        },
+        "rollback_vote" => {
+            if !is_superadmin {
+                return Json(CommandResponse { success: false, message: "Moderator only".into(), results: None });
+            }
+            let _ = state.core_tx.send(CoreMessage::RollbackLastVote {
+                server_id,
+                bot_index: target_bot,
+            }).await;
+            return Json(CommandResponse { success: true, message: "Rollback initiated".into(), results: None });
+        },
+        "delegate" => {
+            if let Some(target_str) = &command.payload {
+                let target_id = target_str.parse::<u64>().unwrap_or(0);
+                let caller_id = user_id.parse::<u64>().unwrap_or(0);
+                let _ = state.core_tx.send(CoreMessage::DelegatePermission {
+                    server_id,
+                    bot_index: target_bot,
+                    caller_id,
+                    target_id,
+                }).await;
+            }
+            return Json(CommandResponse { success: true, message: "Delegation updated".into(), results: None });
+        },
+        "revoke_delegate" => {
+            if let Some(target_str) = &command.payload {
+                let target_id = target_str.parse::<u64>().unwrap_or(0);
+                let _ = state.core_tx.send(CoreMessage::RevokeDelegate {
+                    server_id,
+                    bot_index: target_bot,
+                    target_id,
+                }).await;
+            }
+            return Json(CommandResponse { success: true, message: "Delegation revoked".into(), results: None });
         },
         _ => {}
     }

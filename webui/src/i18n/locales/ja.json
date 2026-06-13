@@ -90,6 +90,20 @@
 "networkSource": "ネットワーク",
 "librarySource": "ライブラリ"
 },
+"vote": {
+"noControlInfo": "スキップ、クリア、または切断するための投票を開始します",
+"active": "投票進行中",
+"requestFor": "リクエスト",
+"votes": "票",
+"voteYes": "「はい」に投票",
+"cancel": "投票をキャンセル",
+"rollback": "最後の投票を取り消す"
+},
+"ownership": {
+"youOwn": "あなたはこのセッションの所有者です",
+"owner": "セッション所有者",
+"delegated": "委任されたコントロール"
+},
 "channels": {
 "selectTitle": "ボイスチャンネルを選択",
 "selectSubtitle": "選択したボット用",

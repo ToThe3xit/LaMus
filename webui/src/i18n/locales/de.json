@@ -90,6 +90,20 @@
 "networkSource": "Netzwerk",
 "librarySource": "Bibliothek"
 },
+"vote": {
+"noControlInfo": "Starten Sie eine Abstimmung, um zu überspringen, zu leeren oder die Verbindung zu trennen",
+"active": "Abstimmung läuft",
+"requestFor": "Anfrage",
+"votes": "Stimmen",
+"voteYes": "Mit JA stimmen",
+"cancel": "Abstimmung abbrechen",
+"rollback": "Letzte Abstimmung rückgängig machen"
+},
+"ownership": {
+"youOwn": "Du bist Besitzer dieser Sitzung",
+"owner": "Sitzungsbesitzer",
+"delegated": "Delegierte Steuerung"
+},
 "channels": {
 "selectTitle": "Sprachkanal auswählen",
 "selectSubtitle": "Für den ausgewählten Bot",

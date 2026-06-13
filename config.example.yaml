@@ -21,6 +21,10 @@ default_volume: 100 # Default volume (min 0, max 100)
 superadmin_ids:
   - "YOUR_DISCORD_USER_ID_HERE" # SuperUser ID (Your personal Discord Account ID)
 max_bots_per_channel: 2 # Max number of bots allowed in a single voice channel
+# Vote system
+vote_control:
+  required_percentage: 50
+  timeout_seconds: 15
 
 # Discord OAuth2 & App Credentials
 discord_client_id: "YOUR_DISCORD_CLIENT_ID"

@@ -32,7 +32,7 @@ LaMus is a high-performance, self-hosted Discord music bot ecosystem engineered 
 - [ARM Deployment & CGNAT Bypass](#arm-deployment--cgnat-bypass)
 - [Resource Usage & Efficiency](#resource-usage--efficiency)
 - [Troubleshooting](#troubleshooting)
-- [Roadmap — Patch 0.3.0](#roadmap--patch-030)
+- [Roadmap](#roadmap)
 
 ---
 
@@ -315,6 +315,17 @@ LaMus implements a layered permission model without an external database:
 
 Command authorisation is **stateless**: the backend checks the caller's voice channel against the HiveMind registry on every request without hitting any external store, keeping latency negligible.
 
+### Session Ownership & Democratic Control
+
+LaMus introduces a lightweight session management model designed to prevent conflicts when multiple users interact with the same bot instance.
+
+- **Session Ownership** — the user who initially invites a bot into a voice channel becomes the session owner. By default, only the owner may perform disruptive actions such as skipping tracks or modifying the queue.
+- **Open Sessions** — the owner may choose to open the session to everyone currently present in the voice channel.
+- **Vote-Skip System** — for open sessions, potentially disruptive actions require approval from a configurable percentage of active voice channel members. Voting lasts for 15 seconds and is automatically resolved once the configured threshold is reached.
+- **Moderator Override** — designated moderators always retain full control over the session, may cancel active votes, and can restore the previous state within a limited rollback window.
+
+> **Note:** In the current pre-release version (v0.3.0), the ownership and voting interface is available only through the WebUI. Native Discord slash command integration is planned for a future stable release.
+
 ---
 
 ## Local Library & Search Engine
@@ -532,34 +543,39 @@ The interface adapts automatically down to approximately 360 px wide. Below that
 
 ---
 
-## Roadmap — Patch 0.3.0
+## Roadmap
 
-The following features are planned for the next release:
+### Patch 0.4.0 — Auto-Volume & Project Infrastructure
+- Dedicated Lavalink plugin for automatic loudness normalization.
+- Documentation overhaul and GitHub Wiki migration.
+- Versioning and release workflow improvements.
 
-### ~~Queue Shuffle~~ - DONE
-Randomise the active playback queue in-place. The currently playing track is not interrupted and playback history is preserved.
+### Patch 0.5.0 — Audio Experience Update
+- Audio filters and equalizer presets.
+- YouTube chapter support.
 
-### ~~Bulk Queue Operations~~ - DONE
-- **Deduplication** — automatically remove duplicate tracks from the queue based on their internal track ID.
-- **Advanced sorting** — sort queued tracks by duration or by playback source (local vs. network).
+### Patch 0.6.0 — User Infrastructure
+- User profiles and persistent settings.
+- GDPR / EU compliance tools.
+- User data management and migration framework.
 
-### ~~Smart Autoplay (Recommendation Algorithm)~~ - DONE
-After the queue is exhausted, the system will automatically fetch and enqueue related tracks from YouTube (based on the YouTube Related Tracks API). This replaces the current Radio module with a smarter, zero-configuration continuation engine.
+### Patch 0.7.0 — User Features
+- Favorites.
+- Listening history.
+- User statistics.
+- Custom playlists.
 
-### ~~Multi-Language Support (i18n)~~ - DONE
-Full architectural refactor of the WebUI string layer to support runtime language switching (Polish, English, German as initial targets). This is a prerequisite for opening the project to an international community and for the eventual option of running LaMus as a public bot.
+### Patch 0.8.0 — WebUI File Manager
+- Local library management.
+- Upload and maintenance tools.
 
-### ~~Volume Normalisation (Auto-Volume)~~ - DEFERRED
+### Patch 0.9.0 — Advanced Administration
+- God Panel.
+- Hot Reload.
+- Instance management tools.
 
-*Deferred to a future major release. A proper implementation would require a dedicated Lavalink plugin capable of exposing loudness metadata or performing audio normalisation directly within the Lavalink audio processing pipeline. Since this functionality cannot be reliably implemented from the LaMus side alone, it has been postponed and will most likely become the primary focus of Patch 0.4.0.*
-
-An RMS/LUFS analysis pass run at track load time. Equalises perceived loudness when transitioning between local files (which may have inconsistent mastering) and YouTube streams, eliminating the need for manual volume correction between tracks.
-
-### Bot Session Ownership
-The user who invites a bot to a channel becomes its owner for that session. Ownership grants exclusive control, with the option to delegate permissions to specific users or open the session to the entire voice channel.
-
-### Democratic Control (Vote-Skip)
-For open sessions, skip votes and other disruptive actions require approval from a configurable percentage of users currently present in the voice channel. This prevents trolling without requiring the session owner to be constantly present.
+### Patch 1.0.0 — Database Evolution
+- Evaluate migration to a more advanced database backend if required.
 
 ---
 

@@ -90,6 +90,20 @@
 "networkSource": "Netwerk",
 "librarySource": "Bibliotheek"
 },
+"vote": {
+"noControlInfo": "Sāciet balsošanu, lai izlaistu, notīrītu vai atvienotu",
+"active": "Stemmen is bezig",
+"requestFor": "Verzoek",
+"votes": "stemmen",
+"voteYes": "Stem JA",
+"cancel": "Stemming annuleren",
+"rollback": "Laatste stemming ongedaan maken"
+},
+"ownership": {
+"youOwn": "Jij bent de eigenaar van deze sessie",
+"owner": "Sessie-eigenaar",
+"delegated": "Gedelegeerd beheer"
+},
 "channels": {
 "selectTitle": "Selecteer spraakkanaal",
 "selectSubtitle": "Voor de geselecteerde bot",

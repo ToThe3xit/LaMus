@@ -1,6 +1,6 @@
-export type Theme = 'dark' | 'light';
+export type { Theme } from './theme';
 
-export type PlayerState = { 
+export type PlayerState = {
   serverId: string;
   channelId: string;
   botId: number;
@@ -16,4 +16,16 @@ export type PlayerState = {
   volume: number;
   isLooping: boolean;
   isRadioActive?: boolean;
-}
+  ownerId: string | null;
+  ownerName: string | null;
+  delegatedUserIds: string[];
+  activeVote: {
+    action: string;
+    currentVotes: number;
+    requiredVotes: number;
+    secondsRemaining: number;
+    initiatedBy: string;
+  } | null;
+  hasRollback: boolean;
+  rollbackSecondsLeft: number;
+};

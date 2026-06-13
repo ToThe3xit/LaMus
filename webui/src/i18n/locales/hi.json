@@ -90,6 +90,20 @@
 "networkSource": "नेटवर्क",
 "librarySource": "लाइब्रेरी"
 },
+"vote": {
+"noControlInfo": "स्किप करने, साफ़ करने या डिस्कनेक्ट करने के लिए मतदान शुरू करें",
+"active": "मतदान प्रगति पर है",
+"requestFor": "अनुरोध",
+"votes": "वोट",
+"voteYes": "हाँ में वोट करें",
+"cancel": "मतदान रद्द करें",
+"rollback": "पिछला वोट वापस लें"
+},
+"ownership": {
+"youOwn": "आप इस सत्र के स्वामी हैं",
+"owner": "सत्र स्वामी",
+"delegated": "प्रत्यायोजित नियंत्रण"
+},
 "channels": {
 "selectTitle": "वॉयस चैनल चुनें",
 "selectSubtitle": "चुने गए बॉट के लिए",

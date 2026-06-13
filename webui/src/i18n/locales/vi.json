@@ -90,6 +90,20 @@
 "networkSource": "Mạng internet",
 "librarySource": "Thư viện"
 },
+"vote": {
+"noControlInfo": "Bắt đầu bỏ phiếu để bỏ qua, xóa hoặc ngắt kết nối",
+"active": "Cuộc bỏ phiếu đang diễn ra",
+"requestFor": "Yêu cầu",
+"votes": "phiếu bầu",
+"voteYes": "Bỏ phiếu ĐỒNG Ý",
+"cancel": "Hủy cuộc bỏ phiếu",
+"rollback": "Hoàn tác cuộc bỏ phiếu gần nhất"
+},
+"ownership": {
+"youOwn": "Bạn là chủ sở hữu của phiên này",
+"owner": "Chủ sở hữu phiên",
+"delegated": "Quyền kiểm soát đã được ủy quyền"
+},
 "channels": {
 "selectTitle": "Chọn kênh thoại",
 "selectSubtitle": "Cho bot đã chọn",

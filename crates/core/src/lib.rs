@@ -7,5 +7,6 @@ pub mod engine;
 pub mod normalize;
 pub mod types;
 pub mod hivemind;
+pub mod governance;
 
 pub use types::BotInstance;

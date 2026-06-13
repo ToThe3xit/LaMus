@@ -90,6 +90,20 @@
 "networkSource": "Võrk",
 "librarySource": "Teek"
 },
+"vote": {
+"noControlInfo": "Alusta hääletust vahelejätmiseks, tühjendamiseks või ühenduse katkestamiseks",
+"active": "Hääletus käib",
+"requestFor": "Taotlus",
+"votes": "häält",
+"voteYes": "Hääleta JAH",
+"cancel": "Tühista hääletus",
+"rollback": "Tühista viimane hääletus"
+},
+"ownership": {
+"youOwn": "Sina oled selle sessiooni omanik",
+"owner": "Sessiooni omanik",
+"delegated": "Delegeeritud juhtimine"
+},
 "channels": {
 "selectTitle": "Vali häälekanal",
 "selectSubtitle": "Valitud boti jaoks",

@@ -90,6 +90,20 @@
 "networkSource": "Hálózat",
 "librarySource": "Könyvtár"
 },
+"vote": {
+"noControlInfo": "Indítson szavazást a kihagyáshoz, törléshez vagy lecsatlakozáshoz",
+"active": "Szavazás folyamatban",
+"requestFor": "Kérelem",
+"votes": "szavazat",
+"voteYes": "Szavazás IGENNEL",
+"cancel": "Szavazás törlése",
+"rollback": "Legutóbbi szavazat visszavonása"
+},
+"ownership": {
+"youOwn": "Te vagy a munkamenet tulajdonosa",
+"owner": "Munkamenet tulajdonosa",
+"delegated": "Átruházott vezérlés"
+},
 "channels": {
 "selectTitle": "Válassz hangcsatornát",
 "selectSubtitle": "A kiválasztott bot számára",

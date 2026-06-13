@@ -90,6 +90,20 @@
 "networkSource": "Network",
 "librarySource": "Library"
 },
+"vote": {
+  "noControlInfo": "Start a vote to skip, clear or disconnect",
+  "active": "Vote in progress",
+  "requestFor": "Request",
+  "votes": "votes",
+  "voteYes": "Vote YES",
+  "cancel": "Cancel vote",
+  "rollback": "Undo last vote"
+},
+"ownership": {
+  "youOwn": "You own this session",
+  "owner": "Session owner",
+  "delegated": "Delegated control"
+},
 "channels": {
 "selectTitle": "Select voice channel",
 "selectSubtitle": "For the selected bot",

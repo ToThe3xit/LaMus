@@ -54,7 +54,7 @@ const Sidebar = ({
   const { t } = useTranslation();
 
   return (
-    <aside className={`fixed bottom-0 left-0 w-full h-20 md:static md:w-64 md:h-full flex flex-row md:flex-col border-t md:border-t-0 md:border-r z-[100] shrink-0 ${
+    <aside className={`fixed bottom-0 left-0 w-full h-16 md:static md:w-64 md:h-full flex flex-row md:flex-col border-t md:border-t-0 md:border-r z-[100] shrink-0 ${
       theme === 'dark' ? 'bg-zinc-950 border-zinc-900' : 'bg-zinc-50 border-zinc-200'
     }`}>
       <div className="hidden md:flex pt-4 pb-6 px-4 flex-col items-center justify-center">
