@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchResults from '../search/SearchResults';
+import { sanitizeAvatarSrc } from '../../utils/sanitize';
 import type { Theme } from '../../types/player';
 import type { CurrentUser } from '../../types/bot';
 
@@ -165,7 +166,7 @@ const TopBar = ({
           <div className={`w-12 h-12 rounded-2xl border ${
             theme === 'dark' ? 'border-zinc-800 bg-zinc-900' : 'border-zinc-300 bg-zinc-100'
           } flex items-center justify-center text-xl group-hover:border-green-500 transition-colors overflow-hidden`}>
-            <img src={currentUser.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+            <img src={sanitizeAvatarSrc(currentUser.avatarUrl)} alt="Avatar" className="w-full h-full object-cover" />
           </div>
         </button>
       </div>

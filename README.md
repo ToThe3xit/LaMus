@@ -52,7 +52,8 @@ LaMus was built to eliminate all of these. Deployed on a private ARM device and 
 - **Local & Network Audio** — Stream from external sources or play from a massive private local library. Network sources (e.g. YouTube via plugin) can be enabled through the Lavalink configuration.
 - **OAuth2 Authentication** — Users log in through Discord. Regular users see only bots on servers they are actively in. Superadmins have global visibility.
 - **Drag & Drop Queue Management** — Reorder, jump to, or remove tracks directly from the queue panel.
-- **Slash Command Support** — An observer bot registers Discord application commands (`/search`, `/searchlocal`, `/skip`, `/leave`, `/pause`, `/resume`, `/clear`) for users who prefer in-chat control.
+- **Slash Command Support** — An observer bot registers Discord application commands (`/search`, `/searchlocal`, `/skip`, `/leave`, `/pause`, `/resume`, `/clear`) and integrates them with the same permission and session management model used by the WebUI.
+- **Session Ownership & Democratic Control** — Shared bot sessions can be protected by an ownership model with optional vote-based control for disruptive actions, available from both the WebUI and Discord slash commands.
 - **CGNAT Bypass** — A built-in Ngrok container creates a secure reverse tunnel, making the WebUI and Discord callbacks accessible globally without router reconfiguration.
 - **Highly Optimised** — Rust + Tokio core with near-zero idle RAM (~11 MiB), paired with a memory-capped Lavalink audio engine. Max power draw on Raspberry Pi 4B: ~5 W.
 - **Radio Mode** — Automatic track selection from local library or network sources when the queue runs dry.
@@ -323,8 +324,6 @@ LaMus introduces a lightweight session management model designed to prevent conf
 - **Open Sessions** — the owner may choose to open the session to everyone currently present in the voice channel.
 - **Vote-Skip System** — for open sessions, potentially disruptive actions require approval from a configurable percentage of active voice channel members. Voting lasts for 15 seconds and is automatically resolved once the configured threshold is reached.
 - **Moderator Override** — designated moderators always retain full control over the session, may cancel active votes, and can restore the previous state within a limited rollback window.
-
-> **Note:** In the current pre-release version (v0.3.0), the ownership and voting interface is available only through the WebUI. Native Discord slash command integration is planned for a future stable release.
 
 ---
 

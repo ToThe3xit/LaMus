@@ -616,7 +616,87 @@ async fn main() {
                                 let _ = ch.send_message(&http, serenity::builder::CreateMessage::new().content(msg)).await;
                             }
                         });
-                    }
+                    },
+                    musicbot_discord_adapter::discord::ObserverMessage::Vote {
+                        guild_id: _guild_id,
+                        voice_channel_id: _voice_channel_id,
+                        text_channel_id: _text_channel_id,
+                        bot_index,
+                        action,
+                        voter_id,
+                    } => {
+                        let web_tx = web_tx.clone();
+                        let server_id = _guild_id.to_string();
+                        let hm = hivemind.clone();
+
+                        tokio::spawn(async move {
+                            let vote_action = match action.as_str() {
+                                "skip" => musicbot_core::governance::VoteAction::Skip,
+                                "clear" => musicbot_core::governance::VoteAction::ClearQueue,
+                                "leave" => musicbot_core::governance::VoteAction::LeaveChannel,
+                                "pause" | "resume" => musicbot_core::governance::VoteAction::TogglePause,
+                                _ => return,
+                            };
+
+                            let bot_state = hm.get_bot_state(bot_index).await;
+                            let (guild_u64, channel_u64) = match bot_state {
+                                musicbot_core::hivemind::BotState::Busy { guild_id, channel_id } => (guild_id, channel_id),
+                                _ => return,
+                            };
+
+                            let owner_id = hm.governance.get_owner_id(bot_index).await;
+                            let mut channel_members = hm.get_channel_human_members(guild_u64, channel_u64).await;
+                            let mut eligible = Vec::new();
+                            for member_id in channel_members.drain(..) {
+                                let is_bot = hm.is_bot_discord_id(member_id).await;
+                                let is_owner = Some(member_id) == owner_id;
+                                let is_superadmin_user = hm.superadmin_ids.contains(&member_id.to_string());
+                                if !is_bot && !is_owner && !is_superadmin_user {
+                                    eligible.push(member_id);
+                                }
+                            }
+
+                            let vote_pct = hm.governance.required_percentage;
+                            match hm.governance.start_vote(
+                                bot_index,
+                                server_id.clone(),
+                                vote_action,
+                                None,
+                                voter_id,
+                                eligible,
+                                vote_pct,
+                            ).await {
+                                Ok(()) => {
+                                    let hm2 = hm.clone();
+                                    let web_tx2 = web_tx.clone();
+                                    let server_id2 = server_id.clone();
+                                    tokio::spawn(async move {
+                                        tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+                                        let result = hm2.governance.cast_vote(bot_index, voter_id).await;
+                                        match result {
+                                            musicbot_core::governance::VoteCastResult::Passed(passed_action, _payload) => {
+                                                let _ = web_tx2.send(match passed_action {
+                                                    musicbot_core::governance::VoteAction::Skip => CoreMessage::Skip { server_id: server_id2, bot_index },
+                                                    musicbot_core::governance::VoteAction::ClearQueue => CoreMessage::ClearQueue { server_id: server_id2, bot_index },
+                                                    musicbot_core::governance::VoteAction::LeaveChannel => CoreMessage::LeaveChannel { server_id: server_id2, bot_index },
+                                                    musicbot_core::governance::VoteAction::TogglePause => CoreMessage::TogglePause { server_id: server_id2, bot_index },
+                                                }).await;
+                                            }
+                                            _ => {}
+                                        }
+                                    });
+                                }
+                                Err("vote_already_active") => {
+                                    let _ = web_tx.send(CoreMessage::CastVote {
+                                        server_id,
+                                        bot_index,
+                                        voter_id,
+                                    }).await;
+                                }
+                                Err(_) => {}
+                            }
+                        });
+                    },
                 }
             },
             Some(msg) = web_rx.recv() => {

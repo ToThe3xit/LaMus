@@ -18,7 +18,7 @@ import useAuth from './hooks/useAuth';
 import useLanguage from './hooks/useLanguage';
 import { SUPPORTED_LANGUAGES } from './i18n/index';
 import { useTranslation } from 'react-i18next';
-
+import { sanitizeAvatarSrc } from './utils/sanitize';
 import type { PlayerState } from './types/player';
 
 import VoteBanner from './components/governance/VoteBanner';
@@ -81,46 +81,20 @@ function App() {
     }
   }, [activePlayerKey]);
 
-  const { playerState, setPlayerState, activePlayers, handleWsData } =
-    usePlayerState({ activePlayerKey, isSuperadmin, setSystemBots });
+  const handleBotGone = useCallback(() => {
+    setActivePlayerKey(null);
+    setCurrentView('servers');
+  }, []);
 
-  const stableHandleWsData = useCallback(handleWsData, []);
-  void stableHandleWsData;
+  const { playerState, setPlayerState, activePlayers, handleWsData, resetMissingTicks } =
+    usePlayerState({
+      activePlayerKey,
+      isSuperadmin,
+      setSystemBots,
+      onBotGone: handleBotGone,
+    });
 
   useWebSocket(!!currentUser, handleWsData);
-
-  const missingActiveTicksRef = useRef(0);
-
-  useEffect(() => {
-    if (!activePlayerKey) return;
-    if (currentView !== 'player') return;
-    const isStillActive = activePlayers[activePlayerKey] !== undefined;
-    const justJoined = Date.now() - joinedAtRef.current < 4000;
-
-    if (isStillActive) {
-      missingActiveTicksRef.current = 0;
-      if (redirectTimeoutRef.current) {
-        clearTimeout(redirectTimeoutRef.current);
-        redirectTimeoutRef.current = null;
-      }
-      return;
-    }
-
-    if (justJoined) return;
-
-    missingActiveTicksRef.current += 1;
-    if (missingActiveTicksRef.current >= 15 && !redirectTimeoutRef.current) {
-      redirectTimeoutRef.current = setTimeout(() => {
-        setCurrentView((view) => {
-          if (view === 'player') {
-            setActivePlayerKey(null);
-            return 'servers';
-          }
-          return view;
-        });
-      }, 1500);
-    }
-  }, [activePlayers, activePlayerKey, currentView]);
 
   const {
     draggedIndex, setDraggedIndex,
@@ -141,7 +115,6 @@ function App() {
   const [leaveDebounce, setLeaveDebounce] = useState<Record<number, boolean>>({});
 
   const currentTrackRef = useRef<HTMLDivElement>(null);
-  const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const queueScrollRef = useRef<HTMLDivElement>(null);
   const mainScrollRef = useRef<HTMLDivElement>(null);
   const sidebarScrollRef = useRef<HTMLElement>(null);
@@ -275,6 +248,7 @@ function App() {
     setSelectedBotIndex(null);
     const expectedKey = `${activeServerId}_${botIndex}`;
     joinedAtRef.current = Date.now();
+    resetMissingTicks();
     setActivePlayerKey(expectedKey);
     setCurrentView('player');
     setOpenServerFolder(null);
@@ -363,7 +337,7 @@ function App() {
         <div className="flex-1 space-y-10 flex flex-col">
           <section className="space-y-4 text-center">
             <div className={`w-24 h-24 mx-auto rounded-[2rem] flex items-center justify-center text-4xl shadow-inner border overflow-hidden ${theme === 'dark' ? 'border-zinc-700 bg-zinc-800' : 'border-zinc-300 bg-zinc-100'}`}>
-              <img src={currentUser.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+              <img src={sanitizeAvatarSrc(currentUser.avatarUrl)} alt="Avatar" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-xl font-black">{currentUser.name}</h3>
@@ -432,11 +406,11 @@ function App() {
 
         <div
           ref={mainScrollRef}
-          className="flex-1 flex flex-col xl:flex-row p-4 md:p-6 gap-6 overflow-y-auto xl:overflow-hidden min-h-0 relative pb-20 md:pb-6"
+          className="flex-1 flex flex-col xl:flex-row p-4 md:p-6 gap-6 overflow-y-auto xl:overflow-hidden min-h-0 relative pb-20 md:pb-6 xl:h-0"
         >
           {currentView === 'player' ? (
             <>
-              <div className="w-full xl:flex-1 flex flex-col">
+              <div className="w-full xl:flex-1 flex flex-col xl:overflow-y-auto xl:min-h-0">
                 <div className="flex flex-col gap-2 p-2 pb-0">
                   {(() => {
                     const controlledBot = systemBots.find((sb) => sb.id === playerState.botId);
@@ -487,6 +461,7 @@ function App() {
                       secondsRemaining={playerState.activeVote.secondsRemaining}
                       currentUserId={currentUser.id}
                       ownerId={playerState.ownerId}
+                      initiatedBy={playerState.activeVote.initiatedBy}
                       isSuperadmin={isSuperadmin}
                       onVote={() => sendCommand('vote')}
                       onCancel={() => sendCommand('cancel_vote')}

@@ -9,6 +9,7 @@ interface VoteBannerProps {
   secondsRemaining: number;
   currentUserId: string;
   ownerId: string | null;
+  initiatedBy: string;
   isSuperadmin: boolean;
   onVote: () => void;
   onCancel: () => void;
@@ -22,13 +23,15 @@ const VoteBanner = ({
   secondsRemaining,
   currentUserId,
   ownerId,
+  initiatedBy,
   isSuperadmin,
   onVote,
   onCancel,
 }: VoteBannerProps) => {
   const { t } = useTranslation();
   const isOwner = currentUserId === ownerId;
-  const canVote = !isOwner && !isSuperadmin;
+  const isInitiator = currentUserId === initiatedBy;
+  const canVote = !isOwner && !isSuperadmin && !isInitiator;
   const progress = requiredVotes > 0 ? Math.round((currentVotes / requiredVotes) * 100) : 0;
 
   const actionLabel: Record<string, string> = {
@@ -77,6 +80,13 @@ const VoteBanner = ({
             >
               {t('vote.voteYes')}
             </button>
+          )}
+          {(isInitiator || isOwner) && !isSuperadmin && (
+            <span className={`px-4 py-2 rounded-xl text-xs font-black opacity-50 ${
+              theme === 'dark' ? 'bg-zinc-700 text-zinc-400' : 'bg-zinc-200 text-zinc-500'
+            }`}>
+              {t('vote.votedYes') ?? 'Voted ✓'}
+            </span>
           )}
           {isSuperadmin && (
             <button

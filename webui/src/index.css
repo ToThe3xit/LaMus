@@ -34,3 +34,10 @@
   margin-bottom: 20px !important;
   padding-bottom: 12px !important;
 }
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}

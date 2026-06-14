@@ -23,6 +23,7 @@ pub enum ObserverMessage {
     Search { guild_id: u64, voice_channel_id: u64, text_channel_id: u64, bot_index: usize, query: String },
     SearchLocal { guild_id: u64, voice_channel_id: u64, text_channel_id: u64, bot_index: usize, query: String },
     Action { guild_id: u64, text_channel_id: u64, bot_index: usize, action: String },
+    Vote { guild_id: u64, voice_channel_id: u64, text_channel_id: u64, bot_index: usize, action: String, voter_id: u64 },
 }
 
 pub struct ObserverHandler {

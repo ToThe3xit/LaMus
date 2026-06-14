@@ -250,6 +250,9 @@ impl SessionGovernance {
         }
         let required = ((n as f64 * required_percentage as f64 / 100.0).ceil() as usize).max(1);
 
+        //let mut initial_votes = std::collections::HashSet::new();
+        //initial_votes.insert(initiated_by);
+
         s.active_vote.insert(bot_index, VoteSession {
             action,
             action_payload,

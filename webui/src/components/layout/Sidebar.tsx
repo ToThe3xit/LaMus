@@ -100,13 +100,13 @@ const Sidebar = ({
           const walk = (e.touches[0].pageY - (el.offsetTop || 0) - startSidebarY) * 1.5;
           el.scrollTop = scrollSidebarTop - walk;
         }}
-        className={`flex-1 px-4 flex flex-row md:flex-col items-center md:items-stretch space-x-3 md:space-x-0 md:space-y-4 overflow-x-auto md:overflow-y-auto hide-scrollbar pb-0 md:pb-8 pt-0 md:pt-2 ${
+        className={`flex-1 px-2 flex flex-row md:flex-col items-center md:items-stretch space-x-2 md:space-x-0 md:space-y-4 overflow-x-auto md:overflow-y-auto hide-scrollbar pb-0 md:pb-8 pt-0 md:pt-2 ${
           isDraggingSidebar ? 'cursor-grabbing' : 'cursor-default'
         }`}
       >
-        <button
-          onClick={() => setCurrentView('servers')}
-          className={`w-full py-4 rounded-3xl flex items-center justify-center md:px-6 transition-all active:scale-95 border-2 ${
+      <button
+        onClick={() => setCurrentView('servers')}
+        className={`w-12 h-12 md:w-full md:py-4 rounded-2xl md:rounded-3xl flex items-center justify-center md:px-6 transition-all active:scale-95 border-2 shrink-0 ${
             currentView === 'servers'
               ? 'border-green-500 bg-green-500/10 text-green-600 dark:text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.15)]'
               : theme === 'dark'
@@ -118,7 +118,7 @@ const Sidebar = ({
           <span className="ml-4 hidden md:inline font-bold">{t('sidebar.lobby')}</span>
         </button>
 
-        <div className="pt-0 md:pt-6 border-l md:border-l-0 border-t-0 md:border-t border-zinc-800/50 flex flex-row md:flex-col items-center md:items-stretch pl-4 md:pl-0 h-full md:h-auto">
+        <div className="pt-0 md:pt-6 border-l md:border-l-0 border-t-0 md:border-t border-zinc-800/50 flex flex-row md:flex-col items-center md:items-stretch pl-2 md:pl-0 h-full md:h-auto gap-2 md:gap-0">
           <p className="hidden md:block text-[10px] font-black uppercase text-zinc-500 mb-4 px-2 tracking-widest text-left">
             {t('sidebar.instances')}
           </p>
@@ -131,21 +131,21 @@ const Sidebar = ({
                 const isFolderOpen = openServerFolder === srvId;
 
                 return (
-                  <div key={srvId} className="relative mb-3 group">
+                  <div key={srvId} className="relative mb-0 md:mb-3 group">
                     <button
                       onClick={() => {
                         setOpenServerFolder(isFolderOpen ? null : srvId);
                         setActiveServerId(srvId);
                       }}
-                      className={`w-full p-2 rounded-2xl flex items-center gap-3 transition-all border-2 ${
+                      className={`w-12 h-12 md:w-full p-1 md:p-2 rounded-xl md:rounded-2xl flex items-center justify-center md:justify-start gap-3 transition-all border-2 shrink-0 ${
                         isFolderOpen
                           ? 'border-green-500 bg-transparent shadow-[0_0_15px_rgba(34,197,94,0.15)]'
                           : 'border-transparent bg-transparent hover:border-green-500/50 hover:bg-green-500/10'
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden text-sm font-black shadow-inner border transition-colors ${
-                        theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-100 border-zinc-300'
-                      }`}>
+                    <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center shrink-0 overflow-hidden text-xs font-black shadow-inner border transition-colors ${
+                      theme === 'dark' ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-100 border-zinc-300'
+                    }`}>
                         {serverInfo?.iconUrl
                           ? <img src={serverInfo.iconUrl} alt="Icon" className="w-full h-full object-cover" />
                           : 'SRV'}
@@ -241,7 +241,7 @@ const Sidebar = ({
                     setActiveServerId(state.serverId);
                     setCurrentView('player');
                   }}
-                  className={`w-full p-3 mb-3 rounded-2xl flex items-center gap-4 transition-all border-2 ${
+                  className={`w-12 h-12 md:w-full p-1 md:p-3 md:mb-3 rounded-xl md:rounded-2xl flex items-center justify-center md:justify-start gap-4 transition-all border-2 shrink-0 ${
                     isSelected
                       ? 'border-green-500 bg-green-500/10 shadow-[0_0_15px_rgba(34,197,94,0.2)]'
                       : `hover:border-green-500 hover:bg-green-500/10 ${
@@ -251,7 +251,7 @@ const Sidebar = ({
                         }`
                   }`}
                 >
-                  <div className={`w-12 h-12 rounded-xl overflow-hidden border shrink-0 shadow-md flex items-center justify-center text-sm font-black ${theme === 'dark' ? 'border-zinc-700 bg-zinc-800' : 'border-zinc-300 bg-white'}`}>
+                  <div className={`w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl overflow-hidden border shrink-0 shadow-md flex items-center justify-center text-xs font-black ${theme === 'dark' ? 'border-zinc-700 bg-zinc-800' : 'border-zinc-300 bg-white'}`}>
                     {botInfo?.avatarUrl
                       ? <img src={botInfo.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                       : t('common.bot')}

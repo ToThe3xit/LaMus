@@ -505,6 +505,18 @@ pub async fn handle_command(
                 vote_pct,
             ).await {
                 Ok(()) => {
+                    let core_tx = state.core_tx.clone();
+                    let srv = server_id.clone();
+                    let uid = user_id_u64;
+                    let bidx = target_bot;
+                    tokio::spawn(async move {
+                        tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+                        let _ = core_tx.send(CoreMessage::CastVote {
+                            server_id: srv,
+                            bot_index: bidx,
+                            voter_id: uid,
+                        }).await;
+                    });
                     return Json(CommandResponse { success: true, message: "vote_started".into(), results: None });
                 }
                 Err(e) => {

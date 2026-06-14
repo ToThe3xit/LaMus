@@ -84,9 +84,31 @@ pub async fn handle_interaction(
             let _ = interaction.edit_response(&ctx.http, serenity::all::EditInteractionResponse::new().content(msg)).await;
         },
         action @ ("skip" | "leave" | "pause" | "resume" | "clear") => {
-            let _ = obs_tx.send(crate::discord::ObserverMessage::Action { guild_id: u_guild, text_channel_id: t_chan, bot_index, action: action.to_string() });
-            let msg = format!("[INFO] Delegating command `{}` to Bot #{}", action.to_uppercase(), bot_index);
-            let _ = interaction.edit_response(&ctx.http, serenity::all::EditInteractionResponse::new().content(msg)).await;
+            let has_direct = hivemind.governance
+                .has_direct_permission(bot_index, user_id, false)
+                .await;
+
+            if has_direct {
+                let _ = obs_tx.send(crate::discord::ObserverMessage::Action {
+                    guild_id: u_guild,
+                    text_channel_id: t_chan,
+                    bot_index,
+                    action: action.to_string(),
+                });
+                let msg = format!("[BOT #{}] Command `{}` executed.", bot_index, action.to_uppercase());
+                let _ = interaction.edit_response(&ctx.http, serenity::all::EditInteractionResponse::new().content(msg)).await;
+            } else {
+                let _ = obs_tx.send(crate::discord::ObserverMessage::Vote {
+                    guild_id: u_guild,
+                    voice_channel_id: u_chan,
+                    text_channel_id: t_chan,
+                    bot_index,
+                    action: action.to_string(),
+                    voter_id: user_id,
+                });
+                let msg = format!("[BOT #{}] Vote started for `{}`. Others in the channel can vote via the WebUI.", bot_index, action.to_uppercase());
+                let _ = interaction.edit_response(&ctx.http, serenity::all::EditInteractionResponse::new().content(msg)).await;
+            }
         },
         "queue" => {
             let _ = interaction.edit_response(&ctx.http, serenity::all::EditInteractionResponse::new().content("[INFO] Observer cannot see the audio queue. Open the WebUI panel to manage the live playlist!")).await;

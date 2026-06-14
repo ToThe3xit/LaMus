@@ -40,7 +40,7 @@ const PlayerControls = ({
   toggleLoop,
   shufflePressed: _shufflePressed,
   setShufflePressed: _setShufflePressed,
-  setCurrentView,
+  //setCurrentView,
   onLeave,
 }: PlayerControlsProps) => {
   const { t } = useTranslation();
@@ -118,7 +118,7 @@ const PlayerControls = ({
           <button
             onClick={() => {
               onLeave();
-              setCurrentView('servers');
+              //setCurrentView('servers');
             }}
             className="py-3 px-6 sm:px-8 rounded-2xl border border-red-900/30 bg-red-950/10 text-red-500 font-black text-[10px] tracking-[0.2em] active:scale-95 transition-all hover:bg-red-900/20 shadow-lg shadow-red-900/5 whitespace-nowrap"
           >
