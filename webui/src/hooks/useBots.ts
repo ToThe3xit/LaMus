@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { BotInstance, SystemBot } from '../types/bot';
 
@@ -26,6 +26,13 @@ export default function useBots({
   const [channelBotLimitInfo, setChannelBotLimitInfo] =
     useState({ current: 0, max: 2 });
 
+  const knownNamesRef = useRef<Set<string>>(new Set());
+  const systemBotsRef = useRef<SystemBot[]>([]);
+
+  useEffect(() => {
+    systemBotsRef.current = systemBots;
+  }, [systemBots]);
+
   useEffect(() => {
     const fetchServers = () => {
       fetch(`${API_URL}/api/bots`, { credentials: 'include' })
@@ -46,7 +53,13 @@ export default function useBots({
   useEffect(() => {
     if (!activeServerId) return;
 
+    let cancelled = false;
+    let requestInFlight = false;
+    knownNamesRef.current = new Set();
+
     const fetchSystemBots = async () => {
+      if (requestInFlight) return;
+      requestInFlight = true;
       try {
         const res = await fetch(
           `${API_URL}/api/system_bots/${activeServerId}`,
@@ -55,49 +68,75 @@ export default function useBots({
 
         const data = await res.json();
 
-        setSystemBots(data.bots || []);
+        if (cancelled) return;
 
-        setChannelBotLimitInfo({
-          current: data.currentChannelBotCount || 0,
-          max: data.maxLimit || 2,
+        const incomingBots: SystemBot[] = data.bots || [];
+        const incomingNames = new Set(
+          incomingBots.filter((b) => b.isInServer).map((b) => b.name)
+        );
+
+        const namesChanged =
+          incomingNames.size !== knownNamesRef.current.size ||
+          [...incomingNames].some((name) => !knownNamesRef.current.has(name));
+
+        if (namesChanged) {
+          knownNamesRef.current = incomingNames;
+          systemBotsRef.current = incomingBots;
+          setSystemBots(incomingBots);
+        } else {
+          let anyFieldChanged = false;
+
+          const merged = systemBotsRef.current.map((existingBot) => {
+            const fresh = incomingBots.find((b) => b.name === existingBot.name);
+            if (!fresh) return existingBot;
+
+            if (
+              fresh.isBusy !== existingBot.isBusy ||
+              fresh.userHasPermission !== existingBot.userHasPermission ||
+              fresh.avatarUrl !== existingBot.avatarUrl ||
+              fresh.isInServer !== existingBot.isInServer
+            ) {
+              anyFieldChanged = true;
+              return { ...existingBot, ...fresh };
+            }
+            return existingBot;
+          });
+
+          if (anyFieldChanged) {
+            systemBotsRef.current = merged;
+            setSystemBots(merged);
+          }
+        }
+
+        setChannelBotLimitInfo(prev => {
+          const next = {
+            current: data.currentChannelBotCount || 0,
+            max: data.maxLimit || 2,
+          };
+          if (prev.current === next.current && prev.max === next.max) {
+            return prev;
+          }
+          return next;
         });
 
       } catch (err) {
         console.error('System bots fetch error:', err);
+      } finally {
+        requestInFlight = false;
       }
     };
 
     setIsLoadingBots(true);
     fetchSystemBots().finally(() => setIsLoadingBots(false));
 
-    const interval = setInterval(fetchSystemBots, 500);
+    const intervalMs = currentView === 'bots' ? 500 : 1000;
+    const interval = setInterval(fetchSystemBots, intervalMs);
 
-    return () => clearInterval(interval);
-  }, [activeServerId]);
-
-  useEffect(() => {
-    if (currentView !== 'bots' || !activeServerId) return;
-
-    const interval = setInterval(() => {
-      fetch(
-        `${API_URL}/api/system_bots/${activeServerId}`,
-        { credentials: 'include' }
-      )
-        .then(res => res.json())
-        .then(data => {
-          setSystemBots(data.bots || []);
-          setChannelBotLimitInfo({
-            current: data.currentChannelBotCount || 0,
-            max: data.maxLimit || 2,
-          });
-        })
-        .catch(err =>
-          console.error('Auto-refresh error:', err)
-        );
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [currentView, activeServerId]);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [activeServerId, currentView]);
 
   return {
     botInstances,

@@ -18,8 +18,6 @@ target/
 
 # 4. Sensitive Data & Persistence
 # Do not bake secrets or local databases into the immutable Docker image.
-.env
-webui/.env
 *.pem
 *.key
 db.yaml

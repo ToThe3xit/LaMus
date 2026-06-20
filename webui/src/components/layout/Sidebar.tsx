@@ -229,7 +229,7 @@ const Sidebar = ({
                 );
               })
           ) : (
-            Object.entries(activePlayers).map(([key, state]) => {
+            Object.entries(activePlayers).sort(([a], [b]) => a.localeCompare(b)).map(([key, state]) => {
               const botInfo = systemBots.find((sb) => sb.id === state.botId);
               const isSelected = activePlayerKey === key;
 

@@ -23,7 +23,7 @@ const BotSelector = ({
   systemBots,
   isLoadingBots,
   isSuperadmin,
-  channelBotLimitInfo,
+  channelBotLimitInfo: _channelBotLimitInfo,
   activeServerId,
   gridCols,
   setGridCols,
@@ -49,24 +49,6 @@ const BotSelector = ({
           />
         </div>
       </div>
-
-      {!isSuperadmin && channelBotLimitInfo.current >= channelBotLimitInfo.max && (
-        <div className="absolute inset-0 z-[100] bg-black/60 backdrop-blur-md flex items-center justify-center p-10 animate-in fade-in duration-500">
-          <div className="bg-zinc-950 border-4 border-red-500/30 p-12 rounded-[4rem] text-center shadow-[0_0_50px_rgba(239,68,68,0.2)] max-w-lg">
-            <div className="text-4xl mb-8 font-black text-red-500">{t('botSelector.limitStop')}</div>
-            <h2 className="text-4xl font-black text-white mb-4">{t('botSelector.limitTitle')}</h2>
-            <p className="text-zinc-400 font-bold mb-10 uppercase tracking-widest text-sm leading-relaxed">
-              {t('botSelector.limitDescription', { max: channelBotLimitInfo.max })}
-            </p>
-            <button
-              onClick={() => setCurrentView('servers')}
-              className="w-full py-5 bg-zinc-800 hover:bg-zinc-700 text-white font-black rounded-2xl transition-all active:scale-95 shadow-xl"
-            >
-              {t('botSelector.returnToLobby')}
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="flex items-center justify-between mb-10">
         <h2 className="text-3xl font-black">{t('botSelector.title')}</h2>

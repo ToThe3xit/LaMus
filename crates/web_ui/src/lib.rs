@@ -231,7 +231,10 @@ async fn get_system_bots(
     let mut bots_json = Vec::new();
     let bots_guard = state.hivemind.bots.read().await;
 
-    for (i, bot) in bots_guard.iter() {
+    let mut sorted_bots: Vec<(&usize, &musicbot_core::hivemind::BotRecord)> = bots_guard.iter().collect();
+    sorted_bots.sort_by_key(|(i, _)| **i);
+
+    for (i, bot) in sorted_bots {
         let is_in_server = bot.guilds.contains(&guild_id_u64);
 
         let is_busy = matches!(bot.state, musicbot_core::hivemind::BotState::Busy { .. });

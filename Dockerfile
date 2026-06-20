@@ -3,7 +3,7 @@ WORKDIR /app/webui
 COPY webui/package*.json ./
 RUN npm install
 COPY webui/ .
-RUN VITE_API_URL=https://uncandled-multifibrous-josefina.ngrok-free.dev npm run build
+RUN npm run build
 
 FROM rust:1.94-slim AS backend-builder
 WORKDIR /app
