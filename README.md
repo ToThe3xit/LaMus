@@ -175,34 +175,17 @@ For complete deployment instructions, Raspberry Pi setup, CGNAT bypass configura
 
 ## Documentation
 
-Full technical documentation is available in the **[GitHub Wiki](../../wiki)**.
+Full technical documentation is available in the **[GitHub Wiki](../../wiki/Home)**.
 
 | Topic | Description |
 | --- | --- |
-| [Installation Guide](../../wiki) | Step-by-step setup from scratch |
-| [Architecture Overview](../../wiki) | System design and data flow |
-| [Session Ownership](../../wiki) | How ownership and delegation work |
-| [Democratic Control](../../wiki) | Vote-Skip system explained |
-| [Local Search Engine](../../wiki) | Indexing and search internals |
-| [Deployment Guide](../../wiki) | Docker, volumes and networking |
-| [Raspberry Pi Setup](../../wiki) | ARM deployment and CGNAT bypass |
-| [Troubleshooting](../../wiki) | Common issues and fixes |
-
----
-
-## Roadmap
-
-| Version | Focus |
-| --- | --- |
-| **0.4.0** | Auto-Volume normalization plugin |
-| **0.5.0** | Audio filters, equalizer presets, YouTube chapter support |
-| **0.6.0** | User profiles, persistent settings, GDPR compliance tools |
-| **0.7.0** | Favorites, listening history, statistics, custom playlists |
-| **0.8.0** | WebUI file manager, local library upload and maintenance tools |
-| **0.9.0** | God Panel, Hot Reload, advanced instance management |
-| **1.0.0** | Database evolution, potential migration to advanced backend |
-
----
+| [Installation Guide](../../wiki/Installation) | Step-by-step setup from scratch |
+| [Architecture Overview](../../wiki/Architecture) | System design and data flow |
+| [Democratic Control](../../wiki/Vote-Skip-System) | Vote-Skip system explained |
+| [Deployment Guide](../../wiki/Deployment) | Docker, volumes and networking |
+| [Raspberry Pi Setup](../../wiki/Raspberry-Pi-Setup) | ARM deployment and CGNAT bypass |
+| [Troubleshooting](../../wiki/Troubleshooting) | Common issues and fixes |
+| [Roadmap](../../wiki/Roadmap) | Planned features and future releases |
 
 ## Project Status
 
